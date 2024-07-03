@@ -25,7 +25,7 @@ export const Cortejo = () => {
   };
 
   const handleAlbumClick = (album) => {
-    navigate(`/album/${album}`);
+    navigate(`/admin/album/${album}`);
   };
 
   return (

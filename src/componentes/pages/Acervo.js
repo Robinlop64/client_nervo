@@ -11,7 +11,7 @@ export const Acervo = () => {
       <main id="main2">
         <div id='container2'>
           <section className='acervo_pages'>
-            <NavLink to="/fotografias" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/fotografias" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -26,7 +26,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/iconografia" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/iconografia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -41,7 +41,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/libros" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/libros" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -56,7 +56,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/publicaciones" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/publicaciones" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -71,7 +71,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/correspondencia" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/correspondencia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -86,7 +86,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/documentacion" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/documentacion" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -101,7 +101,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/partituras" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/partituras" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -116,7 +116,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/objetos" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/objetos" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -131,7 +131,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/monumentos" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/monumentos" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -146,7 +146,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/audiovisuales" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/audiovisuales" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 

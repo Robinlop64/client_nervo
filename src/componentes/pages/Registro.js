@@ -7,47 +7,47 @@ export const Registro = () => {
       <div className="contenedor_main_registro">
         <h1>Fromulario de registro de bienes</h1>
         <div className='frame_botones_registro'>
-          <NavLink to="/registro/menu-iconografia">
+          <NavLink to="/admin/registro/menu-iconografia">
             <button>
               Iconografía
             </button>
           </NavLink>
-          <NavLink to="/registro/libros">
+          <NavLink to="/admin/registro/libros">
             <button>
               Libros
             </button>
           </NavLink>
-          <NavLink to="/registro/periodicos">
+          <NavLink to="/admin/registro/periodicos">
             <button>
               Publicaciones periódicas
             </button>
           </NavLink>
-          <NavLink to="/registro/correspondencia">
+          <NavLink to="/admin/registro/correspondencia">
             <button>
               Correspondencia
             </button>
           </NavLink>
-          <NavLink to="/registro/documentacion">
+          <NavLink to="/admin/registro/documentacion">
             <button>
               Documentación
             </button>
           </NavLink>
-          <NavLink to="/registro/objetos">
+          <NavLink to="/admin/registro/objetos">
             <button>
               Objetos personales
             </button>
           </NavLink>
-          <NavLink to="/registro/partituras">
+          <NavLink to="/admin/registro/partituras">
             <button>
               Partituras
             </button>
           </NavLink>
-          <NavLink to="/registro/monumentos">
+          <NavLink to="/admin/registro/monumentos">
             <button>
               Monumentos
             </button>
           </NavLink>
-          <NavLink to="/registro/audiovisuales">
+          <NavLink to="/admin/registro/audiovisuales">
             <button>
               Audiovisuales
             </button>

@@ -25,7 +25,7 @@ export const Fotografias2 = () => {
   };
 
   const handleTemaClick = (tema) => {
-    navigate(`/tema/${tema}`);
+    navigate(`/admin/tema/${tema}`);
   };
 
   return (

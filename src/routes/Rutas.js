@@ -65,30 +65,30 @@ export const Rutas = () => {
 
           <Route path="/admin" element={<PrivateLayout />}>
             <Route index element={<Inicio />} />
-            <Route path="login" element={<Inicio />} />
-            <Route path="registrar" element={<Register />} />
-            <Route path="inicio" element={<Inicio />} />
-            <Route path="registro" element={<Registro />} />
-            <Route path="acervo" element={<Acervo />} />
-            <Route path="croonologia" element={<Croonologia />} />
-            <Route path="instituciones" element={<Instituciones />} />
-            <Route path="registro/menu-iconografia" element={<Menuiconografia />} />
-            <Route path="registro/fotografia" element={<RegFotografia />} />
-            <Route path="registro/iconografia" element={<RegIconografia />} />
-            <Route path="registro/libros" element={<RegLibros />} />
-            <Route path="registro/periodicos" element={<RegPeriodicos />} />
-            <Route path="registro/correspondencia" element={<RegCorrespondencia />} />
-            <Route path="registro/documentacion" element={<RegDocumentacion />} />
-            <Route path="registro/objetos" element={<RegObjetos />} />
-            <Route path="registro/partituras" element={<RegPartituras />} />
-            <Route path="registro/monumentos" element={<RegMonumentos />} />
-            <Route path="registro/audiovisuales" element={<RegAudiovisuales />} />
-            <Route path="fotografias" element={<Fotografias2 />} />
-            <Route path="fotografias/:id" element={<FotoDetalle />} />
-            <Route path="fotografias2" element={<Fotografias2 />} />
-            <Route path="tema/Cortejo fúnebre" element={<Cortejo />} />
-            <Route path="album/:id" element={<AlbumFotos />} />
-            <Route path='logout' element={<Logout/>}/>
+            <Route path="/admin/login" element={<Inicio />} />
+            <Route path="/admin/registrar" element={<Register />} />
+            <Route path="/admin/inicio" element={<Inicio />} />
+            <Route path="/admin/registro" element={<Registro />} />
+            <Route path="/admin/acervo" element={<Acervo />} />
+            <Route path="/admin/croonologia" element={<Croonologia />} /> 
+            <Route path="/admin/instituciones" element={<Instituciones />} />
+            <Route path="/admin/registro/menu-iconografia" element={<Menuiconografia />} />
+            <Route path="/admin/registro/fotografia" element={<RegFotografia />} />
+            <Route path="/admin/registro/iconografia" element={<RegIconografia />} />
+            <Route path="/admin/registro/libros" element={<RegLibros />} />
+            <Route path="/admin/registro/periodicos" element={<RegPeriodicos />} />
+            <Route path="/admin/registro/correspondencia" element={<RegCorrespondencia />} />
+            <Route path="/admin/registro/documentacion" element={<RegDocumentacion />} />
+            <Route path="/admin/registro/objetos" element={<RegObjetos />} />
+            <Route path="/admin/registro/partituras" element={<RegPartituras />} />
+            <Route path="/admin/registro/monumentos" element={<RegMonumentos />} />
+            <Route path="/admin/registro/audiovisuales" element={<RegAudiovisuales />} />
+            <Route path="/admin/fotografias" element={<Fotografias2 />} />
+            <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
+            <Route path="/admin/fotografias2" element={<Fotografias2 />} />
+            <Route path="/admin/tema/Cortejo fúnebre" element={<Cortejo />} />
+            <Route path="/admin/album/:id" element={<AlbumFotos />} />
+            <Route path='/admin/logout' element={<Logout/>}/>
           </Route>
         </Routes>
       </AuthProvider>

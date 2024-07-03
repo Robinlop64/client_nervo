@@ -43,7 +43,7 @@ export const Login = () => {
         <strong>{saved === 'error' ? 'Usuario No registrado ' : ''}</strong>
         <form className='register-form'>
           <div className='form-group'>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email'>Usuario</label>
             <input
               type='email'
               name='email'

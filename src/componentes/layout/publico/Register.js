@@ -62,7 +62,7 @@ export const Register = () => {
           </div>
 
           <div className='form-group'>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='email'>Usuario</label>
             <input
               type='email'
               name='email'

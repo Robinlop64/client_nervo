@@ -7,17 +7,17 @@ export const Menuiconografia = () => {
         <h1>Fromulario de registro de bienes</h1>
         
           <div className='frame_botones_icon'>
-            <NavLink to="/registro">
+            <NavLink to="/admin/registro">
               <button>
                 Regresar
               </button>
             </NavLink>
-            <NavLink to="/registro/fotografia">
+            <NavLink to="/admin/registro/fotografia">
               <button>
                 Fotografía
               </button>
             </NavLink>
-            <NavLink to="/registro/iconografia">
+            <NavLink to="/admin/registro/iconografia">
               <button>
                 Iconografía
               </button>

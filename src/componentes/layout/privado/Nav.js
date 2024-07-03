@@ -6,27 +6,27 @@ export const Nav = () => {
     <nav id="nav2">
             <ul>
         <li>
-          <NavLink to="/inicio">
+          <NavLink to="/admin/inicio">
             Inicio
           </NavLink>
         </li>
         <li>
-          <NavLink to="/acervo">
+          <NavLink to="/admin/acervo">
             Acervo
           </NavLink>
         </li>
         <li>
-          <NavLink to="/croonologia">
+          <NavLink to="/admin/croonologia">
             Cron
           </NavLink>
         </li>
         <li>
-          <NavLink to="/instituciones">
+          <NavLink to="/admin/instituciones">
             Instituciones
           </NavLink>
         </li>
         <li>
-          <NavLink to="/registro">
+          <NavLink to="/admin/registro">
             Yo te bendigo vida
           </NavLink>
         </li>

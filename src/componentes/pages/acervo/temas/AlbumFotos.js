@@ -26,7 +26,7 @@ export const AlbumFotos = () => {
     }
   };
   const handleFotoClick = (fotografia) => {
-    navigate(`/fotografias/${fotografia._id}`);
+    navigate(`/admin/fotografias/${fotografia._id}`);
   };
 
 
