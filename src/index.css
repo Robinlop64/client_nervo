@@ -1,13 +1,1174 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: marguerite;
+  src: url("./font/marguerite.ttf");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* General*/
+* {
+  padding: 0px;
+  margin: 0px;
 }
+
+/* Agregar imagen de patron de fondo*/
+body {
+  background-color: black;
+}
+
+#title {
+  font-family: marguerite;
+}
+/*--------------------------------------Header---------------------------------------*/
+#header {
+  min-width: 1024px;
+  width: 100%;
+  height: 250px;
+  margin: 0px auto;
+}
+
+#header a {
+  text-decoration: none;
+  color: white;
+
+}
+
+#header #logo {
+  width: 770px;
+  margin: 0px auto;
+  padding-top: 20px;
+}
+
+#header #logo img {
+  display: block;
+  text-align: center;
+  margin: 0px auto;
+  width: 140px;
+}
+
+#header #logo2 img {
+  display: block;
+  text-align: center;
+  margin: 0px auto;
+  width: 250px;
+}
+
+#header h1 {
+  text-align: center;
+  font-size: 40px;
+  color: #800;
+  font-family: marguerite;
+}
+/*--------------------------------------NavBar---------------------------------------*/
+#nav {
+  width: 100%;
+  background-color: #0672A8;
+  height: 40px;
+  font-family: marguerite;
+  font-size: 16px;
+  box-shadow: 0px 0px 2px black;
+
+}
+
+#nav ul {
+  list-style: none;
+  text-decoration: none;
+  margin: 0px auto;
+  width: 45%;
+
+}
+
+#nav>ul>li {
+  line-height: 40px;
+  float: left;
+  transition: all 300ms;
+}
+
+#nav>ul>li>a {
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+#nav>ul>li:hover {
+  background-color: black;
+
+}
+
+#nav>ul>li>a:hover {
+  color: #0672A8;
+}
+
+#nav2 {
+  width: 100%;
+  background-color: #800;
+  height: 40px;
+  font-family: marguerite;
+  font-size: 16px;
+  box-shadow: 0px 0px 2px black;
+
+}
+
+#nav2 ul {
+  list-style: none;
+  text-decoration: none;
+  margin: 0px auto;
+  width: 45%;
+
+}
+
+#nav2>ul>li {
+  line-height: 40px;
+  float: left;
+  transition: all 300ms;
+}
+
+#nav2>ul>li>a {
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+#nav2>ul>li:hover {
+  background-color: black;
+
+}
+
+#nav2>ul>li>a:hover {
+  color: #0672A8;
+}
+
+
+
+/*--------------------------------------Main1---------------------------------------*/
+#main {
+  background-image: url(../public/img/Fondo1.jpg);
+  min-height: 900px;
+}
+
+#main #texto {
+  position: absolute;
+  top: 85%;
+  left: 7%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 40px;
+  font-family: marguerite;
+}
+
+#main p {
+
+  margin-left: 200px;
+}
+
+#main #form {
+  display: block;
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+}
+/*--------------------------------------Main1---------------------------------------*/
+#main2 {
+  background-image: url(../public/img/fondo2.jpg);
+  height: 2300px;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  font-family: marguerite;
+}
+#main2 #container h1 {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  height: 300px;
+}
+/*--------------------------------------Registro Menu---------------------------------------*/
+
+.main_registro {
+  background-image: url(../public/img/fondo2.jpg);
+  height: 100%;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+}
+.contenedor_main_registro{
+  max-width: 900px;
+  min-width: 900px;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}
+.frame_botones_registro button {
+  max-width: 250px;
+  min-width: 250px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0672A8;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+  transition: all 300ms;
+
+}
+
+.frame_botones_registro button:hover {
+  background-color: black;
+  color: #0672A8;
+}
+/*--------------------------------------Iconografia Menu---------------------------------------*/
+.frame_botones_icon button {
+  max-width: 250px;
+  min-width: 250px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #800;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+  transition: all 300ms;
+
+}
+/*--------------------------------------Formulario fotografia---------------------------------------*/
+
+.contenedor_formulario_foto{
+  max-width: 1200px;
+  min-width: 1200px;
+  padding: 20px;
+  height: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: left;
+
+}
+.contenedor_formulario_foto h2{
+  text-align: center;
+  font-size: 40px;
+  color: #0672A8;
+}
+
+#regresar_boton{
+  text-align: center;
+}
+
+.form-group input[type="textarea"]{
+  padding: 10px;
+  width: 600px;
+  margin-top: 8px;
+}
+.form-group label{
+  display: block;
+  float: left;
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.form-group{
+  display: block;
+  float: left;
+}
+.divisor_form{
+  clear: both;
+  color: #0672A8;
+  width: 1170px;
+  height: 300px;
+}
+#autor {
+  max-width: 500px;
+  min-width: 500px;
+  margin-left: 10px;
+}
+#autor input{
+  max-width: 400px;
+  min-width: 400px;
+  padding: 10px;
+
+  
+}
+.form-group select{
+  max-width: 200px;
+  min-width: 200px;
+}
+.form-group #adq{
+  max-width: 200px;
+  min-width: 200px;
+}
+#hallazgo{
+  max-width: 100px;
+  min-width: 100px;
+}
+#fecha{
+  max-width: 420px;
+  min-width: 420px;
+  display: block;
+  float: left;
+}
+#fecha input{
+  display: block;
+  float: left;
+  max-width: 100px;
+  min-width: 100px;
+}
+/* Estilos para el botón personalizado */
+
+
+#subirfoto{
+  display: block;
+  float: left;
+  text-align: left;
+  margin-right: 300px;
+  width: 800px;
+}
+#subirfoto p{
+  max-width: 900px;
+  min-width: 900px;
+  margin-top: 12px;
+}
+.upload-button {
+  max-width: 150px;
+  min-width: 150px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0672A8;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+  transition: all 300ms;
+  text-align: center;
+  display: inline-block;
+  margin: 0px autos;
+}
+#subirarchivo{
+  margin: 0px;
+  margin-right: 10px;
+}
+#foto_label{
+  margin-top: 10px;
+  margin-right: 5px;
+}.contenedor_formulario_foto h3{
+  text-align: center;
+  font-size: 30px;
+  color: #0672A8;
+}
+
+.campos_fotografia{
+  clear: both;
+  color: #0672A8;
+  width: 1170px;
+  height: 100px;
+}
+.campos_fotografia input[type="number"]{
+  display: block;
+  float: left;
+  max-width: 70px;
+  min-width: 70px;
+}
+.campos_fotografia input[type="text"]{
+  display: block;
+  float: left;
+  max-width: 200px;
+  min-width: 200px;
+}
+.campos_fotografia textarea{
+  display: block;
+  float: left;
+  max-width: 400px;
+  min-width: 400px;
+  max-height: 100px;
+  min-height: 100px;
+  margin-right: 600px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+#descripcion_label{
+  margin-top: 50px;
+}
+
+.upload-button:hover {
+  background-color: black;
+  color: white;
+}
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 200px;
+  margin-left: 40%;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+/* Oculta el botón de archivo real */
+/*input[type="file"] {
+  display: none;
+}*/
+
+/*--------------------------------------Fotodetalle Menu---------------------------------------*/
+
+
+.main_fotodetalle{
+  background-image: url(../public/img/fondo2.jpg);
+  height: 100%;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.main_fotodetalle img{
+  max-width: 600px;
+  margin-top: 15px;
+}
+
+.container_fotodetalle{
+ max-width: 1200px;
+  min-width: 1200px;
+  padding: 20px;
+  height: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: left;
+}
+.container_fotodetalle button{
+  max-width: 250px;
+  min-width: 250px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0672A8;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+  transition: all 300ms;
+}
+
+.container_fotodetalle button:hover{
+  background-color: black;
+
+}
+.container_fotodetalle h2{
+  color: #0672A8;
+  font-size: 34px;
+  font-family: marguerite;
+  margin-left: 100px;
+  border-radius: 3px;
+}
+.main_fotodetalle {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.container_fotodetalle {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #0672A8;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+button {
+  background-color: #0672A8;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #005f88;
+}
+.barra_fotodetalle{
+  border-bottom:2px solid #0672A8;
+  height: 70px;
+}
+.barra_fotodetalle h2 {
+  color: #800;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: block;
+  float: left;
+}
+.barra_fotodetalle h2:last-child{
+  float: right;
+  margin-right: 50px;
+  
+}
+
+.marco {
+  text-align: center;
+  margin-bottom: 20px;
+  display: block;
+  float: left;
+}
+
+.marco img {
+  border: 5px solid #800;
+  border-radius: 8px;
+  max-width: 650px;
+  height: auto;
+  display: block;
+  float: lefts;
+  margin-left: 20px;
+}
+
+.contenido_fotodetalle {
+  color: #333;
+  width: 260px;
+  height: 500px;
+  display: block;
+  float: right;
+  padding-right: 200px;
+}
+
+.contenido_fotodetalle p {
+  margin: 0px ;
+  padding: 5px;
+  padding-right: 50px;
+  float: left;
+  
+}
+
+.contenido_fotodetalle p:last-child {
+  border-bottom: none;
+}
+
+/*--------------------------------------Fotodetalle Menu end---------------------------------------*/
+#container2 {
+  max-width: 900px;
+  min-width: 900px;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#container2 h2 {
+  text-align: center;
+  font-family: marguerite;
+  font-size: 30px;
+}
+
+#container2 label {
+  display: block;
+  float: left;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+
+#container2 #tituloyautor input[type="text"] {
+  display: block;
+  text-align: center;
+  float: left;
+}
+
+
+
+
+
+.acervo_pages{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  transition: all 300ms;
+  color: #0672A8;
+}
+
+.clasificacion {
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #0672A8;
+  margin: 20px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-left: 20px;
+  display: block;
+  width: 80%;
+  margin-left: 70px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.clasificacion article {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.clasificacion .mascara {
+  width: 35%;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+.clasificacion .mascara img {
+  width: 80%;
+
+}
+
+.informacion-clas {
+  width: 100%;
+  padding-top: 15px;
+}
+
+.informacion-clas h4 {
+  font-size: 35px;
+  font-family: marguerite;
+}
+
+.acervo_pages :hover {
+  background-color: #0672A8;
+  color: white;
+
+}
+
+.containerfotografia {
+  max-width: 1150px;
+  min-width: 1150px;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+
+}
+
+.fotografia-item {
+  display: block;
+  float: left;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #0672A8;
+  margin: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 25px;
+  margin-left: 20px;
+  display: block;
+  width: 18%;
+  margin-left: 10px;
+  text-decoration: none;
+  color: inherit;
+  height: 250px;
+}
+
+.fotografia-item img {
+  width: 220px;
+}
+
+/*                              Croonologia        */
+
+.contenedor_cronologia {
+  max-width: 1100px;
+  min-width: 1100px;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.cronologia_item {
+  display: block;
+  float: left;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #0672A8;
+  margin: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 25px;
+  margin-left: 20px;
+  display: block;
+  width: 20%;
+  margin-left: 10px;
+  text-decoration: none;
+  color: inherit;
+  height: 250px;
+}
+
+.cronologia_item img {
+  width: 154px;
+  height: 198px;
+}
+
+.cronologia_item h1 {
+  font-size: 19px;
+}
+
+/*                              Paises        */
+#main3 {
+  background-image: url(../public/img/fondo2.jpg);
+  height: 9300px;
+  display: flex;
+  justify-content: center;
+}
+
+#main3 h1 {
+  font-size: 15px;
+}
+
+.contenedor_paises {
+  display: block;
+  float: left;
+  max-width: 1100px;
+  min-width: 1100px;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.pais{
+  clear: both;
+
+}
+.ciudad{
+  clear: both;
+}
+
+.formubi input[type="text"],
+select,
+textarea,
+input[type="number"],
+input[type="date"] {
+  display: block;
+  float: left;
+  margin: 10px;
+  padding: 5px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+
+input[type="text"],
+select,
+textarea,
+input[type="number"],
+input[type="date"] {
+  display: block;
+
+  margin: 10px;
+  padding: 5px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+#formpais input[type="text"],
+select,
+textarea,
+input[type="number"],
+input[type="date"] {
+  display: block;
+  text-align: center;
+  float: none;
+}
+
+select {
+  max-width: 265px;
+  min-width: 265px;
+}
+
+textarea {
+  max-width: 253px;
+  min-width: 253px;
+}
+
+#camposgenerales input[type="submit"] {
+  display: block;
+  max-width: 250px;
+  min-width: 250px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0672A8;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+
+}
+
+#camposgenerales label {
+  font-size: 18px;
+  color: #0672A8;
+  margin-top: 12px;
+}
+
+#camposgenerales input[type="number"] {
+  height: 25px;
+}
+
+
+
+#pais {
+  margin-left: 13px;
+}
+
+
+#camposgenerales #ciudad {
+  display: block;
+  float: left;
+}
+
+#container2 h3 {
+  margin-top: 50px;
+  font-size: 30px;
+  text-align: center;
+  font-family: marguerite;
+}
+
+#esp1 input[type="submit"] {
+  display: block;
+  max-width: 250px;
+  min-width: 250px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0672A8;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0px 0px 4px black;
+
+}
+
+#footer {
+  width: 100%;
+  margin: 0px auto;
+  height: 50px;
+  text-align: center;
+  background-color: black;
+  min-height: 130px;
+}
+
+#footer p {
+
+  color: white;
+  background-color: black;
+  text-align: center;
+}
+
+#footer p a {
+
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-family: marguerite;
+  font: 20px;
+
+
+}
+
+#footer #foto img {
+  display: block;
+  width: 150px;
+  float: left;
+  margin-top: 10px;
+}
+
+#footer #foto2 img {
+  display: block;
+  width: 150px;
+  float: right;
+}
+
+.foto-detalle-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.foto-detalle-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: left;
+  height: 670px;
+  width: 60%;
+}
+
+.fotografia-detalle-img {
+  max-width: 100%;
+  max-height: 50vh;
+}
+#container2 form .form-group  {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.small-input {
+  width: 50px;
+}
+#esp1 {
+  margin-top: 20px;
+}
+
+
+/*--------------------------------------temas fotografia---------------------------------------*/
+
+.main_temas_fotografia{
+  background-image: url(../public/img/fondo2.jpg);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.temas_contenedor_items{
+    max-width: 900px;
+    min-width: 900px;
+    padding: 20px;
+    height: 100;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: center;
+}
+.temas_contenedor_items h3{
+  font-size: 30px;
+  font-family: marguerite;
+
+}
+.temas_contenedor {
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #0672A8;
+  margin: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 20px;
+  display: block;
+  width: 90%;
+  margin-left: 27px;
+  text-decoration: none;
+  color: inherit;
+  min-height: 100px;
+  text-align: center;
+  color: #0672A8;
+
+}
+.temas_contenedor:hover{
+  background-color: #0672A8;
+  color: white;
+}
+
+.temas_contenedor article{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 95%;
+.contenido_temas{
+  display: block;
+  width: 100%;
+  
+}
+
+}
+#img_temas{
+  display: block;
+  float: left;
+  width: 25%;
+  min-height: 200px;
+  max-height: 200px;
+  
+  
+}
+#p_temas{
+  font-size: 17px;
+  display: block;
+  float: left;
+  text-align: center;
+  width: 100%;
+  font-family: sans-serif;
+}
+
+/*--------------------------------------temas fotografia fin---------------------------------------*/
+/*--------------------------------------Pagina de los albums---------------------------------------*/
+.containerfotografia h3{
+  font-family: marguerite;
+  font-size: 40px;
+  color: #0672A8;
+  border-bottom: #0672A8 solid 3px;
+  margin-bottom: 10px;
+}
+.albumes_item{
+  
+    display: block;
+    float: left;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px #0672A8;
+    margin: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 20px;
+    display: block;
+    width: 20%;
+    margin-left: 10px;
+    text-decoration: none;
+    color: inherit;
+    height: 250px;
+    text-align: center;
+  
+}
+.albumes_item:hover{
+  background-color: #0672A8;
+  color: white;
+}
+.albumes_item:hover >h3{
+  background-color: #0672A8;
+  color: white;
+  border-bottom: white solid 3px;
+} 
+.albumes_item img{
+  width: 80%;
+  max-height: 120px;
+}
+.albumes_item h3{
+  font-size: 23px;
+}
+.albumes_item p{
+  font-family: sans-serif;
+
+}
+.main_temas_fotografia{
+  background-image: url(../public/img/fondo2.jpg);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.temas_contenedor_items{
+    max-width: 900px;
+    min-width: 900px;
+    padding: 20px;
+    height: 100;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: center;
+}
+.temas_contenedor_items h3{
+  font-size: 30px;
+  font-family: marguerite;
+
+}
+.temas_contenedor {
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px #0672A8;
+  margin: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 20px;
+  display: block;
+  width: 90%;
+  margin-left: 27px;
+  text-decoration: none;
+  color: inherit;
+  min-height: 100px;
+  text-align: center;
+  color: #0672A8;
+
+}
+.temas_contenedor:hover{
+  background-color: #0672A8;
+  color: white;
+}
+
+.temas_contenedor article{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 95%;
+.contenido_temas{
+  display: block;
+  width: 100%;
+  
+}
+
+}
+#img_temas{
+  display: block;
+  float: left;
+  width: 25%;
+  
+  
+}
+#p_temas{
+  font-size: 17px;
+  display: block;
+  float: left;
+  text-align: center;
+  width: 100%;
+  font-family: sans-serif;
+}
+
+/*--------------------------------------temas fotografia fin---------------------------------------*/
