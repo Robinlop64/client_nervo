@@ -31,7 +31,7 @@ export const Fotografias = () => {
     <div>
       <main id='main2'>
         <div className='containerfotografia'>
-          <h3>Fotografías</h3>
+          <h3>Fotografías 3</h3>
           <button onClick={getFotos}>Mostrar Fotografías</button>
           <div className='fotografias-container'>
             {fotografias.map((fotografia) => {
@@ -44,7 +44,7 @@ export const Fotografias = () => {
                 >
                   <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img' />
                   <p>{fotografia.titulo}</p>
-                  <p>{fotografia.autor}</p>
+                  <p>Robin{fotografia.numero_foto}</p>
                 </div>
               );
             })}

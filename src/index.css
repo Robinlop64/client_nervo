@@ -172,7 +172,7 @@ body {
 /*--------------------------------------Main1---------------------------------------*/
 #main2 {
   background-image: url(../public/img/fondo2.jpg);
-  height: 2300px;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
@@ -459,12 +459,7 @@ h1 {
   justify-content: center;
   width: 100%;
 }
-#main2 {
-  background-image: url(../public/img/fondo2.jpg);
-  height: 2300px;
-  display: flex;
-  justify-content: center;
-}
+
 
 .main_fotodetalle img {
   max-width: 600px;
@@ -704,8 +699,8 @@ button:hover {
 }
 
 .containerfotografia {
-  max-width: 1150px;
-  min-width: 1150px;
+  max-width: 85%;
+  min-width: 85%;
   padding: 20px;
   height: 100;
   background-color: white;
@@ -728,7 +723,7 @@ button:hover {
   padding-right: 25px;
   margin-left: 20px;
   display: block;
-  width: 18%;
+  width: 16%;
   margin-left: 10px;
   text-decoration: none;
   color: inherit;
@@ -738,7 +733,12 @@ button:hover {
 .fotografia-item img {
   width: 220px;
 }
-
+.numero_foto{
+  color: #0672A8;
+  font-size: 25px;
+  margin-top: 10px;
+  font-family: marguerite;
+}
 /*                              Croonologia        */
 
 .contenedor_cronologia {

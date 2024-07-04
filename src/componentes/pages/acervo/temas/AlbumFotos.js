@@ -45,9 +45,9 @@ export const AlbumFotos = () => {
                   className='fotografia-item'
                   onClick={() => handleFotoClick(fotografia)}
                 >
-                  <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img' />
+                  <img src={imageUrl}  className='fotografia-img' />
                   <p>{fotografia.titulo}</p>
-                  <p>{fotografia.autor}</p>
+                  <p className='numero_foto'>{fotografia.numero_foto}</p>
                 </div>
               );
             })}
