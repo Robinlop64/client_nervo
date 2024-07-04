@@ -30,32 +30,52 @@ export const FotoDetalle = () => {
 
   const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
 
+  const getNavigationPath = () => {
+    const { pais, institucion, tema } = fotografia;
+    return (
+      <>
+        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
+        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
+        <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
+        <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
+      </>
+    );
+  };
+
   return (
-    <main className="main_fotodetalle">
+    <main className='main_fotodetalle'>
+      <div id='nav'>
+        <p>{getNavigationPath()}</p>
+      </div>
       <div className="container_fotodetalle">
         <button onClick={() => navigate(-1)}>Regresar</button>
+
         <div className='barra_fotodetalle'>
           <h2>{fotografia.tema}</h2>
-          <h2> {fotografia.tipo_bien}</h2>
+          <h2>{fotografia.tipo_bien}</h2>
         </div>
+        <div className='ficha_fotografia'>
         <div className='marco'>
-        <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
+          <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
         </div>
-
-
         <div className='contenido_fotodetalle'>
-        <p>Título: {fotografia.titulo}</p>
-        <p>Autor: {fotografia.autor}</p>
-        <p>Fecha: {fotografia.anio}/{fotografia.mes}/{fotografia.dia}</p>
-        <p>Colección: {fotografia.coleccion}</p>
-        
-        <p>Álbum: {fotografia.numero_album}</p>
-        <p>Número de Foto: {fotografia.numero_foto}</p>
-        
-        <p>Descripción: {fotografia.descripcion}</p>
-        <p>Ubicación del bien: {fotografia.institucion}</p>
+          <p>Título: {fotografia.titulo}</p>
+          <p>Autor: {fotografia.autor}</p>
+          <p>
+            Fecha:
+            {fotografia.anio}
+            {fotografia.mes && `/${fotografia.mes}`}
+            {fotografia.dia && `/${fotografia.dia}`}
+          </p>
+          <p>Colección: {fotografia.coleccion}</p>
+          <p>Álbum: {fotografia.numero_album}</p>
+          <p>Número de Foto: {fotografia.numero_foto}</p>
+          <p>Descripción: {fotografia.descripcion}</p>
+          <p>Ubicación del bien: {fotografia.institucion}</p>
+        </div>
         </div>
       </div>
     </main>
+
   );
 }

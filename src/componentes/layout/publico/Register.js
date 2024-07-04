@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { useForm } from '../../../hooks/useForm'
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useForm } from '../../../hooks/useForm';
 
 export const Register = () => {
-
-  const { formulario, cambiado } = useForm({});
-  const [ saved,setSaved] = useState("not sended")
+  const { formulario, cambiado, resetFormulario } = useForm({});
+  const [saved, setSaved] = useState("not sended");
 
   const saveUser = async (e) => {
     e.preventDefault();
     let newUser = formulario;
-    console.log(newUser)
+    console.log(newUser);
     const request = await fetch("https://backend-prueba-apel.onrender.com/api/user/register", {
       method: "POST",
       body: JSON.stringify(newUser),
@@ -19,27 +18,25 @@ export const Register = () => {
 
     const data = await request.json();
 
-    if(data.status =="success"){
-      setSaved("saved")
-      
-    }else{
-      setSaved("error")
+    if (data.status === "success") {
+      setSaved("saved");
+      resetFormulario(); // Resetea el formulario después de un registro exitoso
+    } else {
+      setSaved("error");
     }
 
     console.log(data);
-  }
+  };
 
   return (
     <main id="main2">
       <div id='container2'>
         <h1>Registrar</h1>
         <NavLink to="/login">
-          <button>
-            Regresar
-          </button>
+          <button>Regresar</button>
         </NavLink>
-        <strong>{saved =="saved" ? "Usuario registrado correctamente" : ""}</strong>
-        <strong>{saved =="error" ? "Usuario No registrado " : ""}</strong>
+        <strong>{saved === "saved" ? "Usuario registrado correctamente" : ""}</strong>
+        <strong>{saved === "error" ? "Usuario No registrado" : ""}</strong>
         <form className='register-form'>
           <div className='form-group'>
             <label htmlFor='nombre'>Nombre</label>
@@ -85,5 +82,5 @@ export const Register = () => {
         </form>
       </div>
     </main>
-  )
-}
+  );
+};
