@@ -25,10 +25,32 @@ export const AlbumFotos = () => {
       console.error('Error fetching photos:', datos.message);
     }
   };
+
   const handleFotoClick = (fotografia) => {
     navigate(`/admin/fotografias/${fotografia._id}`);
   };
 
+  const handleDeleteClick = async (event, fotografiaId) => {
+    event.stopPropagation();
+    const url = `https://backend-prueba-apel.onrender.com/api/fotografia/${fotografiaId}`;
+    const peticion = await fetch(url, {
+      method: "DELETE"
+    });
+
+    let datos = await peticion.json();
+    if (datos.status === "success") {
+      // Refrescar la lista de fotos después de eliminar
+      getFotos();
+    } else {
+      // Manejo de error
+      console.error('Error deleting photo:', datos.message);
+    }
+  };
+
+  const handleEditClick = (event, fotografiaId) => {
+    event.stopPropagation();
+    navigate(`/admin/editar/fotografia/${fotografiaId}`);
+  };
 
   return (
     <div>
@@ -45,9 +67,11 @@ export const AlbumFotos = () => {
                   className='fotografia-item'
                   onClick={() => handleFotoClick(fotografia)}
                 >
-                  <img src={imageUrl}  className='fotografia-img' />
+                  <img src={imageUrl} className='fotografia-img' alt={fotografia.titulo} />
                   <p>{fotografia.titulo}</p>
                   <p className='numero_foto'>{fotografia.numero_foto}</p>
+                  <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
+                  <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
                 </div>
               );
             })}

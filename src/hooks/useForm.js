@@ -35,5 +35,6 @@ export const useForm = (objetoinicial = {}) => {
     enviado,
     cambiado,
     resetFormulario,
+    setFormulario
   };
 };

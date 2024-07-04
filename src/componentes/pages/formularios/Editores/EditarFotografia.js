@@ -1,10 +1,10 @@
 import React from 'react'
-import { Formugeneral } from './Formugeneral'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-import { useForm } from '../../../hooks/useForm';
-import { Api } from '../../../hooks/Api';
+import { useParams, NavLink } from 'react-router-dom';
+import { useForm } from '../../../../hooks/useForm';
+import { Api } from '../../../../hooks/Api';
+
 
 const data = {
   México: {
@@ -99,15 +99,15 @@ const data = {
       "Busto-monumento Amado Nervo"
     ]
   },
-  
-  Brasil:{
-    "Rio de Janeiro":["NA"]
+
+  Brasil: {
+    "Rio de Janeiro": ["NA"]
   }
 };
 
 
-export const RegFotografia = () => {
-  const { formulario, enviado, cambiado, resetFormulario } = useForm({})
+export const EditarFotografia = () => {
+  const { formulario, enviado, cambiado, resetFormulario, setFormulario } = useForm({})
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
   const [paises, setPaises] = useState(Object.keys(data));
@@ -116,17 +116,35 @@ export const RegFotografia = () => {
   const [selectedPais, setSelectedPais] = useState('');
   const [selectedCiudad, setSelectedCiudad] = useState('');
   const [saved, setSaved] = useState('not sended');
+  const { id } = useParams();
+  const [fotografia, setFotografia] = useState({});
 
 
- useEffect(()=>{
-  setSaved("")
- },[formulario])
+
+
+
 
   useEffect(() => {
-    
+    const fetchFoto = async () => {
+      const url = `https://backend-prueba-apel.onrender.com/api/fotografia/foto/${id}`;
+      const peticion = await fetch(url, {
+        method: "GET"
+      });
+
+      let datos = await peticion.json();
+      if (datos.status === "success") {
+        console.log("esto es del fetchtofo",datos.foto)
+        setFotografia(datos.foto);
+        console.log("tambien es del fech foto:", fotografia.autor)
+      } else {
+        // Manejo de error
+      }
+    };
+    fetchFoto();
     if (formulario.pais) {
       const ciudades = Object.keys(data[formulario.pais]);
       setCiudades(ciudades);
+      setSaved("")
       if (ciudades.length === 1) {
         setSelectedCiudad(ciudades[0]);
 
@@ -135,7 +153,9 @@ export const RegFotografia = () => {
         setInstituciones([]);
       }
     }
-  }, [formulario.pais]);
+  }, [formulario.pais, id]);
+
+
 
   useEffect(() => {
     if (formulario.ciudad && formulario.pais) {
@@ -143,52 +163,42 @@ export const RegFotografia = () => {
       setInstituciones(instituciones);
     }
   }, [formulario.ciudad]);
-  
-  const handleFileChange = (event) => {
-    if (event.target.files.length > 0) {
-      setFileName(event.target.files[0].name);
-    } else {
-      setFileName('');
-    }
-  };
 
 
+  const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
   const guardar_foto = async (e) => {
     e.preventDefault()
-    let nueva_foto = formulario;
-    console.log("datos formulario",nueva_foto)
-
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-foto", "POST", nueva_foto)
     
-    if (datos.status == "successs") {
+    let nueva_foto = formulario;
+    console.log("datos formulario es si recoje con el useform", nueva_foto)
+
+    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto)
+    console.log(id)
+    if (datos.status == "success") {
       const fileInput = document.querySelector("#file")
       console.log("Si llegaste aqui es pq success")
-      console.log("si se recoje el archivo",fileInput.files)
+      console.log("si se recoje el archivo", fileInput.files)
       setSaved("saved")
       const formData = new FormData
       formData.append("file0", fileInput.files[0])
-  
 
-      const { subida, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
+
+      const { subida, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
 
       console.log("Datos de subida3")
       console.log(subida)
-      console.log(datos.articuloGuardado._id)
+
 
       setResultado(true)
       setSaved("saved")
 
-    }else{
+    } else {
       setSaved("error")
     }
     console.log(datos)
     
+
   }
-  const handlePaisChange = (e) => {
-    const { name, value } = e.target;
-    cambiado(e);
-    console.log("País seleccionado:", e.target.name);
-  };
 
 
 
@@ -199,7 +209,7 @@ export const RegFotografia = () => {
 
           <div>
 
-            <h1>Formulario de registro de bienes</h1>
+            <h1>Formulario de Edición de bienes de {fotografia.titulo} </h1>
 
 
             <div className='frame_botones_registro' id="regresar_boton">
@@ -214,12 +224,12 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Título:</label>
-                  <input type="textarea" name="titulo" placeholder="Título" value={formulario.titulo || ''} onChange={cambiado} />
+                  <input type="textarea" name="titulo" placeholder="Título" defaultValue={fotografia.titulo || ""} onChange={cambiado} />
                 </div>
 
                 <div className="form-group" id='autor'>
                   <label>Autor:</label>
-                  <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
+                  <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor || ''} onChange={cambiado} />
                 </div>
 
                 <div className="form-group">
@@ -227,12 +237,12 @@ export const RegFotografia = () => {
                   <select
                     id="pais"
                     name='pais'
-                    value={formulario.pais || ''}
+                    defaultValue={fotografia.pais || ''}
                     onChange={cambiado}>
 
                     <option value="">Seleccionar país</option>
                     {paises.map((pais) => (
-                      <option key={pais} name="paises" value={pais}>
+                      <option key={pais} name="paises" defaultValue={pais}>
                         {pais}
                       </option>
                     ))}
@@ -250,7 +260,7 @@ export const RegFotografia = () => {
                   <select
                     id="ciudad"
                     name="ciudad"
-                    value={formulario.ciudad || ''}
+                    defaultValue={fotografia.ciudad || ''}
                     onChange={cambiado}
                   >
                     <option value="">Seleccionar ciudad</option>
@@ -264,10 +274,10 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Institución:</label>
-                  <select id="institucion" name='institucion' value={formulario.institucion || ""} onChange={cambiado}>
+                  <select id="institucion" name='institucion' defaultValue={fotografia.institucion || ""} onChange={cambiado}>
                     <option value="">Seleccionar institución</option>
                     {instituciones.map((institucion, index) => (
-                      <option key={index} value={institucion}>
+                      <option key={index} defaultValue={institucion}>
                         {institucion}
                       </option>
                     ))}
@@ -277,7 +287,7 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Ubicación física:</label>
-                  <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                  <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
                     <option value="">Seleccionar ubicación</option>
                     <option value="Biblioteca">Biblioteca</option>
                     <option value="Archivo">Archivo</option>
@@ -286,7 +296,7 @@ export const RegFotografia = () => {
                 </div>
                 <div className="form-group">
                   <label>Colección:</label>
-                  <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+                  <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
                     <option value="">Seleccionar la colección</option>
                     <option value="Privada">Privada</option>
                     <option value="Creación">Pública</option>
@@ -294,18 +304,18 @@ export const RegFotografia = () => {
                 </div>
                 <div className="form-group" id='fecha'>
                   <label>Fecha:</label>
-                  <input type="number" name="anio" className="small-input" placeholder="Año" value={formulario.anio || ''} onChange={cambiado} />
-                  <input type="number" name="mes" className="small-input" placeholder="Mes" value={formulario.mes || ''} onChange={cambiado} />
-                  <input type="number" name="dia" className="small-input" placeholder="Día" value={formulario.dia || ''} onChange={cambiado} />
+                  <input type="number" name="anio" className="small-input" placeholder="Año" defaultValue={fotografia.anio || ''} onChange={cambiado} />
+                  <input type="number" name="mes" className="small-input" placeholder="Mes" defaultValue={fotografia.mes || ''} onChange={cambiado} />
+                  <input type="number" name="dia" className="small-input" placeholder="Día" defaultValue={fotografia.dia || ''} onChange={cambiado} />
                 </div>
 
-                
-               
+
+
 
                 <div className="form-group">
                   <label>Año de adquisición:</label>
-                  <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
-                  <option value="">Seleccionar año</option>
+                  <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
+                    <option value="">Seleccionar año</option>
                     <option value="2020">2020</option>
                     <option value="2019">2019</option>
                     <option value="2018">2018</option>
@@ -322,7 +332,7 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Hallazgo:</label>
-                  <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
+                  <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
                     <option value="No">No</option>
                     <option value="Sí">Sí</option>
                   </select>
@@ -330,7 +340,7 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Persona que registra:</label>
-                  <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
+                  <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
                     <option value="Mayra Fonseca">Mayra Fonseca</option>
                     <option value="Robin">Robin</option>
                     <option value="Xoely">Xoely</option>
@@ -339,17 +349,20 @@ export const RegFotografia = () => {
 
                 <div className="form-group">
                   <label>Tema:</label>
-                  <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
+                  <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
                     <option value="dw">Seleccionar el tema</option>
                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                   </select>
                 </div>
 
-                
+
 
                 <div className='form-group'>
                   <label htmlFor='file0'>Imagen</label>
-                  <input type='file' name='file0' id="file"/>
+                  <div className='marco'>
+                    <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
+                  </div>
+                  <input type='file' name='file0' id="file" />
                 </div>
               </div>
 
@@ -358,37 +371,37 @@ export const RegFotografia = () => {
               <div className='campos_fotografia' >
                 <div className="form-group">
                   <label>Número de foto:</label>
-                  <input type="number" name="numero_foto"  value={formulario.numero_foto || ''} onChange={cambiado} />
+                  <input type="number" name="numero_foto" defaultValue={fotografia.numero_foto || ''} onChange={cambiado} />
                 </div>
 
-                
+
                 <div className="form-group">
-                <label>Número de álbum:</label>
-                  <select name="numero_album" id="num_album" value={formulario.numero_album || ''} onChange={cambiado} >
-                  <option value="">Número de álbum</option>
+                  <label>Número de álbum:</label>
+                  <select name="numero_album" id="num_album" defaultValue={fotografia.numero_album || ''} onChange={cambiado} >
+                    <option value="">Número de álbum</option>
                     <option value="6">6</option>
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
-                    
+
                   </select>
                 </div>
 
                 <div className="form-group">
                   <label>Formato:</label>
-                  <input type="text" name="formato" placeholder="Formato" value={formulario.formato || ''} onChange={cambiado} />
+                  <input type="text" name="formato" placeholder="Formato" defaultValue={fotografia.formato || ''} onChange={cambiado} />
                 </div>
 
                 <div className="form-group">
                   <label>Cámara:</label>
-                  <input type="text" name="camara" placeholder="Cámara" value={formulario.camara || ''} onChange={cambiado} />
+                  <input type="text" name="camara" placeholder="Cámara" defaultValue={fotografia.camara || ''} onChange={cambiado} />
                 </div>
 
                 <div className="form-group">
                   <label id='descripcion_label'>Descripción:</label>
-                  <textarea name="descripcion" placeholder="Descripción" value={formulario.descripcion || ''} onChange={cambiado} />
+                  <textarea name="descripcion" placeholder="Descripción" defaultValue={fotografia.descripcion || ''} onChange={cambiado} />
                 </div>
 
 

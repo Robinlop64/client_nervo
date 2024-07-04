@@ -30,6 +30,7 @@ import { Register } from '../componentes/layout/publico/Register';
 import { PrivateLayout } from '../componentes/layout/privado/PrivateLayout';
 import { AuthProvider } from '../context/AuthProvider';
 import { Logout } from '../componentes/layout/publico/Logout';
+import { EditarFotografia } from '../componentes/pages/formularios/Editores/EditarFotografia';
 
 export const Rutas = () => {
   return (
@@ -74,6 +75,7 @@ export const Rutas = () => {
             <Route path="/admin/instituciones" element={<Instituciones />} />
             <Route path="/admin/registro/menu-iconografia" element={<Menuiconografia />} />
             <Route path="/admin/registro/fotografia" element={<RegFotografia />} />
+            <Route path="/admin/editar/fotografia/:id" element={<EditarFotografia />} />
             <Route path="/admin/registro/iconografia" element={<RegIconografia />} />
             <Route path="/admin/registro/libros" element={<RegLibros />} />
             <Route path="/admin/registro/periodicos" element={<RegPeriodicos />} />

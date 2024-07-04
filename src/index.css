@@ -529,6 +529,9 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+.form-group .marco img{
+  width: 650px;
+}
 
 .contenido_fotodetalle {
   flex-grow: 0;
