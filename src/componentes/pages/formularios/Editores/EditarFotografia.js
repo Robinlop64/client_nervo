@@ -172,7 +172,7 @@ export const EditarFotografia = () => {
     let nueva_foto = formulario;
     console.log("datos formulario es si recoje con el useform", nueva_foto)
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto)
+    const { datos, cargando } = await Api("http://localhost:3900/api/fotografia/editar-foto/" + id, "PUT", nueva_foto)
     console.log(id)
     if (datos.status == "success") {
       const fileInput = document.querySelector("#file")
@@ -183,8 +183,8 @@ export const EditarFotografia = () => {
       formData.append("file0", fileInput.files[0])
 
 
-      const { subida, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
-
+      const { subida, cargando } = await Api("http://localhost:3900/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
       console.log("Datos de subida3")
       console.log(subida)
 

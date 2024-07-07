@@ -30,6 +30,7 @@ export const FotoDetalle = () => {
 
   const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
 
+
   const getNavigationPath = () => {
     const { pais, institucion, tema } = fotografia;
     return (
