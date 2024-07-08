@@ -8,8 +8,8 @@ export const Acervo = () => {
 
   return (
     <div>
-      <main id="main2">
-        <div id='container2'>
+      <main id="main_acervo">
+        <div className='container_acervo'>
           <section className='acervo_pages'>
             <NavLink to="/admin/fotografias" className="clasificacion" onClick={handleNavLinkClick}>
               <article>

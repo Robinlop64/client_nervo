@@ -16,7 +16,7 @@ import { RegPartituras } from '../componentes/pages/formularios/RegPartituras';
 import { RegMonumentos } from '../componentes/pages/formularios/RegMonumentos';
 import { RegAudiovisuales } from '../componentes/pages/formularios/RegAudiovisuales';
 import { Acervo } from '../componentes/pages/Acervo';
-import { Fotografias } from '../componentes/pages/acervo/Fotografias';
+
 import { Croonologia } from '../componentes/pages/Croonologia';
 import { Instituciones } from '../componentes/pages/Instituciones';
 import { Formugeneral } from '../componentes/pages/formularios/Formugeneral';

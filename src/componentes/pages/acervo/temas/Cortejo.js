@@ -31,7 +31,7 @@ export const Cortejo = () => {
   return (
     <div>
       <main id='main2'>
-        <div className='containerfotografia'>
+        <div className='container_fotografia'>
           <h3>Álbumes</h3>
           
           <div className='albumes-container'>

@@ -11,7 +11,7 @@ export const Footer = () => {
             <div id="foto2">
                 <img src="img/logo fundacion nuevo-01.png" alt="foto2"/>
             </div>
-
+            
         </footer> 
   )
 }

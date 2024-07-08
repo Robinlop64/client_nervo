@@ -168,9 +168,10 @@ export const RegFotografia = () => {
       const formData = new FormData
       formData.append("file0", fileInput.files[0])
   
-
-      const { subida, cargando } = await Api("http://localhost:3900/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
-
+      
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
+        
       console.log("Datos de subida3")
       console.log(subida)
       console.log(datos.articuloGuardado._id)

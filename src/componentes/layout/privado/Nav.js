@@ -1,42 +1,32 @@
-import React from 'react'
-import { NavLink, Router } from 'react-router-dom'
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export const Nav = () => {
+  const navigate = useNavigate();
+
   return (
     <nav id="nav2">
-            <ul>
+      <button className="back-button" onClick={() => navigate(-1)}>←</button>
+      <ul>
         <li>
-          <NavLink to="/admin/inicio">
-            Inicio
-          </NavLink>
+          <NavLink to="/admin/inicio">Inicio</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/acervo">
-            Acervo
-          </NavLink>
+          <NavLink to="/admin/acervo">Acervo</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/croonologia">
-            Cron
-          </NavLink>
+          <NavLink to="/admin/cronologia">Cronología</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/instituciones">
-            Instituciones
-          </NavLink>
+          <NavLink to="/admin/instituciones">Instituciones</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/registro">
-            Yo te bendigo vida
-          </NavLink>
+          <NavLink to="/admin/registro">Yo te bendigo vida</NavLink>
         </li>
         <li>
-          <NavLink to="/admin/logout  ">
-            Logout
-          </NavLink>
+          <NavLink to="/admin/logout">Logout</NavLink>
         </li>
       </ul>
-        </nav>
-        
-    )
-}
+    </nav>
+  );
+};

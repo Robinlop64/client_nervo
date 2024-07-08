@@ -42,7 +42,9 @@ export const FotoDetalle = () => {
       </>
     );
   };
-
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   return (
     <main className='main_fotodetalle'>
       <div id='nav'>
@@ -53,30 +55,26 @@ export const FotoDetalle = () => {
 
         <div className='barra_fotodetalle'>
           <h2>{fotografia.tema}</h2>
-          <h2>{fotografia.tipo_bien}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco'>
-          <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
-        </div>
-        <div className='contenido_fotodetalle'>
-          <p>Título: {fotografia.titulo}</p>
-          <p>Autor: {fotografia.autor}</p>
-          <p>
-            Fecha:
-            {fotografia.anio}
-            {fotografia.mes && `/${fotografia.mes}`}
-            {fotografia.dia && `/${fotografia.dia}`}
-          </p>
-          <p>Colección: {fotografia.coleccion}</p>
-          <p>Álbum: {fotografia.numero_album}</p>
-          <p>Número de Foto: {fotografia.numero_foto}</p>
-          <p>Descripción: {fotografia.descripcion}</p>
-          <p>Ubicación del bien: {fotografia.institucion}</p>
-        </div>
+          <div className='marco'>
+            <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
+          </div>
+          <div className='contenido_fotodetalle'>
+            <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
+            <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
+            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
+            <p><span>Fecha:</span> <span>{fotografia.anio}{fotografia.mes && `/${fotografia.mes}`}{fotografia.dia && `/${fotografia.dia}`}</span></p>
+            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
+            <p><span>Álbum:</span> <span>{fotografia.numero_album}</span></p>
+            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
+            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
+            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+          </div>
+
         </div>
       </div>
     </main>
-
   );
+
 }

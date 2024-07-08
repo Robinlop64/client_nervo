@@ -1,11 +1,13 @@
 import React from 'react'
-
 export const Inicio = () => {
-  
   return (
-    <main id="main">
-            <p id = "texto">Rescatamos patrimonio <br/> difundimos cultura </p>
-
-        </main>
-  )
+    <main id="main_inicio">
+      <div className='inicio_container'>
+        <div id="img_inicio">
+          <p id="texto">Rescatamos patrimonio <br /> difundimos cultura</p>
+        </div>
+      </div>
+      <div className='clearfix'></div>
+    </main>
+  );
 }

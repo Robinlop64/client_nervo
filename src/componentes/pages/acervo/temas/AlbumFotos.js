@@ -53,9 +53,9 @@ export const AlbumFotos = () => {
   };
 
   return (
-    <div>
-      <main id='main2'>
-        <div className='containerfotografia'>
+    
+      <main className='main_album'>
+        <div className='container_fotografia'>
           <h3>Fotografías</h3>
           <button onClick={getFotos}>Mostrar Fotografías</button>
           <div className='fotografias-container'>
@@ -67,7 +67,7 @@ export const AlbumFotos = () => {
                   className='fotografia-item'
                   onClick={() => handleFotoClick(fotografia)}
                 >
-                  <img src={imageUrl} className='fotografia-img' alt={fotografia.titulo} />
+                  <img src={imageUrl} className='fotografia-img'  />
                   <p>{fotografia.titulo}</p>
                   <p className='numero_foto'>{fotografia.numero_foto}</p>
                   <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
@@ -78,6 +78,6 @@ export const AlbumFotos = () => {
           </div>
         </div>
       </main>
-    </div>
+ 
   );
 };
