@@ -68,7 +68,7 @@ export const AlbumFotos = () => {
                   onClick={() => handleFotoClick(fotografia)}
                 >
                   <img src={imageUrl} className='fotografia-img'  />
-                  <p>{fotografia.titulo}</p>
+                  
                   <p className='numero_foto'>{fotografia.numero_foto}</p>
                   <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
                   <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
