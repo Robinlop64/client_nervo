@@ -88,7 +88,7 @@ export const Rutas = () => {
             <Route path="/admin/fotografias" element={<Fotografias2 />} />
             <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
-            <Route path="/admin/tema/Cortejo fúnebre" element={<Cortejo />} />
+            <Route path="/admin/tema/Repatriación de los restos de Amado Nervo" element={<Cortejo />} />
             <Route path="/admin/album/:id" element={<AlbumFotos />} />
             <Route path='/admin/logout' element={<Logout/>}/>
           </Route>

@@ -16,7 +16,6 @@ export const AlbumFotos = () => {
     const peticion = await fetch(url, {
       method: "GET"
     });
-
     let datos = await peticion.json();
     if (datos.status === "success") {
       setFotos(datos.fotos);
@@ -72,6 +71,7 @@ export const AlbumFotos = () => {
                   <p className='numero_foto'>{fotografia.numero_foto}</p>
                   <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
                   <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+                  
                 </div>
               );
             })}
