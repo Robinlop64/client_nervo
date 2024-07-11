@@ -56,7 +56,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/admin/publicaciones" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/hemerografia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 

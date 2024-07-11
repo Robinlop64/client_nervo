@@ -143,14 +143,7 @@ export const RegFotografia = () => {
       setInstituciones(instituciones);
     }
   }, [formulario.ciudad]);
-  
-  const handleFileChange = (event) => {
-    if (event.target.files.length > 0) {
-      setFileName(event.target.files[0].name);
-    } else {
-      setFileName('');
-    }
-  };
+
 
 
   const guardar_foto = async (e) => {
@@ -185,11 +178,6 @@ export const RegFotografia = () => {
     console.log(datos)
     
   }
-  const handlePaisChange = (e) => {
-    const { name, value } = e.target;
-    cambiado(e);
-    console.log("País seleccionado:", e.target.name);
-  };
 
 
 
@@ -373,7 +361,6 @@ export const RegFotografia = () => {
                     <option value="9">9</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
-                    
                   </select>
                 </div>
 

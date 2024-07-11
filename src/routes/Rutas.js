@@ -31,6 +31,9 @@ import { PrivateLayout } from '../componentes/layout/privado/PrivateLayout';
 import { AuthProvider } from '../context/AuthProvider';
 import { Logout } from '../componentes/layout/publico/Logout';
 import { EditarFotografia } from '../componentes/pages/formularios/Editores/EditarFotografia';
+import { Hemerografia } from '../componentes/pages/acervo/Hemerografia';
+import { HemerografiaTema } from '../componentes/pages/acervo/temas/HemerografiaTema';
+import { HemerografiaDetalle } from '../componentes/pages/acervo/detalles/HemerografiaDetalle';
 
 export const Rutas = () => {
   return (
@@ -90,6 +93,14 @@ export const Rutas = () => {
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
             <Route path="/admin/tema/Repatriación de los restos de Amado Nervo" element={<Cortejo />} />
             <Route path="/admin/album/:id" element={<AlbumFotos />} />
+
+            <Route path="/admin/hemerografia" element={<Hemerografia />} />
+            <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
+            <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
+
+
+
+
             <Route path='/admin/logout' element={<Logout/>}/>
           </Route>
         </Routes>

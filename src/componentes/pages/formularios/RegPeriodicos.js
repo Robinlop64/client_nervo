@@ -1,76 +1,524 @@
 import React from 'react'
-import { Formugeneral } from './Formugeneral'
+import { NavLink } from 'react-router-dom';
+import { useForm } from '../../../hooks/useForm';
+import { Api } from '../../../hooks/Api';
+import { useState, useEffect } from 'react';
+const data = {
+    México: {
+        Tepic: [
+            "Casa Museo Amado Nervo",
+            "Biblioteca Magna de la Universidad Autónoma de Nayarit (UAN)",
+            "Hemeroteca de la UAN",
+            "Archivo General del Estado de Nayarit",
+            "Archivo Histórico de la Diócesis de Tepic",
+            "Fototeca Centro INAH Tepic"
+        ],
+        Compostela: ["Colecciones Particulares"],
+        Mazatlán: ["Archivo Histórico Municipal de Mazatlán"],
+        Guadalajara: [
+            "Biblioteca Pública del Estado de Jalisco “Juan José Arreola”",
+            "Colecciones Particulares"
+        ],
+        Monterrey: [
+            "Biblioteca Miguel de Cervantes Saavedra. Tecnológico de Monterrey (ITESM)",
+            "Biblioteca Universitaria de la Universidad Autónoma de Nuevo León (UANL)"
+        ],
+        Pachuca: ["Fototeca Nacional del Instituto Nacional de Antropología e Historia (INAH)"],
+        CDMX: [
+            "Biblioteca Nacional de México",
+            "Hemeroteca Nacional de México",
+            "Casa Museo Alfonso Reyes (Capilla Alfonsina)",
+            "Archivo Histórico Genaro Estrada. Secretaria de Relaciones Exteriores",
+            "Archivo General de la Nación",
+            "Colecciones Particulares"
+        ]
+    },
+    España: {
+        Madrid: [
+            "Biblioteca Nacional de España",
+            "Instituto del Patrimonio Cultural de España /Universidad Complutense de Madrid",
+            "Ateneo de Madrid",
+            "Biblioteca Octavio Paz. Instituto de México en España",
+            "Archivo Histórico Nacional",
+            "Real Academia Española",
+            "Registro Civil de Madrid",
+            "Cementerio Sacramental San Lorenzo y San José",
+            "Hemeroteca Municipal del Ayuntamiento de Madrid",
+            "Archivo General de Palacio"
+        ],
+        Barcelona: ["Archivo Histórico Fotográfico"]
+    },
+    Francia: {
+        París: [
+            "Embajada de México en Francia",
+            "Mairie De París Du 14",
+            "Archivo de París",
+            "Instituto Cultural México en Francia",
+            "Biblioteca Nacional de Francia"
+        ]
+    },
+    Portugal: {
+        Lisboa: [
+            "Embajada de México en Portugal",
+            "Archivo Diplomático del Ministerio de Negocios Extranjeros en Portugal",
+            "Torre Do Tombo de la Universidad de Portugal",
+            "Biblioteca Nacional de Portugal",
+            "Hemeroteca Municipal de Lisboa"
+        ]
+    },
+    Argentina: {
+        Buenos_Aires: [
+            "Biblioteca de la Legislatura Portuaria",
+            "Biblioteca del Congreso de la Nación",
+            "Biblioteca Nacional Mariano Moreno",
+            "Embajada de México en Argentina",
+            "Archivo Ministerio de Relaciones Exteriores, cancillería Argentina",
+            "Archivo General de la Nación",
+            "Jardín del Rosedal"
+        ]
+    },
+    Uruguay: {
+        Montevideo: [
+            "Palacio Santos- Ministerio de Relaciones Exteriores, Instituto Artiga",
+            "Archivo General de la Nación",
+            "Biblioteca Nacional de Uruguay",
+            "Archivo Nacional de la Imagen y la Palabra",
+            "Museo Naval",
+            "Parque Hotel. Merco-sur",
+            "Ateneo de Montevideo",
+            "Biblioteca Amado Nervo",
+            "Cementerio Central",
+            "Centro de Estudios Históricos Navales y Marítimos",
+            "Palacio Legislativo",
+            "Calle Amado Nervo",
+            "Universidad de la República de Uruguay",
+            "Museo Zorrilla",
+            "Busto-monumento Amado Nervo"
+        ]
+    },
 
+    Brasil: {
+        "Rio de Janeiro": ["NA"]
+    }
+};
 export const RegPeriodicos = () => {
-  return (
-    <div>
-        <main id='main2'>
-            <div id="container2">
-            <Formugeneral/>
-            <h3>Campos específicos Publicaciones periódicas</h3>
-                <div id="esp1">
-                    <label for="nombrePeriodico">Nombre del periódico</label>
-                    <input type="text" id="nombrePeriodico" name="nombrePeriodico" placeholder="Nombre del periódico"/>
-            
-                    <label>Fecha de publicación</label>
-                    <label for="dia">Día</label>
-                    <input type="text" id="dia" name="dia" placeholder="Día"/>
-                    <label for="mes">Mes</label>
-                    <input type="text" id="mes" name="mes" placeholder="Mes"/>
-                    <label for="anio">Año</label>
-                    <input type="text" id="anio" name="anio" placeholder="Año"/>
-            
-                    <label for="pagina">Página</label>
-                    <input type="text" id="pagina" name="pagina" placeholder="Página"/>
-            
-                    <label for="numeroEdicion">Número de edición</label>
-                    <input type="text" id="numeroEdicion" name="numeroEdicion" placeholder="Número de edición"/>
-            
-                    <label for="numeroPublicacion">Número de publicación</label>
-                    <input type="text" id="numeroPublicacion" name="numeroPublicacion" placeholder="Número de publicación"/>
-            
-                    <label>Género</label>
-                    <label for="generoPeriodistico">Periodístico</label>
-                    <select id="generoPeriodistico" name="generoPeriodistico">
-                        <option value="notas">Notas</option>
-                        <option value="articulos">Artículos</option>
-                        <option value="cronicas">Crónicas</option>
-                    </select>
-            
-                    <label for="generoLiterario">Literarios</label>
-                    <select id="generoLiterario" name="generoLiterario">
-                        <option value="poesia">Poesía</option>
-                        <option value="cuentos">Cuentos</option>
-                        <option value="criticaLiteraria">Crítica literaria</option>
-                        <option value="semblanzas">Semblanzas</option>
-                    </select>
-            
-                    <label for="nombreSeudonimos">Nombre o seudónimos</label>
-                    <input type="text" id="nombreSeudonimos" name="nombreSeudonimos" placeholder="Nombre o seudónimos"/>
-            
-                    <label for="encabezado">Encabezado</label>
-                    <input type="text" id="encabezado" name="encabezado" placeholder="Encabezado"/>
-            
-                    <label for="seccion">Sección</label>
-                    <input type="text" id="seccion" name="seccion" placeholder="Sección"/>
-            
-                    <label for="columnas">Columnas</label>
-                    <input type="text" id="columnas" name="columnas" placeholder="Columnas"/>
-            
-                    <label for="colaboradores">Colaboradores</label>
-                    <input type="text" id="colaboradores" name="colaboradores" placeholder="Colaboradores"/>
-            
-                    <label for="tipoPublicacion">Tipo de publicación</label>
-                    <input type="text" id="tipoPublicacion" name="tipoPublicacion" placeholder="Tipo de publicación"/>
-            
-                    <label for="resumen">Resumen</label>
-                    <input type="text" id="resumen" name="resumen" placeholder="Resumen"/>
-            
-                    <label for="transcripcion">Transcripción</label>
-                    <input type="text" id="transcripcion" name="transcripcion" placeholder="Transcripción"/>
+    const { formulario, enviado, cambiado, resetFormulario } = useForm({})
+    const [resultado, setResultado] = useState(false)
+    const [fileName, setFileName] = useState('');
+    const [paises, setPaises] = useState(Object.keys(data));
+    const [ciudades, setCiudades] = useState([]);
+    const [instituciones, setInstituciones] = useState([]);
+    const [selectedPais, setSelectedPais] = useState('');
+    const [selectedCiudad, setSelectedCiudad] = useState('');
+    const [saved, setSaved] = useState('not sended');
+
+
+    useEffect(() => {
+        setSaved("")
+    }, [formulario])
+
+    useEffect(() => {
+
+        if (formulario.pais) {
+            const ciudades = Object.keys(data[formulario.pais]);
+            setCiudades(ciudades);
+            if (ciudades.length === 1) {
+                setSelectedCiudad(ciudades[0]);
+
+            } else {
+                setSelectedCiudad('');
+                setInstituciones([]);
+            }
+        }
+    }, [formulario.pais]);
+
+    useEffect(() => {
+        if (formulario.ciudad && formulario.pais) {
+            const instituciones = data[formulario.pais][formulario.ciudad];
+            setInstituciones(instituciones);
+        }
+    }, [formulario.ciudad]);
+
+
+    const guardar_foto = async (e) => {
+        e.preventDefault()
+        let nueva_foto = formulario;
+        console.log("datos formulario", nueva_foto)
+        const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto)
+        if (datos.status == "successs") {
+            const fileInput = document.querySelector("#file")
+            console.log("Si llegaste aqui es pq success")
+            console.log("si se recoje el archivo", fileInput.files)
+            const formData = new FormData
+            formData.append("file0", fileInput.files[0])
+            const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + datos.publicacionGuardada._id, "POST", formData, true)
+            const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/" + datos.publicacionGuardada._id, "POST", formData, true)
+            console.log("Datos de subida3")
+            //console.log(subida)
+            console.log(datos.publicacionGuardada._id)
+            setResultado(true)
+            setSaved("saved")
+
+        } else {
+            setSaved("error")
+        }
+        console.log(datos)
+
+    }
+
+    return (
+        <div>
+            <main className='main_registro'>
+                <div className='contenedor_formulario_foto'>
+
+                    <h1>Formulario de registro de bienes</h1>
+
+
+                    <div className='frame_botones_registro' id="regresar_boton">
+                        <NavLink to="/registro">
+                            <button className="button">Regresar</button>
+                        </NavLink>
+                    </div>
+                    <form onSubmit={guardar_foto}>
+                        <h2>Campos generales</h2>
+
+                        <div className='divisor_form'>
+
+                            <div className="form-group">
+                                <label>Título:</label>
+                                <input type="textarea" name="titulo" placeholder="Título" value={formulario.titulo || ''} onChange={cambiado} />
+                            </div>
+
+                            <div className="form-group" id='autor'>
+                                <label>Autor:</label>
+                                <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
+                            </div>
+
+                            <div className="form-group">
+                                <label>País:</label>
+                                <select
+                                    id="pais"
+                                    name='pais'
+                                    value={formulario.pais || ''}
+                                    onChange={cambiado}>
+
+                                    <option value="">Seleccionar país</option>
+                                    {paises.map((pais) => (
+                                        <option key={pais} name="paises" value={pais}>
+                                            {pais}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+
+
+
+
+
+
+                            <div className="form-group">
+                                <label>Ciudad:</label>
+                                <select
+                                    id="ciudad"
+                                    name="ciudad"
+                                    value={formulario.ciudad || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="">Seleccionar ciudad</option>
+                                    {ciudades.map((ciudad) => (
+                                        <option key={ciudad} value={ciudad}>
+                                            {ciudad}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Institución:</label>
+                                <select id="institucion" name='institucion' value={formulario.institucion || ""} onChange={cambiado}>
+                                    <option value="">Seleccionar institución</option>
+                                    {instituciones.map((institucion, index) => (
+                                        <option key={index} value={institucion}>
+                                            {institucion}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+
+                            <div className="form-group">
+                                <label>Ubicación física:</label>
+                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                                    <option value="">Seleccionar ubicación</option>
+                                    <option value="Biblioteca">Biblioteca</option>
+                                    <option value="Archivo">Archivo</option>
+                                    <option value="Museo">Museo</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Colección:</label>
+                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+                                    <option value="">Seleccionar la colección</option>
+                                    <option value="Privada">Privada</option>
+                                    <option value="Creación">Pública</option>
+                                </select>
+                            </div>
+                            <div className="form-group" id='fecha'>
+                                <label>Fecha:</label>
+                                <input type="number" name="anio" className="small-input" placeholder="Año" value={formulario.anio || ''} onChange={cambiado} />
+                                <input type="number" name="mes" className="small-input" placeholder="Mes" value={formulario.mes || ''} onChange={cambiado} />
+                                <input type="number" name="dia" className="small-input" placeholder="Día" value={formulario.dia || ''} onChange={cambiado} />
+                            </div>
+
+
+
+
+                            <div className="form-group">
+                                <label>Año de adquisición:</label>
+                                <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
+                                    <option value="">Seleccionar año</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2014">2014</option>
+                                </select>
+                            </div>
+
+
+
+
+
+                            <div className="form-group">
+                                <label>Hallazgo:</label>
+                                <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Persona que registra:</label>
+                                <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
+                                    <option value="Mayra Fonseca">Mayra Fonseca</option>
+                                    <option value="Robin">Robin</option>
+                                    <option value="Xoely">Xoely</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Tema:</label>
+                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
+                                    <option value="">Seleccionar el tema</option>
+                                    <option value="1"> tema 1</option>
+                                    <option value="2"> tema 2 </option>
+                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                                </select>
+                            </div>
+
+
+
+                            <div className='form-group'>
+                                <label htmlFor='file0'>Imagen</label>
+                                <input type='file' name='file0' id="file" />
+                            </div>
+                        </div>
+                        <h3>Campos específicos Publicaciones periódicas</h3>
+                        <div className='divisor_form'>
+                            <div className="form-group">
+                                <label htmlFor="nombrePeriodico">Nombre del periódico</label>
+                                <input
+                                    type="text"
+                                    id="nombrePeriodico"
+                                    name="nombre_periodico"
+                                    placeholder="Nombre del periódico"
+                                    value={formulario.nombre_periodico || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="encabezado">Encabezado</label>
+                                <input
+                                    type="text"
+                                    id="encabezado"
+                                    name="encabezado"
+                                    placeholder="Encabezado"
+                                    value={formulario.encabezado || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group">
+                            <label id='fecha_publicacion'>Fecha de publicación</label>
+                            </div>
+                            <div className="form-group" id='fecha3'>
+                                <input type="number" name="anio2" className="small-input" placeholder="Año" value={formulario.anio2 || ''} onChange={cambiado} />
+                                <input type="number" name="mes2" className="small-input" placeholder="Mes" value={formulario.mes2 || ''} onChange={cambiado} />
+                                <input type="number" name="dia2" className="small-input" placeholder="Día" value={formulario.dia2 || ''} onChange={cambiado} />
+                            </div>
+
+                            <div className="form-group" id='fecha2'>
+                                <label htmlFor="pagina">Página (s)</label>
+                                <input
+                                    type="number"
+                                    id="pagina"
+                                    name="num_paginas"
+                                    placeholder="Página"
+                                    value={formulario.num_paginas || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group" id='fecha2'>
+                                <label htmlFor="numeroEdicion">Número de edición</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicion"
+                                    name="num_edicion"
+                                    placeholder="Número de edición"
+                                    value={formulario.num_edicion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group" id='fecha2'>
+                                <label htmlFor="numeroPublicacion">Número de publicación</label>
+                                <input
+                                    type="number"
+                                    id="numeroPublicacion"
+                                    name="num_publicacion"
+                                    placeholder="Número de publicación"
+                                    value={formulario.num_publicacion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Género periodístico</label>
+                                <select
+                                    id="generoPeriodistico"
+                                    name="genero_periodistico"
+                                    value={formulario.genero_periodistico || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="notas">Notas</option>
+                                    <option value="articulos">Artículos</option>
+                                    <option value="cronicas">Crónicas</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="generoLiterario">Literarios</label>
+                                <select
+                                    id="generoLiterario"
+                                    name="literarios"
+                                    value={formulario.literarios || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="poesia">Poesía</option>
+                                    <option value="cuentos">Cuentos</option>
+                                    <option value="criticaLiteraria">Crítica literaria</option>
+                                    <option value="semblanzas">Semblanzas</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="nombreSeudonimos">Seudónimo</label>
+                                <select
+                                    id="nombreSeudonimos"
+                                    name="seudonimos"
+                                    value={formulario.seudonimos || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="poesia">Poesía</option>
+                                    <option value="cuentos">Cuentos</option>
+                                    <option value="criticaLiteraria">Crítica literaria</option>
+                                    <option value="semblanzas">Semblanzas</option>
+                                </select>
+                            </div>
+
+                            
+
+                            <div className="form-group" id="seccion">
+                                <label htmlFor="seccion">Sección</label>
+                                <input
+                                    type="text"
+                                    id="seccionInput"
+                                    name="seccion"
+                                    placeholder="Sección"
+                                    value={formulario.seccion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group" id="columnas">
+                                <label htmlFor="columnas">Columnas</label>
+                                <input
+                                    type="text"
+                                    id="columnasInput"
+                                    name="columnas"
+                                    placeholder="Columnas"
+                                    value={formulario.columnas || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group" id="colaboradores">
+                                <label htmlFor="colaboradores">Colaboradores</label>
+                                <input
+                                    type="text"
+                                    id="colaboradoresInput"
+                                    name="colaboradores"
+                                    placeholder="Colaboradores"
+                                    value={formulario.colaboradores || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group" id="tipoPublicacion">
+                                <label htmlFor="tipoPublicacion">Tipo de publicación</label>
+                                <input
+                                    type="text"
+                                    id="tipoPublicacionInput"
+                                    name="tipo_publicacion"
+                                    placeholder="Tipo de publicación"
+                                    value={formulario.tipo_publicacion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group"id="resumen">
+                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <textarea
+                                    type="text"
+                                    id="resumenInput"
+                                    name="resumen"
+                                    placeholder="Resumen"
+                                    value={formulario.resumen || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group"id="transcripcion">
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <textarea
+                                    type="text"
+                                    id="transcripcionInput"
+                                    name="transcripcion"
+                                    placeholder="Transcripción"
+                                    value={formulario.transcripcion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                        </div>
+                        <button className="button" onClick={guardar_foto}>Enviar</button>
+              <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
+              <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+                    </form>
                 </div>
-            </div>
-        </main>
-    </div>
-  )
+            </main>
+        </div>
+    )
 }
