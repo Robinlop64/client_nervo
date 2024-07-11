@@ -593,6 +593,7 @@ h1 {
 }
 .form-group .marco img{
   width: 650px;
+
 }
 
 
@@ -616,7 +617,7 @@ h1 {
 
 
 .marco img {
-
+  padding-top: 1px;
   width: 100%;
   height: auto;
   display: block;

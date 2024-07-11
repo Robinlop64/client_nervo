@@ -28,9 +28,6 @@ export const HemerografiaDetalle = () => {
     return <div>Loading...</div>;
   }
 
-  const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${fotografia.image}`;
-
-
   const getNavigationPath = () => {
     const { pais, institucion, tema } = fotografia;
     return (
@@ -42,9 +39,11 @@ export const HemerografiaDetalle = () => {
       </>
     );
   };
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  };
+
   return (
     <main className='main_fotodetalle'>
       <div id='nav'>
@@ -58,7 +57,14 @@ export const HemerografiaDetalle = () => {
         </div>
         <div className='ficha_fotografia'>
           <div className='marco'>
-            <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
+            {fotografia.images && fotografia.images.map((image, index) => (
+              <img
+                key={index}
+                src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image}`}
+                alt={`${fotografia.titulo} ${index + 1}`}
+                className='fotografia-img-large'
+              />
+            ))}
           </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
@@ -71,10 +77,8 @@ export const HemerografiaDetalle = () => {
             <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
             <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
           </div>
-
         </div>
       </div>
     </main>
   );
-
-}
+};

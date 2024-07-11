@@ -141,30 +141,28 @@ export const RegPeriodicos = () => {
 
 
     const guardar_foto = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         let nueva_foto = formulario;
-        console.log("datos formulario", nueva_foto)
-        const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto)
-        if (datos.status == "successs") {
-            const fileInput = document.querySelector("#file")
-            console.log("Si llegaste aqui es pq success")
-            console.log("si se recoje el archivo", fileInput.files)
-            const formData = new FormData
-            formData.append("file0", fileInput.files[0])
-            const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + datos.publicacionGuardada._id, "POST", formData, true)
-            const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/" + datos.publicacionGuardada._id, "POST", formData, true)
-            console.log("Datos de subida3")
-            //console.log(subida)
-            console.log(datos.publicacionGuardada._id)
-            setResultado(true)
-            setSaved("saved")
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
 
+        if (datos.status === "successs") {
+            console.log("status success")
+            const fileInput = document.querySelector("#file");
+            const formData = new FormData();
+            Array.from(fileInput.files).forEach((file, index) => {
+                formData.append(`files`, file);
+            });
+            console.log("formdata",formData)
+            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            //const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+
+            setResultado(true);
+            setSaved("saved");
         } else {
-            setSaved("error")
+            console.log("status error")
+            setSaved("error");
         }
-        console.log(datos)
-
-    }
+    };
 
     return (
         <div>
@@ -323,7 +321,7 @@ export const RegPeriodicos = () => {
 
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
-                                <input type='file' name='file0' id="file" />
+                                <input type='file' name='file0' id="file" multiple/>
                             </div>
                         </div>
                         <h3>Campos específicos Publicaciones periódicas</h3>
