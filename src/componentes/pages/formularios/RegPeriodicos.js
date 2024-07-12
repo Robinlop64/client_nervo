@@ -250,7 +250,7 @@ export const RegPeriodicos = () => {
                             <div className="form-group" id='fecha2'>
                                 <label htmlFor="pagina">Página (s)</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="pagina"
                                     name="num_paginas"
                                     placeholder="Página"
@@ -258,7 +258,7 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="columnas">
+                            <div className="form-group" id='fecha2' >
                                 <label htmlFor="columnas">Columnas</label>
                                 <input
                                     type="text"
@@ -389,6 +389,7 @@ export const RegPeriodicos = () => {
                                     <option value="Biblioteca">Biblioteca</option>
                                     <option value="Archivo">Archivo</option>
                                     <option value="Museo">Museo</option>
+                                    <option value="Fondo reservado">Fondo reservado</option>
                                 </select>
                             </div>
                             <div className="form-group">
@@ -415,6 +416,16 @@ export const RegPeriodicos = () => {
                                     <option value="2016">2016</option>
                                     <option value="2015">2015</option>
                                     <option value="2014">2014</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2005">2005</option>
+
                                 </select>
                             </div>
 
@@ -445,13 +456,14 @@ export const RegPeriodicos = () => {
                                     <option value="">Seleccionar el tema</option>
                                     <option value="1"> tema 1</option>
                                     <option value="2"> tema 2 </option>
+                                    <option value="El Nacional"> El Nacional </option>
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>
                             </div>
 
 
 
-                            
+
                         </div>
 
                         
