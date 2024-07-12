@@ -191,7 +191,7 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 >
                     
-                                    <option value="">Seleccionar sudónimo</option>
+                                    <option value="">Seleccionar Periódico</option>
                                     <option value="El Nacional">El Nacional</option>
                                     
                                 </select>
@@ -304,6 +304,7 @@ export const RegPeriodicos = () => {
                                     <option value="notas">Notas</option>
                                     <option value="articulos">Artículos</option>
                                     <option value="cronicas">Crónicas</option>
+                                    <option value="frases">Frases</option>
                                 </select>
                             </div>
                             
