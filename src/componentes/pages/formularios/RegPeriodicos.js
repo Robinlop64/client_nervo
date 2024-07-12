@@ -143,25 +143,9 @@ export const RegPeriodicos = () => {
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
-
-        if (datos.status === "successs") {
-            console.log("status success")
-            const fileInput = document.querySelector("#file");
-            const formData = new FormData();
-            Array.from(fileInput.files).forEach((file, index) => {
-                formData.append(`files`, file);
-            });
-            console.log("formdata",formData)
-            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-
-            setResultado(true);
-            setSaved("saved");
-        } else {
-            console.log("status error")
-            setSaved("error");
-        }
+        //const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
+        console.log(nueva_foto)
+       
     };
 
     return (
@@ -181,42 +165,57 @@ export const RegPeriodicos = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
-                        <div className='divisor_form'>
-                            <div className="form-group">
+                        
+                            <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Periódico</label>
-                                <input
-                                    type="text"
-                                    id="nombrePeriodico"
+                                <select
+                                    id="nombrePeriodicoSelect"
                                     name="nombre_periodico"
-                                    placeholder="Nombre del periódico"
                                     value={formulario.nombre_periodico || ''}
                                     onChange={cambiado}
-                                />
+                                >
+                    
+                                    <option value="">Seleccionar sudónimo</option>
+                                    <option value="El Nacional">El Nacional</option>
+                                    
+                                </select>
+
+
                             </div>
-                            <div className="form-group" id='fecha2'>
+                            <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de edición</label>
                                 <input
                                     type="number"
-                                    id="numeroEdicion"
-                                    name="num_edicion"
-                                    placeholder="Número de edición"
-                                    value={formulario.num_edicion || ''}
+                                    id="numeroEdicionInput"
+                                    name="numero_edicion"
+                                    value={formulario.numero_edicion}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                        
+                            <div className="form-group" id="FechaPublicacion">
+                            <label id='fecha_publicacionLabel'>Fecha de publicación</label>
+                            <input
+                                type="date"
+                                name="anio2"
+                                value={formulario.fecha_publicacion}
+                                onChange={cambiado}
+                            />
+                            </div>
+
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de registro</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_registro"
+                                    value={formulario.numero_registro || ''}
                                     onChange={cambiado}
                                 />
                             </div>
                             <div className="form-group">
-                            <label id='fecha_publicacion'>Fecha de publicación</label>
-                            </div>
-                            <div className="form-group" id='fecha3'>
-                                <input type="number" name="anio2" className="small-input" placeholder="Año" value={formulario.anio2 || ''} onChange={cambiado} />
-                                <input type="number" name="mes2" className="small-input" placeholder="Mes" value={formulario.mes2 || ''} onChange={cambiado} />
-                                <input type="number" name="dia2" className="small-input" placeholder="Día" value={formulario.dia2 || ''} onChange={cambiado} />
-                            </div>
-
-
-                            <div className="form-group">
                                 <label>Encabezado</label>
-                                <input type="textarea" name="titulo" placeholder="Título" value={formulario.titulo || ''} onChange={cambiado} />
+                                <input id='encabezado' type="textarea" name="encabezado" placeholder="Título" value={formulario.encabezado|| ''} onChange={cambiado} />
                             </div>
 
                             <div className="form-group" id='autor'>
@@ -231,7 +230,7 @@ export const RegPeriodicos = () => {
                                     value={formulario.seudonimos || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar sudónimo</option>
+                                    <option value="">Seleccionar seudónimo</option>
                                     <option value="Román">Román</option>
                                     <option value="Rip-Rip">Rip-Rip</option>
                                     <option value="Tricio">Tricio</option>
@@ -252,18 +251,22 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id='fecha2'>
+                        </div>
+                            <div className='divisor_form2'>
+                           
+                            
+                            <div className="form-group" id='pagina'>
                                 <label htmlFor="pagina">Página (s)</label>
                                 <input
                                     type="text"
-                                    id="pagina"
-                                    name="num_paginas"
+                                    id="paginaInput"
+                                    name="numero_paginas"
                                     placeholder="Página"
-                                    value={formulario.num_paginas || ''}
+                                    value={formulario.numero_paginas }
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id='fecha2' >
+                            <div className="form-group" id='columnas' >
                                 <label htmlFor="columnas">Columnas</label>
                                 <input
                                     type="text"
@@ -274,7 +277,6 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            
                             <div className="form-group">
                                 <label>Género periodístico</label>
                                 <select
@@ -289,27 +291,32 @@ export const RegPeriodicos = () => {
                                 </select>
                             </div>
                             
-                            <div className="form-group">
+                            <div className="form-group" id="lugarPublicacion">
                                 <label htmlFor="encabezado">Lugar de publicación</label>
                                 <input
                                     type="text"
-                                    id="encabezado"
-                                    name="encabezado"
+                                    id="lugarPublicacionInput"
+                                    name="lugar_publicacion"
                                     placeholder="Lugar de publicación"
-                                    value={formulario.encabezado || ''}
+                                    value={formulario.lugar_publicacion || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="tipoPublicacion">
+                            <div className="form-group" id="periodicidad">
                                 <label htmlFor="tipoPublicacion">Periodicidad</label>
-                                <input
+                                <select
                                     type="text"
-                                    id="tipoPublicacionInput"
-                                    name="tipo_publicacion"
+                                    id="periodicidadInput"
+                                    name="periodicidad"
                                     placeholder="Tipo de publicación"
-                                    value={formulario.tipo_publicacion || ''}
+                                    value={formulario.periodicidad || ''}
                                     onChange={cambiado}
-                                />
+                                >
+                                <option value="">Seleccionar periodicidad</option>
+                                <option value="Diaria">Diaria</option>
+                                <option value="Semanal">Semanal</option>
+                                <option value="Mensual">Mensual</option>
+                                </select>
                             </div>
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
@@ -338,7 +345,7 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                        </div>
+                        
 
                             <div className="form-group">
                                 <label>País:</label>
@@ -402,7 +409,7 @@ export const RegPeriodicos = () => {
                                 <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
                                     <option value="">Seleccionar la colección</option>
                                     <option value="Privada">Privada</option>
-                                    <option value="Creación">Pública</option>
+                                    <option value="Pública">Pública</option>
                                 </select>
                             </div>
 
@@ -465,8 +472,8 @@ export const RegPeriodicos = () => {
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>
                             </div>
-
-                        </div>
+                            </div>
+                       
 
                         
                             

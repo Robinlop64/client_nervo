@@ -798,19 +798,17 @@ h1 {
   clear: both;
   color: #0672A8;
   width: 1170px;
-  height: 300px;
+  height: 200px;
 }
-#autor {
-  max-width: 500px;
-  min-width: 500px;
+.divisor_form2{
+  clear: both;
+  color: #0672A8;
+  width: 1170px;
+  height: 500px;
+  display: block;
+  float: left;
 }
-#autor input{
-  max-width: 400px;
-  min-width: 400px;
-  padding: 10px;
 
-  
-}
 #num_album{
   max-width: 160px;
   min-width: 160px;
@@ -881,44 +879,8 @@ h1 {
   padding-left: 10px;
   margin-top: 5px; /* Add some margin to separate the input from the label */
 }
-#fecha_publicacion{
-  margin-top: 45px;
-}
-#encabezado{
-  max-width: 550px;
-  min-width: 550px;
-}
-#seccion{
-  width: 50%;
-}
-#seccionInput{
-  max-width: 85%;
-  min-width: 85%;
-}
-#columnas{
-  width: 50%;
-}
 
-#columnasInput{
-  max-width: 75%;
-  min-width: 75%;
-}
 
-#colaboradores{
-  width: 50%;
-}
-#colaboradoresInput{
-  max-width: 75%;
-  min-width: 75%;
-}
-#tipoPublicacion{
-  width: 50%;
-}
-#tipoPublicacionInput{
-  max-width: 65%;
-  min-width: 65%;
-  margin-left: 30px;
-}
 #resumen{
   width: 50%;
   
@@ -1071,7 +1033,132 @@ button:hover {
   background-color: #005f88;
 }
 
+/*--------------------------------------Formulario Hemerografia---------------------------------------*/
 
+#nombrePeriodico{
+  margin-top: 40px;
+}
+#numeroEdicion{
+  max-width: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  text-align: center;
+}
+#numeroEdicionInput{
+  max-width: 100px;
+  min-width: 100px;
+  padding-left: 10px;
+  margin-top: 5px; /* Add some margin to separate the input from the label */
+}
+
+#numeroEdicion Input{
+  display: block;
+  float: left;
+  max-width: 40%;
+  min-width: 40%;
+}
+#FechaPublicacion{
+  max-width: 190px;
+  min-width: 190px;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: center;
+}
+#FechaPublicacionInput{
+  max-width: 100px;
+  min-width: 100px;
+  padding-left: 10px;
+  margin-top: 5px; /* Add some margin to separate the input from the label */
+}
+
+#FechaPublicacion Input{
+  display: block;
+  float: left;
+  max-width: 80%;
+  min-width: 80%;
+}
+#encabezado{
+  max-width: 90%;
+  min-width: 90%;
+  margin-left: 5px;
+}
+#autor {
+  max-width: 32%;
+  min-width: 32%;
+}
+#autor label{
+  margin-right: 10px;
+}
+#autor input{
+  max-width: 75%;
+  min-width: 75%;
+  padding: 10px;
+  margin-left: 20px;
+
+  
+}
+#seccion{
+  width: 33%;
+  margin-left: 40px;
+}
+#seccion label{
+  margin-right: 10px;
+}
+#seccionInput{
+  max-width: 75%;
+  min-width: 75%;
+  margin-left: 10px;
+}
+#pagina{
+  float: left;
+  clear: both;
+  width: 30%;
+}
+#paginaInput{
+  max-width: 70%;
+  min-width: 70%;
+}
+#columnas{
+  width: 30%;
+  float: left;
+}
+#columnasInput{
+  max-width: 75%;
+  min-width: 75%;
+}
+#lugarPublicacion{
+  width: 30%;
+}
+#lugarPublicacion label{
+  margin-right: 5px;
+}
+#lugarPublicacionInput{
+max-width: 50%;
+min-width: 50%;
+}
+#colaboradores{
+  width: 50%;
+}
+#colaboradoresInput{
+  max-width: 75%;
+  min-width: 75%;
+}
+#tipoPublicacion{
+  width: 50%;
+}
+#tipoPublicacionInput{
+  max-width: 65%;
+  min-width: 65%;
+  margin-left: 30px;
+}
 /*--------------------------------------Fotodetalle Menu end---------------------------------------*/
 #container2 {
   max-width: 900px;
