@@ -181,9 +181,41 @@ export const RegPeriodicos = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
+                        <div className='divisor_form'>
+                            <div className="form-group">
+                                <label htmlFor="nombrePeriodico">Periódico</label>
+                                <input
+                                    type="text"
+                                    id="nombrePeriodico"
+                                    name="nombre_periodico"
+                                    placeholder="Nombre del periódico"
+                                    value={formulario.nombre_periodico || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id='fecha2'>
+                                <label htmlFor="numeroEdicion">Número de edición</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicion"
+                                    name="num_edicion"
+                                    placeholder="Número de edición"
+                                    value={formulario.num_edicion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group">
+                            <label id='fecha_publicacion'>Fecha de publicación</label>
+                            </div>
+                            <div className="form-group" id='fecha3'>
+                                <input type="number" name="anio2" className="small-input" placeholder="Año" value={formulario.anio2 || ''} onChange={cambiado} />
+                                <input type="number" name="mes2" className="small-input" placeholder="Mes" value={formulario.mes2 || ''} onChange={cambiado} />
+                                <input type="number" name="dia2" className="small-input" placeholder="Día" value={formulario.dia2 || ''} onChange={cambiado} />
+                            </div>
+
 
                             <div className="form-group">
-                                <label>Título:</label>
+                                <label>Encabezado</label>
                                 <input type="textarea" name="titulo" placeholder="Título" value={formulario.titulo || ''} onChange={cambiado} />
                             </div>
 
@@ -191,6 +223,117 @@ export const RegPeriodicos = () => {
                                 <label>Autor:</label>
                                 <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="nombreSeudonimos">Seudónimo</label>
+                                <select
+                                    id="nombreSeudonimos"
+                                    name="seudonimos"
+                                    value={formulario.seudonimos || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="">Seleccionar sudónimo</option>
+                                    <option value="Román">Román</option>
+
+                                </select>
+                            </div>
+                            <div className="form-group" id="seccion">
+                                <label htmlFor="seccion">Sección</label>
+                                <input
+                                    type="text"
+                                    id="seccionInput"
+                                    name="seccion"
+                                    placeholder="Sección"
+                                    value={formulario.seccion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id='fecha2'>
+                                <label htmlFor="pagina">Página (s)</label>
+                                <input
+                                    type="number"
+                                    id="pagina"
+                                    name="num_paginas"
+                                    placeholder="Página"
+                                    value={formulario.num_paginas || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="columnas">
+                                <label htmlFor="columnas">Columnas</label>
+                                <input
+                                    type="text"
+                                    id="columnasInput"
+                                    name="columnas"
+                                    placeholder="Columnas"
+                                    value={formulario.columnas || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label>Género periodístico</label>
+                                <select
+                                    id="generoPeriodistico"
+                                    name="genero_periodistico"
+                                    value={formulario.genero_periodistico || ''}
+                                    onChange={cambiado}
+                                >
+                                    <option value="notas">Notas</option>
+                                    <option value="articulos">Artículos</option>
+                                    <option value="cronicas">Crónicas</option>
+                                </select>
+                            </div>
+                            
+                            <div className="form-group">
+                                <label htmlFor="encabezado">Lugar de publicación</label>
+                                <input
+                                    type="text"
+                                    id="encabezado"
+                                    name="encabezado"
+                                    placeholder="Lugar de publicación"
+                                    value={formulario.encabezado || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="tipoPublicacion">
+                                <label htmlFor="tipoPublicacion">Periodicidad</label>
+                                <input
+                                    type="text"
+                                    id="tipoPublicacionInput"
+                                    name="tipo_publicacion"
+                                    placeholder="Tipo de publicación"
+                                    value={formulario.tipo_publicacion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className='form-group'>
+                                <label htmlFor='file0'>Imagen</label>
+                                <input type='file' name='file0' id="file" multiple/>
+                            </div>
+                            <div className="form-group"id="resumen">
+                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <textarea
+                                    type="text"
+                                    id="resumenInput"
+                                    name="resumen"
+                                    placeholder="Resumen"
+                                    value={formulario.resumen || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group"id="transcripcion">
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <textarea
+                                    type="text"
+                                    id="transcripcionInput"
+                                    name="transcripcion"
+                                    placeholder="Transcripción"
+                                    value={formulario.transcripcion || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                        </div>
 
                             <div className="form-group">
                                 <label>País:</label>
@@ -208,12 +351,6 @@ export const RegPeriodicos = () => {
                                     ))}
                                 </select>
                             </div>
-
-
-
-
-
-
 
                             <div className="form-group">
                                 <label>Ciudad:</label>
@@ -243,7 +380,7 @@ export const RegPeriodicos = () => {
                                     ))}
                                 </select>
                             </div>
-
+                            
 
                             <div className="form-group">
                                 <label>Ubicación física:</label>
@@ -262,12 +399,7 @@ export const RegPeriodicos = () => {
                                     <option value="Creación">Pública</option>
                                 </select>
                             </div>
-                            <div className="form-group" id='fecha'>
-                                <label>Fecha:</label>
-                                <input type="number" name="anio" className="small-input" placeholder="Año" value={formulario.anio || ''} onChange={cambiado} />
-                                <input type="number" name="mes" className="small-input" placeholder="Mes" value={formulario.mes || ''} onChange={cambiado} />
-                                <input type="number" name="dia" className="small-input" placeholder="Día" value={formulario.dia || ''} onChange={cambiado} />
-                            </div>
+
 
 
 
@@ -319,198 +451,18 @@ export const RegPeriodicos = () => {
 
 
 
-                            <div className='form-group'>
-                                <label htmlFor='file0'>Imagen</label>
-                                <input type='file' name='file0' id="file" multiple/>
-                            </div>
+                            
                         </div>
-                        <h3>Campos específicos Publicaciones periódicas</h3>
-                        <div className='divisor_form'>
-                            <div className="form-group">
-                                <label htmlFor="nombrePeriodico">Nombre del periódico</label>
-                                <input
-                                    type="text"
-                                    id="nombrePeriodico"
-                                    name="nombre_periodico"
-                                    placeholder="Nombre del periódico"
-                                    value={formulario.nombre_periodico || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="encabezado">Encabezado</label>
-                                <input
-                                    type="text"
-                                    id="encabezado"
-                                    name="encabezado"
-                                    placeholder="Encabezado"
-                                    value={formulario.encabezado || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group">
-                            <label id='fecha_publicacion'>Fecha de publicación</label>
-                            </div>
-                            <div className="form-group" id='fecha3'>
-                                <input type="number" name="anio2" className="small-input" placeholder="Año" value={formulario.anio2 || ''} onChange={cambiado} />
-                                <input type="number" name="mes2" className="small-input" placeholder="Mes" value={formulario.mes2 || ''} onChange={cambiado} />
-                                <input type="number" name="dia2" className="small-input" placeholder="Día" value={formulario.dia2 || ''} onChange={cambiado} />
-                            </div>
 
-                            <div className="form-group" id='fecha2'>
-                                <label htmlFor="pagina">Página (s)</label>
-                                <input
-                                    type="number"
-                                    id="pagina"
-                                    name="num_paginas"
-                                    placeholder="Página"
-                                    value={formulario.num_paginas || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group" id='fecha2'>
-                                <label htmlFor="numeroEdicion">Número de edición</label>
-                                <input
-                                    type="number"
-                                    id="numeroEdicion"
-                                    name="num_edicion"
-                                    placeholder="Número de edición"
-                                    value={formulario.num_edicion || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group" id='fecha2'>
-                                <label htmlFor="numeroPublicacion">Número de publicación</label>
-                                <input
-                                    type="number"
-                                    id="numeroPublicacion"
-                                    name="num_publicacion"
-                                    placeholder="Número de publicación"
-                                    value={formulario.num_publicacion || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label>Género periodístico</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="genero_periodistico"
-                                    value={formulario.genero_periodistico || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="generoLiterario">Literarios</label>
-                                <select
-                                    id="generoLiterario"
-                                    name="literarios"
-                                    value={formulario.literarios || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="poesia">Poesía</option>
-                                    <option value="cuentos">Cuentos</option>
-                                    <option value="criticaLiteraria">Crítica literaria</option>
-                                    <option value="semblanzas">Semblanzas</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Seudónimo</label>
-                                <select
-                                    id="nombreSeudonimos"
-                                    name="seudonimos"
-                                    value={formulario.seudonimos || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="poesia">Poesía</option>
-                                    <option value="cuentos">Cuentos</option>
-                                    <option value="criticaLiteraria">Crítica literaria</option>
-                                    <option value="semblanzas">Semblanzas</option>
-                                </select>
-                            </div>
+                        
+                            
+            
 
                             
 
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Sección</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="seccion"
-                                    placeholder="Sección"
-                                    value={formulario.seccion || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
+                            
 
-                            <div className="form-group" id="columnas">
-                                <label htmlFor="columnas">Columnas</label>
-                                <input
-                                    type="text"
-                                    id="columnasInput"
-                                    name="columnas"
-                                    placeholder="Columnas"
-                                    value={formulario.columnas || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group" id="colaboradores">
-                                <label htmlFor="colaboradores">Colaboradores</label>
-                                <input
-                                    type="text"
-                                    id="colaboradoresInput"
-                                    name="colaboradores"
-                                    placeholder="Colaboradores"
-                                    value={formulario.colaboradores || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group" id="tipoPublicacion">
-                                <label htmlFor="tipoPublicacion">Tipo de publicación</label>
-                                <input
-                                    type="text"
-                                    id="tipoPublicacionInput"
-                                    name="tipo_publicacion"
-                                    placeholder="Tipo de publicación"
-                                    value={formulario.tipo_publicacion || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
-                                <textarea
-                                    type="text"
-                                    id="resumenInput"
-                                    name="resumen"
-                                    placeholder="Resumen"
-                                    value={formulario.resumen || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-                            <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
-                                <textarea
-                                    type="text"
-                                    id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                        </div>
+                          
                         <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
               <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
