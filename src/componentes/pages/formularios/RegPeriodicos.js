@@ -233,7 +233,12 @@ export const RegPeriodicos = () => {
                                 >
                                     <option value="">Seleccionar sudónimo</option>
                                     <option value="Román">Román</option>
-
+                                    <option value="Rip-Rip">Rip-Rip</option>
+                                    <option value="Tricio">Tricio</option>
+                                    <option value="Benedictus">Benedictus</option>
+                                    <option value="Joie">Joie</option>
+                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
+                                    <option value="X.Y.Z">X.Y.Z</option>
                                 </select>
                             </div>
                             <div className="form-group" id="seccion">
@@ -460,9 +465,6 @@ export const RegPeriodicos = () => {
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>
                             </div>
-
-
-
 
                         </div>
 
