@@ -56,23 +56,24 @@ export const HemerografiaDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-          <div className='marco'>
-            {fotografia.images && fotografia.images.map((image, index) => (
-              <img
-                key={index}
-                src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image}`}
-                alt={`${fotografia.titulo} ${index + 1}`}
-                className='fotografia-img-large'
-              />
-            ))}
-          </div>
+        <div className='marco'>
+          {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
+          {fotografia.images && fotografia.images.map((image, index) => (
+            <img
+              key={index}
+              src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+              alt={`${fotografia.titulo} ${index + 1}`}
+              className='fotografia-img-large'
+            />
+          ))}
+        </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
+            <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
             <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.anio}{fotografia.mes && `/${fotografia.mes}`}{fotografia.dia && `/${fotografia.dia}`}</span></p>
+            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
             <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Álbum:</span> <span>{fotografia.numero_album}</span></p>
+            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
             <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
             <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
             <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>

@@ -34,6 +34,7 @@ import { EditarFotografia } from '../componentes/pages/formularios/Editores/Edit
 import { Hemerografia } from '../componentes/pages/acervo/Hemerografia';
 import { HemerografiaTema } from '../componentes/pages/acervo/temas/HemerografiaTema';
 import { HemerografiaDetalle } from '../componentes/pages/acervo/detalles/HemerografiaDetalle';
+import { EditarHemerografia } from '../componentes/pages/formularios/Editores/EditarHemerografia';
 
 export const Rutas = () => {
   return (
@@ -97,6 +98,7 @@ export const Rutas = () => {
             <Route path="/admin/hemerografia" element={<Hemerografia />} />
             <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
             <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
+            <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
 
 
 

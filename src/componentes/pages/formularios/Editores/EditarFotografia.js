@@ -119,11 +119,6 @@ export const EditarFotografia = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState({});
 
-
-
-
-
-
   useEffect(() => {
     const fetchFoto = async () => {
       const url = `https://backend-prueba-apel.onrender.com/api/fotografia/foto/${id}`;
@@ -405,8 +400,6 @@ export const EditarFotografia = () => {
                   <label id='descripcion_label'>Descripción:</label>
                   <textarea name="descripcion" placeholder="Descripción" defaultValue={fotografia.descripcion || ''} onChange={cambiado} />
                 </div>
-
-
               </div>
               <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>

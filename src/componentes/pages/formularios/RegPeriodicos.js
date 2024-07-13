@@ -213,7 +213,7 @@ export const RegPeriodicos = () => {
                             <label id='fecha_publicacionLabel'>Fecha de publicación</label>
                             <input
                                 type="date"
-                                name="anio2"
+                                name="fecha_publicacion"
                                 value={formulario.fecha_publicacion}
                                 onChange={cambiado}
                             />
@@ -489,6 +489,7 @@ export const RegPeriodicos = () => {
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>
                             </div>
+                            
                             </div>
                        
 
