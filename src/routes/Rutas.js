@@ -35,6 +35,30 @@ import { Hemerografia } from '../componentes/pages/acervo/Hemerografia';
 import { HemerografiaTema } from '../componentes/pages/acervo/temas/HemerografiaTema';
 import { HemerografiaDetalle } from '../componentes/pages/acervo/detalles/HemerografiaDetalle';
 import { EditarHemerografia } from '../componentes/pages/formularios/Editores/EditarHemerografia';
+import { Iconografia } from '../componentes/pages/acervo/Iconografia';
+import { IconografiaTema } from '../componentes/pages/acervo/temas/IconografiaTema';
+import { IconografiaDetalle } from '../componentes/pages/acervo/detalles/IconografiaDetalle';
+import { EditarIconografia } from '../componentes/pages/formularios/Editores/EditarIconografia';
+import { Libros } from '../componentes/pages/acervo/Libros';
+import { LibrosTema } from '../componentes/pages/acervo/temas/LibrosTema';
+import { LibrosDetalle } from '../componentes/pages/acervo/detalles/LibrosDetalle';
+import { EditarLibros } from '../componentes/pages/formularios/Editores/EditarLibros';
+import { Correspondencia } from '../componentes/pages/acervo/Correspondencia';
+import { CorrespondenciaTema } from '../componentes/pages/acervo/temas/CorrespondenciaTema';
+import { CorrespondenciaDetalle } from '../componentes/pages/acervo/detalles/CorrespondenciaDetalle';
+import { EditarCorrespondencia } from '../componentes/pages/formularios/Editores/EditarCorrespondencia';
+import { Documentacion } from '../componentes/pages/acervo/Documentacion';
+import { DocumentacionDetalle } from '../componentes/pages/acervo/detalles/DocumentacionDetalles';
+import { DocumentacionTema } from '../componentes/pages/acervo/temas/DocumentacionTemas';
+import { Partituras } from '../componentes/pages/acervo/Partituras';
+import { Objetos } from '../componentes/pages/acervo/Objetos';
+import { Monumentos } from '../componentes/pages/acervo/Monumentos';
+import { PartiturasTema } from '../componentes/pages/acervo/temas/PartiturasTema';
+import { ObjetosTema } from '../componentes/pages/acervo/temas/ObjetosTemas';
+import { MonumentosTema } from '../componentes/pages/acervo/temas/MonumentosTemas';
+import { MonumentosDetalle } from '../componentes/pages/acervo/detalles/MonumentosDetalle';
+import { ObjetosDetalle } from '../componentes/pages/acervo/detalles/ObjetosDetalle';
+import { PartiturasDetalle } from '../componentes/pages/acervo/detalles/PartiturasDetalle';
 
 export const Rutas = () => {
   return (
@@ -89,6 +113,8 @@ export const Rutas = () => {
             <Route path="/admin/registro/partituras" element={<RegPartituras />} />
             <Route path="/admin/registro/monumentos" element={<RegMonumentos />} />
             <Route path="/admin/registro/audiovisuales" element={<RegAudiovisuales />} />
+
+
             <Route path="/admin/fotografias" element={<Fotografias2 />} />
             <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
@@ -100,7 +126,39 @@ export const Rutas = () => {
             <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
             <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
 
+            <Route path="/admin/iconografia" element={<Iconografia />} />
+            <Route path="/admin/iconografia/tema/:id" element={<IconografiaTema />} />
+            <Route path="/admin/iconografia/:id" element={<IconografiaDetalle />} />
+            <Route path="/admin/editar/iconografia/:id" element={<EditarIconografia />} />
 
+            <Route path="/admin/libros" element={<Libros />} />
+            <Route path="/admin/libros/tema/:id" element={<LibrosTema />} />
+            <Route path="/admin/libros/:id" element={<LibrosDetalle />} />
+            <Route path="/admin/editar/libros/:id" element={<EditarLibros />} />
+
+
+            <Route path="/admin/correspondencia" element={<Correspondencia/>} />
+            <Route path="/admin/correspondencia/tema/:id" element={<CorrespondenciaTema />} />
+            <Route path="/admin/correspondencia/:id" element={<CorrespondenciaDetalle />} />
+            <Route path="/admin/editar/correspondencia/:id" element={<EditarCorrespondencia />} />
+
+
+            <Route path="/admin/documentacion" element={<Documentacion/>} />
+            <Route path="/admin/documentacion/tema/:id" element={<DocumentacionTema />} />
+            <Route path="/admin/documentacion/:id" element={<DocumentacionDetalle />} />
+
+
+            <Route path="/admin/partituras" element={<Partituras/>} />
+            <Route path="/admin/partituras/tema/:id" element={<PartiturasTema />} />
+            <Route path="/admin/partituras/:id" element={<PartiturasDetalle />} />
+            
+            <Route path="/admin/objetos" element={<Objetos/>} />
+            <Route path="/admin/objetos/tema/:id" element={<ObjetosTema />} />
+            <Route path="/admin/objetos/:id" element={<ObjetosDetalle />} />
+            
+            <Route path="/admin/monumentos" element={<Monumentos/>} />
+            <Route path="/admin/monumentos/tema/:id" element={<MonumentosTema />} />
+            <Route path="/admin/monumentos/:id" element={<MonumentosDetalle />} />
 
 
             <Route path='/admin/logout' element={<Logout/>}/>

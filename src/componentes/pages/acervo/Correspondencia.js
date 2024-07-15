@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Hemerografia = () => {
+export const Correspondencia = () => {
   const [temas, setTemas] = useState([]);
   const navigate = useNavigate();
 
@@ -10,7 +10,7 @@ export const Hemerografia = () => {
   }, []);
 
   const getTemas = async () => {
-    const url = "https://backend-prueba-apel.onrender.com/api/hemerografia/listar-temas";
+    const url = "https://backend-prueba-apel.onrender.com/api/correspondencia/listar-temas";
     const peticion = await fetch(url, {
       method: "GET"
     });
@@ -25,7 +25,7 @@ export const Hemerografia = () => {
   };
 
   const handleTemaClick = (tema) => {
-    navigate(`/admin/hemerografia/tema/${tema}`);
+    navigate(`/admin/correspondencia/tema/${tema}`);
   };
 
   return (
@@ -42,7 +42,7 @@ export const Hemerografia = () => {
               <article>
                 <img
                   id='img_temas'
-                  src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${tema.nombreImagen}`}
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${tema.nombreImagen}`}
                   alt={`${tema.tema} foto`}
                 />
                 <div className="contenido_temas">

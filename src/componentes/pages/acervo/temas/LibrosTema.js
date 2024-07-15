@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export const HemerografiaTema = () => {
+export const LibrosTema = () => {
   const [fotos, setFotos] = useState([]);
   const [nombrePeriodico, setNombrePeriodico] = useState('');
   const { id } = useParams();
@@ -13,7 +13,7 @@ export const HemerografiaTema = () => {
   }, [id]);
 
   const getFotos = async () => {
-    const url = `https://backend-prueba-apel.onrender.com/api/hemerografia/tema/${id}`;
+    const url = `https://backend-prueba-apel.onrender.com/api/libros/tema/${id}`;
     const peticion = await fetch(url, {
       method: "GET"
     });
@@ -21,7 +21,7 @@ export const HemerografiaTema = () => {
     if (datos.status === "success") {
       setFotos(datos.fotos);
       if (datos.fotos.length > 0) {
-        setNombrePeriodico(datos.fotos[0].nombre_periodico);
+        setNombrePeriodico(datos.fotos[0].tema);
       }
     } else {
       // Manejo de error
@@ -30,12 +30,12 @@ export const HemerografiaTema = () => {
   };
 
   const handleFotoClick = (fotografia) => {
-    navigate(`/admin/hemerografia/${fotografia._id}`);
+    navigate(`/admin/libros/${fotografia._id}`);
   };
 
   const handleDeleteClick = async (event, fotografiaId) => {
     event.stopPropagation();
-    const url = `https://backend-prueba-apel.onrender.com/api/fotografia/${fotografiaId}`;
+    const url = `https://backend-prueba-apel.onrender.com/api/libros/${fotografiaId}`;
     const peticion = await fetch(url, {
       method: "DELETE"
     });
@@ -52,7 +52,7 @@ export const HemerografiaTema = () => {
 
   const handleEditClick = (event, fotografiaId) => {
     event.stopPropagation();
-    navigate(`/admin/editar/iconografia/${fotografiaId}`);
+    navigate(`/admin/editar/libros/${fotografiaId}`);
   };
 
   return (
@@ -64,7 +64,7 @@ export const HemerografiaTema = () => {
         {fotos.map((fotografia) => {
   // Verifica que el campo 'images' exista y tenga al menos una imagen
   const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
-  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${firstImage}` : '';
+  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/libros/${firstImage}` : '';
 
   return (
     <div
