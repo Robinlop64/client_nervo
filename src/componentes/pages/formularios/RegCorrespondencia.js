@@ -154,7 +154,7 @@ export const RegCorrespondencia = () => {
             });
             console.log("formdata",formData)
             const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            //const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
 
             setResultado(true);
             setSaved("saved");

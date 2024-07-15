@@ -231,7 +231,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group">
                                 <label>Encabezado</label>
-                                <input id='encabezado' type="textarea" name="encabezado" placeholder="Título" value={formulario.encabezado|| ''} onChange={cambiado} />
+                                <input id='encabezado' type="textarea" name="encabezado" placeholder="Encabezado" value={formulario.encabezado|| ''} onChange={cambiado} />
                             </div>
 
                             <div className="form-group" id='autor'>
@@ -352,13 +352,12 @@ export const RegPeriodicos = () => {
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendiente</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
+                                    name="pendiente"
+                                    value={formulario.pendiente || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -473,9 +472,11 @@ export const RegPeriodicos = () => {
                             <div className="form-group">
                                 <label>Persona que registra:</label>
                                 <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
-                                    <option value="Mayra Fonseca">Mayra Fonseca</option>
+                                    <option value="">Seleccionar persona que registra</option>
+                                    <option value="Mayra Fonseca">Mayra</option>
                                     <option value="Robin">Robin</option>
                                     <option value="Xoely">Xoely</option>
+                                    <option value="Perla">Perla</option>
                                 </select>
                             </div>
 
@@ -483,24 +484,12 @@ export const RegPeriodicos = () => {
                                 <label>Tema:</label>
                                 <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
                                     <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
                                     <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>
                             </div>
                             
                             </div>
-                       
-
-                        
-                            
-            
-
-                            
-
-                            
-
+   
                           
                         <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>

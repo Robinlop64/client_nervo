@@ -52,7 +52,7 @@ export const HemerografiaTema = () => {
 
   const handleEditClick = (event, fotografiaId) => {
     event.stopPropagation();
-    navigate(`/admin/editar/iconografia/${fotografiaId}`);
+    navigate(`/admin/editar/hemerografia/${fotografiaId}`);
   };
 
   return (

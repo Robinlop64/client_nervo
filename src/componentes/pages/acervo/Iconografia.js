@@ -31,7 +31,7 @@ export const Iconografia = () => {
   return (
     <main className='main_temas_fotografia'>
       <div className='temas_contenedor_items'>
-        <h1>Temas Libros</h1>
+        <h1>Temas Iconografía</h1>
         <div className=''>
           {temas.map((tema, index) => (
             <div

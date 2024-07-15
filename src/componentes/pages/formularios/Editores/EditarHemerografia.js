@@ -242,7 +242,7 @@ export const EditarHemerografia = () => {
                   defaultValue={fotografia.seudonimos || ''}
                   onChange={cambiado}
                 >
-                  <option value="">Seleccionar seudónimo</option>
+                  <option value={fotografia.seudonimos}>{fotografia.seudonimos}</option>
                   <option value="Román">Román</option>
                   <option value="Rip-Rip">Rip-Rip</option>
                   <option value="Tricio">Tricio</option>
@@ -323,7 +323,7 @@ export const EditarHemerografia = () => {
                                     defaultValue={fotografia.periodicidad || ''}
                                     onChange={cambiado}
                                 >
-                                <option value="">Seleccionar periodicidad</option>
+                                <option value={fotografia.periodicidad}>{fotografia.periodicidad}</option>
                                 <option value="Diaria">Diaria</option>
                                 <option value="Semanal">Semanal</option>
                                 <option value="Mensual">Mensual</option>
@@ -346,13 +346,13 @@ export const EditarHemerografia = () => {
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    defaultValue={fotografia.transcripcion || ''}
+                                    name="pendiente"
+                                    placeholder=""
+                                    defaultValue={fotografia.pendiente || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -366,7 +366,7 @@ export const EditarHemerografia = () => {
                                     defaultValue={fotografia.pais || ''}
                                     onChange={cambiado}>
 
-                                    <option value="">Seleccionar país</option>
+                                    <option value={fotografia.pais}>{fotografia.pais}</option>
                                     {paises.map((pais) => (
                                         <option key={pais} name="paises" value={pais}>
                                             {pais}
@@ -383,7 +383,7 @@ export const EditarHemerografia = () => {
                                     defaultValue={fotografia.ciudad || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar ciudad</option>
+                                    <option value={fotografia.ciudad}>{fotografia.ciudad}</option>
                                     {ciudades.map((ciudad) => (
                                         <option key={ciudad} value={ciudad}>
                                             {ciudad}
@@ -395,7 +395,7 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Institución:</label>
                                 <select id="institucion" name='institucion' defaultValue={fotografia.institucion || ""} onChange={cambiado}>
-                                    <option value="">Seleccionar institución</option>
+                                    <option value={fotografia.institucion}>{fotografia.institucion}</option>
                                     {instituciones.map((institucion, index) => (
                                         <option key={index} value={institucion}>
                                             {institucion}
@@ -408,7 +408,7 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Ubicación física:</label>
                                 <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
+                                    <option value={fotografia.ubicacion_fisica}>{fotografia.ubicacion_fisica}</option>
                                     <option value="Biblioteca">Biblioteca</option>
                                     <option value="Archivo">Archivo</option>
                                     <option value="Museo">Museo</option>
@@ -418,7 +418,7 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Colección:</label>
                                 <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
+                                    <option value={fotografia.coleccion}>{fotografia.coleccion}</option>
                                     <option value="Privada">Privada</option>
                                     <option value="Pública">Pública</option>
                                 </select>
@@ -431,7 +431,7 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Año de adquisición:</label>
                                 <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
-                                    <option value="">Seleccionar año</option>
+                                    <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
                                     <option value="2018">2018</option>
@@ -459,6 +459,7 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Hallazgo:</label>
                                 <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
+                                    <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
@@ -467,16 +468,18 @@ export const EditarHemerografia = () => {
                             <div className="form-group">
                                 <label>Persona que registra:</label>
                                 <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
-                                    <option value="Mayra Fonseca">Mayra Fonseca</option>
+                                <option value={fotografia.persona_registra }>{fotografia.persona_registra }</option>
+                                    <option value="Mayra Fonseca">Mayra</option>
                                     <option value="Robin">Robin</option>
                                     <option value="Xoely">Xoely</option>
+                                    <option value="Perla">Perla</option>
                                 </select>
                             </div>
 
                             <div className="form-group">
                                 <label>Tema:</label>
                                 <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
+                                    <option value={fotografia.tema}>{fotografia.tema}</option>
                                     <option value="1"> tema 1</option>
                                     <option value="2"> tema 2 </option>
                                     <option value="El Nacional"> El Nacional </option>
