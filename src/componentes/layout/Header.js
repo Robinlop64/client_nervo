@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from "../../img/logo fundacion nuevo-02.png"
+
 import { NavLink } from 'react-router-dom'
 export const Header = () => {
   return (

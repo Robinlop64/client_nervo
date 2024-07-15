@@ -246,7 +246,7 @@ export const RegPeriodicos = () => {
                                     value={formulario.seudonimos || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar seudónimo</option>
+                                    <option value="Amado Nervo">Amado Nervo</option>
                                     <option value="Román">Román</option>
                                     <option value="Rip-Rip">Rip-Rip</option>
                                     <option value="Tricio">Tricio</option>
@@ -256,18 +256,20 @@ export const RegPeriodicos = () => {
                                     <option value="X.Y.Z">X.Y.Z</option>
                                 </select>
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Sección</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
+                            <div className="form-group">
+                                <label>Sección</label>
+                                <select
+                                    id="generoPeriodistico"
                                     name="seccion"
-                                    placeholder="Sección"
                                     value={formulario.seccion || ''}
                                     onChange={cambiado}
-                                />
+                                >
+                                    <option value="">Seleccionar sección</option>
+                                    <option value="Fuegos Fatuos">Fuegos Fatuos</option>
+                                    
+                                </select>
                             </div>
-                        </div>
+                            </div>
                             <div className='divisor_form2'>
                            
                             
