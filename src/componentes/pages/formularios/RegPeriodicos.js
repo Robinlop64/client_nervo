@@ -193,7 +193,7 @@ export const RegPeriodicos = () => {
                     
                                     <option value="">Seleccionar Periódico</option>
                                     <option value="El Nacional">El Nacional</option>
-                                    
+                                    <option value="El Imparcial">El Imparcial</option>
                                 </select>
 
 
@@ -266,7 +266,27 @@ export const RegPeriodicos = () => {
                                 >
                                     <option value="">Seleccionar sección</option>
                                     <option value="Fuegos Fatuos">Fuegos Fatuos</option>
-                                    
+                                    <option value="Pimientos dulces">Pimietos dulces</option>
+                                    <option value="Página literaria">Página literaria</option>
+                                    <option value="Literatura">Literatura</option>
+                                    <option value="Actualidades europeas">Actualidades europeas</option>
+                                    <option value="Asuntos femeninos">Asuntos femeninos</option>
+                                    <option value="Actualidades literarias">Actualidades literarias</option>
+                                    <option value="Actualidades madrileñas">Actualidades madrileñas</option>
+                                    <option value="La varita de la virtud">La varita de la virtud</option>
+                                    <option value="Desde parís">Desde parís</option>
+                                    <option value="Desde Madrid">Desde Madrid</option>                      
+
+                                    <option value="Actualidades">Actualidades</option>
+                                    <option value="Actualidades españolas">Actualidades españolas</option>
+                                    <option value="Plaso ibañes">Plaso ibañes</option>
+                                    <option value="El Imparcial">"El Imparcial"</option>
+                                    <option value="De Amado Nervo">De Amado Nervo</option>
+                                    <option value="La literatura maravillosa">La literatura maravillosa</option>
+                                    <option value="Crónicas frívolas">Crónicas frívolas</option>
+                                    <option value="Literatura nacional">Literatura nacional</option>
+                                    <option value="NA">NA</option>
+
                                 </select>
                             </div>
                             </div>
