@@ -507,6 +507,7 @@ export const RegPeriodicos = () => {
                                 <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
                                     <option value="">Seleccionar el tema</option>
                                     <option value="El Nacional"> El Nacional </option>
+                                    <option value="El Imparcial"> El Imparcial </option>
                                 </select>
                             </div>
                             
