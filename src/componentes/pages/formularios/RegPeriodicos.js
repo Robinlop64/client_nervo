@@ -323,10 +323,12 @@ export const RegPeriodicos = () => {
                                     value={formulario.genero_periodistico || ''}
                                     onChange={cambiado}
                                 >
+                                    <option value="">Seleccionar género</option>
                                     <option value="notas">Notas</option>
                                     <option value="articulos">Artículos</option>
                                     <option value="cronicas">Crónicas</option>
                                     <option value="frases">Frases</option>
+                                    <option value="pendiente">Pendiente</option>
                                 </select>
                             </div>
                             
