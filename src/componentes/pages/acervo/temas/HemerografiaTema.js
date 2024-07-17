@@ -69,7 +69,7 @@ export const HemerografiaTema = () => {
   return (
     <div
       key={fotografia._id}
-      className='fotografia-item'
+      className='hemerografia-item'
       onClick={() => handleFotoClick(fotografia)}
     >
       {firstImage ? (

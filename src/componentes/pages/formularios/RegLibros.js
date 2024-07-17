@@ -145,25 +145,42 @@ export const RegLibros = () => {
         e.preventDefault();
         let nueva_foto = formulario;
         const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/libros/registrar", "POST", nueva_foto);
-        console.log(nueva_foto)
+    
         if (datos.status === "successs") {
-            console.log("status success")
+            console.log("status success");
+    
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
-            Array.from(fileInput.files).forEach((file, index) => {
-                formData.append(`files`, file);
+            Array.from(fileInput.files).forEach((file) => {
+                formData.append('files', file);
             });
-            console.log("formdata",formData)
+    
             const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/libros/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/libros/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-
+    
+            // Nueva sección para subir los archivos PDF
+            const pdfInput = document.querySelector("#pdf");
+            const pdfFormData = new FormData();
+            Array.from(pdfInput.files).forEach((file) => {
+                pdfFormData.append('pdfs', file);
+            });
+    
+            // Recorrer y mostrar los elementos de pdfFormData
+            for (let pair of pdfFormData.entries()) {
+                console.log(pair[0] + ': ' + pair[1].name); // Imprimir el nombre del archivo
+            }
+    
+            const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/libros/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const { pdfSubida2 } = await Api(`https://backend-google-fnsu.onrender.com/api/libros/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setResultado(true);
             setSaved("saved");
         } else {
-            console.log("status error")
+            console.log("status error");
             setSaved("error");
         }
     };
+    
+    
 
     return (
         <div>
@@ -423,17 +440,6 @@ export const RegLibros = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">pdf</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="pdf"
-                                    placeholder="corriente"
-                                    value={formulario.pdf || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
                             
                             
                             
@@ -443,6 +449,11 @@ export const RegLibros = () => {
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
+                            </div>
+
+                            <div className='form-group'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs' id="pdf" multiple/>
                             </div>
 
 
