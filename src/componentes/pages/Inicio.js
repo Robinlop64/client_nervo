@@ -4,7 +4,7 @@ export const Inicio = () => {
     <main id="main_inicio">
       <div className='inicio_container'>
         <div id="img_inicio">
-          <p id="texto">Rescatamos patrimonio <br /> difundimos cultura</p>
+          <p id="texto">Acervo Digital</p>
         </div>
       </div>
       <div className='clearfix'></div>

@@ -62,6 +62,7 @@ export const FotoDetalle = () => {
           </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
+            <h4>Ficha catalográfica</h4>
             <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
             <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
             <p><span>Fecha:</span> <span>{fotografia.anio}{fotografia.mes && `/${fotografia.mes}`}{fotografia.dia && `/${fotografia.dia}`}</span></p>

@@ -69,14 +69,20 @@ export const LibrosDetalle = () => {
         </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            <h4>Ficha catalográfica</h4>
+            <p><span id='spanAzul'>Título:</span> <span>{fotografia.titulo}</span></p>
+            <p><span id='spanAzul'>Autor:</span> <span>{fotografia.autor}</span></p>
+            <p><span id='spanAzul'>Prólogo:</span> <span>{fotografia.prologo}</span></p>
+            <p><span id='spanAzul'>Compilador (es):</span> <span>{fotografia.compiladores}</span></p>
+            <p><span id='spanAzul'>Editorial:</span> <span>{fotografia.editorial}</span></p>
+            <p><span id='spanAzul'>Año de publicación:</span> <span>{fotografia.fecha_publicacion}</span></p>
+            <p><span id='spanAzul'>Lugar de edición:</span> <span>{fotografia.lugar_edicion}</span></p>
+            <p><span id='spanAzul'>Año de reimpresión	:</span> <span>{fotografia.fehca_reimpresion}</span></p>
+            <p><span id='spanAzul'>Volumen:</span> <span>{fotografia.volumen}</span></p>
+            <p><span id='spanAzul'>Número de páginas:</span> <span>{fotografia.numero_paginas}</span></p>
+            <p><span id='spanAzul'>ISBN:</span> <span>{fotografia.isbn}</span></p>
+            <p><span id='spanAzul'>Colección/Serie:</span> <span>{fotografia.coleccion_serie}</span></p>
+
           </div>
         </div>
       </div>

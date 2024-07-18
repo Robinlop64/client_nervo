@@ -11,7 +11,8 @@ const data = {
             "Hemeroteca de la UAN",
             "Archivo General del Estado de Nayarit",
             "Archivo Histórico de la Diócesis de Tepic",
-            "Fototeca Centro INAH Tepic"
+            "Fototeca Centro INAH Tepic",
+            "Fundación yo te bendigo vida"
         ],
         Compostela: ["Colecciones Particulares"],
         Mazatlán: ["Archivo Histórico Municipal de Mazatlán"],
@@ -165,11 +166,6 @@ export const RegLibros = () => {
                 pdfFormData.append('pdfs', file);
             });
     
-            // Recorrer y mostrar los elementos de pdfFormData
-            for (let pair of pdfFormData.entries()) {
-                console.log(pair[0] + ': ' + pair[1].name); // Imprimir el nombre del archivo
-            }
-    
             const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/libros/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             const { pdfSubida2 } = await Api(`https://backend-google-fnsu.onrender.com/api/libros/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setResultado(true);
@@ -211,38 +207,20 @@ export const RegLibros = () => {
                                 <label>ISBN:</label>
                                 <input type="text" className='autor' name="isbn" placeholder="ISBN" value={formulario.isbn || ''} onChange={cambiado} />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Editorial</label>
-                                <select
+
+
+                            <div className="form-group" id='editorial_imprenta'>
+                                <label htmlFor="nombreSeudonimos">Editorial / imprenta</label>
+                                <input
+                                    type='text'
                                     id="nombreSeudonimos"
                                     name="editorial"
                                     value={formulario.editorial || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar editorial</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
+                                </input>
                             </div>
-                            <div className="form-group">
-                                <label>Imprenta</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="imprenta"
-                                    value={formulario.imprenta || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                </select>
-                            </div>
+                           
 
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Numero de edición</label>
@@ -250,7 +228,7 @@ export const RegLibros = () => {
                                     type="number"
                                     id="numeroEdicionInput"
                                     name="numero_edicion"
-                                    placeholder='ancho'
+                                    placeholder=''
                                     value={formulario.numero_edicion}
                                     onChange={cambiado}
                                 />
@@ -276,167 +254,81 @@ export const RegLibros = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Lugar de publicación</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="lugar_publicacion"
-                                    placeholder="Lugar de publicación"
-                                    value={formulario.lugar_publicacion }
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group" id='columnas' >
+                            
+                            <div className="form-group" id='lugar_edicion' >
                                 <label htmlFor="columnas">Lugar de edición</label>
                                 <input
                                     type="text"
-                                    id="columnasInput"
+                                    id="lugar_edicionInput"
                                     name="lugar_edicion"
                                     placeholder="Lugar deedicion"
                                     value={formulario.lugar_edicion || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>Fecha de publicación</label>
+                            <div className="form-group" id="numeroEdicion">
+                            <label id='fecha_publicacionLabel'>Año de publicación</label>
                             <input
-                                type="date"
+                                type="number"
                                 name="fecha_publicacion"
                                 value={formulario.fecha_publicacion}
                                 onChange={cambiado}
                             />
 
                             </div>
-                            <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>Fecha de reimpresion</label>
+                            <div className="form-group" id="numeroEdicion">
+                            <label id='fecha_publicacionLabel'>Año de reimpresión</label>
                             <input
-                                type="date"
+                                type="number"
                                 name="fecha_reimpresion"
                                 value={formulario.fecha_reimpresion}
                                 onChange={cambiado}
                             />
                             </div>
-                            <div className="form-group" id="nombrePeriodico">
-                                <label htmlFor="nombrePeriodico">Encuadernación</label>
-                                <select
-                                    id="nombrePeriodicoSelect"
-                                    name="encuadernacion"
-                                    value={formulario.encuadernacion || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar tipo de Iconografia</option>
-                                    <option value="Dibujo">Dibujo</option>
-                                    <option value="Pintura">Pintura</option>
-                                    <option value="Grabados">Grabados</option>
-                                    <option value="Carteles">Carteles</option>
-                                    
-                                </select>
-
-                                <div className="form-group" id="numeroEdicion">
+                            <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Volumen</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="numeroEdicionInput"
                                     name="volumen"
-                                    placeholder='ancho'
+                                    placeholder=''
                                     value={formulario.volumen}
                                     onChange={cambiado}
                                 />
-                               
-                            </div>
-                            <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Tomo</label>
-                                <input
-                                    type="number"
-                                    id="numeroEdicionInput"
-                                    name="tomo"
-                                    placeholder='ancho'
-                                    value={formulario.tomo}
-                                    onChange={cambiado}
-                                />
-                               
-                            </div>
-                            
-
-
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Género literario</label>
-                                <select
-                                    id="nombreSeudonimos"
-                                    name="genero_literario"
-                                    value={formulario.genero_literario || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar editorial</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
-                            </div>
-                            <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de ejemplar</label>
-                                <input
-                                    type="number"
-                                    id="numeroEdicionInput"
-                                    name="numero_ejemplar"
-                                    placeholder='ancho'
-                                    value={formulario.numero_ejemplar}
-                                    onChange={cambiado}
-                                />
-                               
-                            </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">relación con el autor</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="relacion_autor"
-                                    placeholder="corriente"
-                                    value={formulario.relacion_autor || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-
-                            
+                            </div>  
                         </div>
                             <div className='divisor_form2'>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Premios</label>
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="seccion">Prólogo</label>
                                 <input
                                     type="text"
-                                    id="seccionInput"
-                                    name="premios"
-                                    placeholder="corriente"
-                                    value={formulario.premios || ''}
+                                    id="prologoInput"
+                                    name="prologo"
+                                    placeholder=""
+                                    value={formulario.prologo || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Citas</label>
+                     
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="prologo">Compiladores</label>
                                 <input
                                     type="text"
-                                    id="seccionInput"
-                                    name="citas"
-                                    placeholder="corriente"
-                                    value={formulario.citas || ''}
+                                    id="prologoInput"
+                                    name="compiladores"
+                                    placeholder=""
+                                    value={formulario.compiladores || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Colaboradores</label>
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="prologo">Colección/Serie</label>
                                 <input
                                     type="text"
-                                    id="seccionInput"
-                                    name="colaboradores"
-                                    placeholder="corriente"
-                                    value={formulario.colaboradores || ''}
+                                    id="prologoInput"
+                                    name="coleccion_serie"
+                                    placeholder=""
+                                    value={formulario.coleccion_serie || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -446,25 +338,38 @@ export const RegLibros = () => {
                             
 
                             
-                            <div className='form-group'>
+                            <div className='form-group' id='images'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
 
-                            <div className='form-group'>
+                            <div className='form-group' id='pdf2'>
                                 <label htmlFor='pdfs'>Pdf</label>
-                                <input type='file' name='pdfs' id="pdf" multiple/>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
                             </div>
 
 
                             <div className='divisor_form'>
-                            <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                            <div className="form-group"id="pendientes">
+                                <label htmlFor="pendientes" id='pendientesLabel'>Pendientes</label>
                                 <textarea
                                     type="text"
-                                    id="resumenInput"
+                                    id="pendientesInput"
+                                    name="pendientes"
+                                    placeholder=""
+                                    value={formulario.pendientes || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                    
+                            <div className="form-group"id="pendientes">
+                                <label htmlFor="pendientes" id='pendientesLabel'>Notas</label>
+                                <textarea
+                                    type="text"
+                                    id="pendientesInput"
                                     name="resumen"
-                                    placeholder="Resumen"
+                                    placeholder=""
                                     value={formulario.resumen || ''}
                                     onChange={cambiado}
                                 />
@@ -591,11 +496,16 @@ export const RegLibros = () => {
                             <div className="form-group">
                                 <label>Tema:</label>
                                 <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                                    <option value="NA">Seleccionar el tema</option>
+                                    <option value="Poesía"> Poesía</option>
+                                    <option value="Libros sobre Amado Nervo"> Libros sobre Amado Nervo </option>
+                                    <option value="Antologías"> Antologías</option>
+                                    <option value="Novelas">Novelas</option>
+                                    <option value="Cuentos">Cuentos</option>    
+                                    <option value="Prosa">Prosa</option>
+                                    <option value="Literatura Mexicana">Literatura Mexicana</option>
+                                    <option value="Obras Completas">Obras Completas</option>
+                                    <option value="NA">NA</option>
                                 </select>
                             </div>                       
                             </div>

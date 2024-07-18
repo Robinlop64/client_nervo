@@ -2,6 +2,10 @@
   font-family: marguerite;
   src: url("./font/marguerite.ttf");
 }
+@font-face {
+  font-family: PoiretOne;
+  src: url("./font/PoiretOne-Regular.ttf");
+}
 
 /* General*/
 * {
@@ -30,6 +34,7 @@ h1 {
   display: block;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(to bottom, black,#0672A8);
 }
 .header-container {
   display: flex;
@@ -56,12 +61,13 @@ h1 {
   width: 100%;
   background-color: #0672A8;
   height: 40px;
-  font-family: marguerite;
+  font-family: PoiretOne;
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  font-size: 20px;
 }
 
 #nav ul {
@@ -117,12 +123,13 @@ h1 {
   width: 100%;
   background-color: #800;
   height: 40px;
-  font-family: marguerite;
+  font-family: PoiretOne;
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  font-size: 24px;
 }
 
 #nav2 ul {
@@ -200,7 +207,11 @@ h1 {
   justify-content: center;
   align-items: center;
   padding: 0px;
+  background: linear-gradient(to bottom, #0672A8,#5e5e5e);
+  height: 110%;
+  background-repeat: repeat; /* Repite la imagen para llenar el contenedor */
 }
+
 
 .inicio_container {
   background-color: black;
@@ -212,25 +223,28 @@ h1 {
   background-image: url('img/Fondo1.jpg');
   background-size: cover; /* Ensure the background image covers the container */
   background-position: center; /* Center the background image */
+  height: 90%;
 }
 
 #img_inicio {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 600px;
+  box-shadow: 15px 15px 15px 5px rgba(0, 0, 0, 0.3);
 }
 
 #img_inicio img {
   width: 100%;
   height: auto;
+  
 }
 
 #texto {
   position: absolute;
   top: 100px;
-  left: 5%;
+  left: 10%;
   color: white;
-  font-size: 30px; /* Adjust font size as needed */
+  font-size: 40px; /* Adjust font size as needed */
   font-family: marguerite;
   padding: 0px;
   
@@ -242,11 +256,12 @@ h1 {
 #footer {
   width: 100%;
   margin: 0 auto;
-  background-color: black;
+  background: linear-gradient(to bottom, #5e5e5e,black);
   min-height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 0px;
 }
 
 .footer-container {
@@ -271,10 +286,15 @@ h1 {
   font-size: 20px;
 }
 
-#footer #foto img,
+
 #footer #foto2 img {
   width: 150px;
+  margin-left: 50px;
 } 
+#footer #foto img{
+  width: 100px;
+  margin-right: 70px;
+}
 /*---------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------Acervo-------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------*/
@@ -531,7 +551,7 @@ h1 {
 /*---------------------------------------------------------------------------------------------------------------------------------*/
 .main_fotodetalle{
   background-image: url(../public/img/fondo2.jpg);
-  font-family: Arial, sans-serif;
+  font-family:Poiret One;
   height: 100%;
   min-height: 400px;
   display: block;
@@ -557,7 +577,7 @@ h1 {
 }
 
 .container_fotodetalle {
-  width: 70%;
+  width: 75%;
   margin: 0 auto;
   padding: 20px;
   height: 100%;
@@ -607,7 +627,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 40%;
   text-align: center;
   margin: 20px;
   display: block;
@@ -642,20 +662,21 @@ h1 {
   padding-top: 1px;
   width: 100%;
   height: auto;
+  max-height: 600px;
+  width: auto;
   display: block;
   float: lefts;
   margin: 0px;
 }
 
 .contenido_fotodetalle {
- 
   height: 100%;
   padding: 10px;
   margin-top: 25px;
   color: #333;
-  width: 30%;
+  width: 40%;
   display: block;
-  float: left;
+  float: right;
 }
 
 .contenido_fotodetalle h3 {
@@ -667,15 +688,32 @@ h1 {
 
 .contenido_fotodetalle p {
   display: flex;
-  justify-content: left;  
+  justify-content:left;  
   margin: 5px 0;
   padding-bottom: 5px;
+  font-family: PoiretOne;
+  font-size: 20px;
+  color: black;
+  color: #800;
+
 }
 
 .contenido_fotodetalle p:last-child {
   border-bottom: none;
 }
+.contenido_fotodetalle h4 {
+  text-align:left;
+  font-family: PoiretOne;
+  font-size: 25px;
+  color: #0672A8;
+  margin-bottom: 20px;
+  border-bottom:2px solid #0672A8;
 
+}
+#spanAzul{
+  color: #800;
+  margin-right: 10px;
+}
 
 #main {
   background-color: white;
@@ -686,7 +724,7 @@ h1 {
   position: absolute;
   top: 85%;
   left: 7%;
-  transform: translateY(-50%);
+  transform: translateY(-70%);
   color: white;
   font-size: 40px;
   font-family: marguerite;
@@ -1181,6 +1219,51 @@ min-width: 50%;
   min-width: 65%;
   margin-left: 30px;
 }
+
+#editorial_imprenta{
+  margin-top: 30px;
+}
+#lugar_edicion{
+  max-width: 40%;
+  min-width: 40%;
+  margin-top: 30px;
+}
+#lugar_edicionInput{
+  max-width: 70%;
+  min-width: 70%;
+}
+
+
+#prologo{
+  max-width: 33%;
+  min-width: 33%;;
+}
+#prologoInput{
+  max-width: 65%;
+  min-width: 65%;
+}
+
+#pendientes{
+  width: 50%;
+  
+}
+#pendientesLabel{
+  float: none;
+  text-align: center;
+}
+#pendientesInput{
+  max-width: 90%;
+  min-width: 90%;
+  min-height: 100px;
+}
+#images{
+  margin-left: 200px;
+}
+#pdf2{
+  margin-right: 200px;
+  float: right;
+}
+
 /*--------------------------------------Fotodetalle Menu end---------------------------------------*/
 #container2 {
   max-width: 900px;
