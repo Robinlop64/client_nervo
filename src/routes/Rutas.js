@@ -59,6 +59,10 @@ import { MonumentosTema } from '../componentes/pages/acervo/temas/MonumentosTema
 import { MonumentosDetalle } from '../componentes/pages/acervo/detalles/MonumentosDetalle';
 import { ObjetosDetalle } from '../componentes/pages/acervo/detalles/ObjetosDetalle';
 import { PartiturasDetalle } from '../componentes/pages/acervo/detalles/PartiturasDetalle';
+import { EditarDocumentacion } from '../componentes/pages/formularios/Editores/EditarDocumentacion';
+import { EditarPartituras } from '../componentes/pages/formularios/Editores/EditarPartituras';
+import { EditarObjetos } from '../componentes/pages/formularios/Editores/EditarObjetos';
+import { EditarMonumentos } from '../componentes/pages/formularios/Editores/EditarMonumentos';
 
 export const Rutas = () => {
   return (
@@ -146,19 +150,22 @@ export const Rutas = () => {
             <Route path="/admin/documentacion" element={<Documentacion/>} />
             <Route path="/admin/documentacion/tema/:id" element={<DocumentacionTema />} />
             <Route path="/admin/documentacion/:id" element={<DocumentacionDetalle />} />
-
+            <Route path="/admin/editar/documentacion/:id" element={<EditarDocumentacion />} />
 
             <Route path="/admin/partituras" element={<Partituras/>} />
             <Route path="/admin/partituras/tema/:id" element={<PartiturasTema />} />
             <Route path="/admin/partituras/:id" element={<PartiturasDetalle />} />
+            <Route path="/admin/editar/partituras/:id" element={<EditarPartituras />} />
             
             <Route path="/admin/objetos" element={<Objetos/>} />
             <Route path="/admin/objetos/tema/:id" element={<ObjetosTema />} />
             <Route path="/admin/objetos/:id" element={<ObjetosDetalle />} />
+            <Route path="/admin/editar/objetos/:id" element={<EditarObjetos />} />
             
             <Route path="/admin/monumentos" element={<Monumentos/>} />
             <Route path="/admin/monumentos/tema/:id" element={<MonumentosTema />} />
             <Route path="/admin/monumentos/:id" element={<MonumentosDetalle />} />
+            <Route path="/admin/editar/monumentos/:id" element={<EditarMonumentos />} />
 
 
             <Route path='/admin/logout' element={<Logout/>}/>
