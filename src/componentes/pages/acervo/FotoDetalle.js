@@ -35,9 +35,9 @@ export const FotoDetalle = () => {
     const { pais, institucion, tema } = fotografia;
     return (
       <>
-        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
-        <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
+        <span onClick={() => navigate(`/pais/${pais}`)}>{pais} /</span> 
+        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion} /</span> 
+        <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias / </span> 
         <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
       </>
     );
@@ -47,7 +47,7 @@ export const FotoDetalle = () => {
   }
   return (
     <main className='main_fotodetalle'>
-      <div id='nav'>
+      <div id='nav3'>
         <p>{getNavigationPath()}</p>
       </div>
       <div className="container_fotodetalle">
