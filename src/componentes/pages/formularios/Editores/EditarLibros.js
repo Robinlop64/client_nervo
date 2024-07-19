@@ -123,7 +123,7 @@ export const EditarLibros = () => {
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.hemero);
+        setFotografia(datos.libro);
       } else {
         // Manejo de error
       }
@@ -160,11 +160,9 @@ export const EditarLibros = () => {
         Array.from(fileInput.files).forEach((file, index) => {
             formData.append(`files`, file);
         });
-      setSaved("saved");
 
       const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/libros/registrar-imagen/" + id, "POST", formData, true);
-      const { subida3, cargando3 } = await Api("https://backend-google-fnsu.onrender.com/api/libros/editar/" + id, "PUT", nueva_foto);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/libros/registrar-imagen/" + id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/libros/editar-imagen/" + id, "POST", formData, true);
 
       setResultado(true);
       setSaved("saved");
@@ -184,180 +182,191 @@ export const EditarLibros = () => {
             </NavLink>
           </div>
           <form onSubmit={guardar_foto}>
-            <h2>Campos generales</h2>
-            <div className='divisor_form'>
-              <div className="form-group" id="nombrePeriodico">
-                <label htmlFor="nombrePeriodico">Tipo de iconografia</label>
-                <select
-                  id="nombrePeriodicoSelect"
-                  name="nombre_periodico"
-                  defaultValue={fotografia.nombre_periodico }
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.nombre_periodico}>{fotografia.nombre_periodico}</option>
-                  <option value="El Nacional">El Nacional</option>
-                </select>
-              </div>
-              <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de edición</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_edicion"
-                  defaultValue={fotografia.numero_edicion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="FechaPublicacion">
-                <label id='fecha_publicacionLabel'>Fecha de publicación</label>
-                <input
-                  type="date"
-                  name="fecha_publicacion"
-                  defaultValue={fotografia.fecha_publicacion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de registro</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_registro"
-                  defaultValue={fotografia.numero_registro || ''}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group">
-                <label>Encabezado</label>
-                <input id='encabezado' type="textarea" name="encabezado" placeholder="Título" defaultValue={fotografia.encabezado || ''} onChange={cambiado} />
-              </div>
-              <div className="form-group" id='autor'>
-                <label>Autor:</label>
-                <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor || ''} onChange={cambiado} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="nombreSeudonimos">Seudónimo</label>
-                <select
-                  id="nombreSeudonimos"
-                  name="seudonimos"
-                  defaultValue={fotografia.seudonimos || ''}
-                  onChange={cambiado}
-                >
-                  <option value="">Seleccionar seudónimo</option>
-                  <option value="Román">Román</option>
-                  <option value="Rip-Rip">Rip-Rip</option>
-                  <option value="Tricio">Tricio</option>
-                  <option value="Benedictus">Benedictus</option>
-                  <option value="Joie">Joie</option>
-                  <option value="Versión española de Amado Nervo">Versión española de Amado Nervo</option>
-                  <option value="X.Y.Z">X.Y.Z</option>
-                </select>
-              </div>
-              <div className="form-group" id="seccion">
-                <label htmlFor="seccion">Sección</label>
-                <input
-                  type="text"
-                  id="seccionInput"
-                  name="seccion"
-                  placeholder="Sección"
-                  defaultValue={fotografia.seccion || ''}
-                  onChange={cambiado}
-                />
-              </div>
-            </div>
-            <div className='divisor_form2'>
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Página(s)</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="numero_paginas"
-                                    placeholder="Página"
-                                    defaultValue={fotografia.numero_paginas }
-                                    onChange={cambiado}
-                                />
+                        <h2>Campos generales</h2>
+
+                        <div className='divisor_form'>
+                          <div className="form-group">
+                                <label>Título</label>
+                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" defaultValue={fotografia.titulo|| ''} onChange={cambiado} />
                             </div>
-                            <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Columnas</label>
-                                <input
-                                    type="text"
-                                    id="columnasInput"
-                                    name="columnas"
-                                    placeholder="Columnas"
-                                    defaultValue={fotografia.columnas || ''}
-                                    onChange={cambiado}
-                                />
+                            <div className="form-group" id='autor'>
+                                <label>Autor:</label>
+                                <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor} onChange={cambiado} />
                             </div>
-                            <div className="form-group">
-                                <label>Género periodístico</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="genero_periodistico"
-                                    defaultValue={fotografia.genero_periodistico || ''}
+                            <div className="form-group" id='autor'>
+                                <label>ISBN:</label>
+                                <input type="text" className='autor' name="isbn" placeholder="ISBN" defaultValue={fotografia.isbn || ''} onChange={cambiado} />
+                            </div>
+
+
+                            <div className="form-group" id='editorial_imprenta'>
+                                <label htmlFor="nombreSeudonimos">Editorial / imprenta</label>
+                                <input
+                                    type='text'
+                                    id="nombreSeudonimos"
+                                    name="editorial"
+                                    defaultValue={fotografia.editorial || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                </select>
+                                </input>
+                            </div>
+                           
+
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Numero de edición</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_edicion"
+                                    placeholder=''
+                                    defaultValue={fotografia.numero_edicion}
+                                    onChange={cambiado}
+                                />
+                               
+                            </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número Páginas</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_paginas"
+                                    defaultValue={fotografia.numero_paginas || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de registro</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_registro"
+                                    defaultValue={fotografia.numero_registro || ''}
+                                    onChange={cambiado}
+                                />
                             </div>
                             
-                            <div className="form-group" id="lugarPublicacion">
-                                <label htmlFor="encabezado">Lugar de publicación</label>
+                            <div className="form-group" id='lugar_edicion' >
+                                <label htmlFor="columnas">Lugar de edición</label>
                                 <input
                                     type="text"
-                                    id="lugarPublicacionInput"
-                                    name="lugar_publicacion"
-                                    placeholder="Lugar de publicación"
-                                    defaultValue={fotografia.lugar_publicacion || ''}
+                                    id="lugar_edicionInput"
+                                    name="lugar_edicion"
+                                    placeholder="Lugar deedicion"
+                                    defaultValue={fotografia.lugar_edicion || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="periodicidad">
-                                <label htmlFor="tipoPublicacion">Periodicidad</label>
-                                <select
-                                    type="text"
-                                    id="periodicidadInput"
-                                    name="periodicidad"
-                                    placeholder="Tipo de publicación"
-                                    defaultValue={fotografia.periodicidad || ''}
-                                    onChange={cambiado}
-                                >
-                                <option value="">Seleccionar periodicidad</option>
-                                <option value="Diaria">Diaria</option>
-                                <option value="Semanal">Semanal</option>
-                                <option value="Mensual">Mensual</option>
-                                </select>
+                            <div className="form-group" id="numeroEdicion">
+                            <label id='fecha_publicacionLabel'>Año de publicación</label>
+                            <input
+                                type="number"
+                                name="fecha_publicacion"
+                                defaultValue={fotografia.fecha_publicacion}
+                                onChange={cambiado}
+                            />
+
                             </div>
-                            <div className='form-group'>
+                            <div className="form-group" id="numeroEdicion">
+                            <label id='fecha_publicacionLabel'>Año de reimpresión</label>
+                            <input
+                                type="number"
+                                name="fecha_reimpresion"
+                                defaultValue={fotografia.fecha_reimpresion}
+                                onChange={cambiado}
+                            />
+                            </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Volumen</label>
+                                <input
+                                    type="text"
+                                    id="numeroEdicionInput"
+                                    name="volumen"
+                                    placeholder=''
+                                    defaultValue={fotografia.volumen}
+                                    onChange={cambiado}
+                                />
+                            </div>  
+                        </div>
+                            <div className='divisor_form2'>
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="seccion">Prólogo</label>
+                                <input
+                                    type="text"
+                                    id="prologoInput"
+                                    name="prologo"
+                                    placeholder=""
+                                    defaultValue={fotografia.prologo || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                     
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="prologo">Compiladores</label>
+                                <input
+                                    type="text"
+                                    id="prologoInput"
+                                    name="compiladores"
+                                    placeholder=""
+                                    defaultValue={fotografia.compiladores || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="prologo">
+                                <label htmlFor="prologo">Colección/Serie</label>
+                                <input
+                                    type="text"
+                                    id="prologoInput"
+                                    name="coleccion_serie"
+                                    placeholder=""
+                                    defaultValue={fotografia.coleccion_serie || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            
+                            
+                            
+                            
+
+                            
+                            <div className='form-group' id='images'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
-                            <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+
+                            <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
+                            </div>
+
+
+                            <div className='divisor_form'>
+                            <div className="form-group"id="pendientes">
+                                <label htmlFor="pendientes" id='pendientesLabel'>Pendientes</label>
                                 <textarea
                                     type="text"
-                                    id="resumenInput"
+                                    id="pendientesInput"
+                                    name="pendientes"
+                                    placeholder=""
+                                    defaultValue={fotografia.pendientes || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                    
+                            <div className="form-group"id="pendientes">
+                                <label htmlFor="pendientes" id='pendientesLabel'>Notas</label>
+                                <textarea
+                                    type="text"
+                                    id="pendientesInput"
                                     name="resumen"
-                                    placeholder="Resumen"
+                                    placeholder=""
                                     defaultValue={fotografia.resumen || ''}
                                     onChange={cambiado}
                                 />
                             </div>
 
-                            <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
-                                <textarea
-                                    type="text"
-                                    id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    defaultValue={fotografia.transcripcion || ''}
-                                    onChange={cambiado}
-                                />
+                            
                             </div>
-                        
 
                             <div className="form-group">
                                 <label>País:</label>
@@ -367,7 +376,7 @@ export const EditarLibros = () => {
                                     defaultValue={fotografia.pais || ''}
                                     onChange={cambiado}>
 
-                                    <option value="">Seleccionar país</option>
+                                    <option value={fotografia.pais}>{fotografia.pais}</option>
                                     {paises.map((pais) => (
                                         <option key={pais} name="paises" value={pais}>
                                             {pais}
@@ -384,7 +393,7 @@ export const EditarLibros = () => {
                                     defaultValue={fotografia.ciudad || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar ciudad</option>
+                                    <option value={fotografia.ciudad}>{fotografia.ciudad}</option>
                                     {ciudades.map((ciudad) => (
                                         <option key={ciudad} value={ciudad}>
                                             {ciudad}
@@ -396,7 +405,7 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Institución:</label>
                                 <select id="institucion" name='institucion' defaultValue={fotografia.institucion || ""} onChange={cambiado}>
-                                    <option value="">Seleccionar institución</option>
+                                    <option value={fotografia.ciudad}>{fotografia.ciudad}</option>
                                     {instituciones.map((institucion, index) => (
                                         <option key={index} value={institucion}>
                                             {institucion}
@@ -409,7 +418,7 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Ubicación física:</label>
                                 <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
+                                    <option value={fotografia.ubicacion_fisica}>{fotografia.ubicacion_fisica}</option>
                                     <option value="Biblioteca">Biblioteca</option>
                                     <option value="Archivo">Archivo</option>
                                     <option value="Museo">Museo</option>
@@ -419,7 +428,7 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Colección:</label>
                                 <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
+                                    <option value={fotografia.coleccion}>{fotografia.coleccion}</option>
                                     <option value="Privada">Privada</option>
                                     <option value="Pública">Pública</option>
                                 </select>
@@ -432,7 +441,7 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Año de adquisición:</label>
                                 <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
-                                    <option value="">Seleccionar año</option>
+                                    <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
                                     <option value="2018">2018</option>
@@ -460,6 +469,7 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Hallazgo:</label>
                                 <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
+                                    <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
@@ -468,26 +478,31 @@ export const EditarLibros = () => {
                             <div className="form-group">
                                 <label>Persona que registra:</label>
                                 <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
+                                  <option value={fotografia.persona_registra}>{fotografia.persona_registra}</option>
                                     <option value="Mayra Fonseca">Mayra Fonseca</option>
                                     <option value="Robin">Robin</option>
                                     <option value="Xoely">Xoely</option>
+                                    <option value="Perla">Perla</option>
                                 </select>
                             </div>
 
                             <div className="form-group">
                                 <label>Tema:</label>
                                 <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                                    <option value={fotografia.tema}>{fotografia.tema}</option>
+                                    <option value="Poesía"> Poesía</option>
+                                    <option value="Libros sobre Amado Nervo"> Libros sobre Amado Nervo </option>
+                                    <option value="Antologías"> Antologías</option>
+                                    <option value="Novelas">Novelas</option>
+                                    <option value="Cuentos">Cuentos</option>    
+                                    <option value="Prosa">Prosa</option>
+                                    <option value="Literatura Mexicana">Literatura Mexicana</option>
+                                    <option value="Obras Completas">Obras Completas</option>
+                                    <option value="NA">NA</option>
                                 </select>
+                            </div>                       
                             </div>
-                            
-                            </div>
-
-          </form>
+                    </form>
           <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
               <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>

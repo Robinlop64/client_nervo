@@ -162,8 +162,7 @@ export const EditarHemerografia = () => {
       setSaved("saved");
 
       const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + id, "POST", formData, true);
-      const { subida3, cargando3 } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/editar/" + id, "PUT", nueva_foto);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/" + id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/editar-imagen/" + id, "POST", formData, true);
 
       setResultado(true);
       setSaved("saved");
