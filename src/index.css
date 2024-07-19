@@ -495,7 +495,7 @@ h1 {
 .temas_contenedor_items{
     width: 70%;
     padding: 20px;
-    background-color: white;
+    background: linear-gradient(to top,white,white);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
@@ -521,6 +521,7 @@ h1 {
   text-decoration: none;
   color: inherit;
   min-height: 100px;
+  background-color: white;
   text-align: center;
   color: #0672A8;
 
