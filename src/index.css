@@ -421,7 +421,7 @@ h1 {
 
 .clasificacion {
   border-radius: 10px;
-  box-shadow: 0px 0px 6px #0672A8;
+  box-shadow: 0px 0px 0px #0672A8;
   margin: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -467,7 +467,10 @@ h1 {
 .acervo_pages :hover {
   
   color: #800;
-  background: linear-gradient(to bottom, #0672A8,#0672A8);
+  border-top: 3px #0672A8;
+  border-left: 3px #0672A8;
+  border-right: 3px #0672A8;
+  border-bottom: 3px #0672A8;
   .mascara img{
     box-shadow: 0px 0px 6px #800;
   }
@@ -491,6 +494,7 @@ h1 {
   height: 100%;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 .temas_contenedor_items{
     width: 70%;
@@ -501,6 +505,11 @@ h1 {
     box-sizing: border-box;
     text-align: center;
 }
+.main_temas_fotografia h1{
+  color: #800;
+  border-bottom: 3px solid #0672A8;
+
+}
 .temas_contenedor_items h3{
   font-size: 30px;
   font-family: marguerite;
@@ -508,7 +517,9 @@ h1 {
 }
 .temas_contenedor {
   border-radius: 10px;
-  box-shadow: 0px 0px 6px #0672A8;
+  box-shadow: 0px 0px 0px #0672A8;
+  background: linear-gradient(to bottom,white,#0672A8);
+  border-top:1px solid white;
   margin: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -520,15 +531,32 @@ h1 {
   margin-left: 27px;
   text-decoration: none;
   color: inherit;
+  
   min-height: 100px;
   background-color: white;
   text-align: center;
-  color: #0672A8;
+  color: white;
+  transition: all 200ms;
 
 }
 .temas_contenedor:hover{
   background-color: #0672A8;
-  color: white;
+  color: #005f88;
+  border-top: 3px solid #0672A8;
+  box-shadow: 0px 0px 6px #0672A8;
+  border-bottom: 3px solid #800;
+  border-left: 3px solid #800;
+  border-right: 3px solid #0672A8;
+  h3{
+    border-bottom: 3px solid #005f88;
+    font-size: 30px;
+  }
+  #img_temas{
+    box-shadow: 0px 0px 6px #333;
+  }
+  p{
+    color: #005f88;
+  }
 }
 
 .temas_contenedor article{
@@ -549,7 +577,9 @@ h1 {
   width: 25%;
   min-height: 200px;
   max-height: 200px;
-  
+  border-radius: 10px;
+  box-shadow: 0px 0px 0px #333;
+  margin-right: 10px;
   
 }
 #p_temas{
