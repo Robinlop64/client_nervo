@@ -58,8 +58,8 @@ export const HemerografiaTema = () => {
   return (
     <main className='main_album'>
       <div className='container_fotografia'>
-        <h3>{nombrePeriodico}</h3>
-        <button onClick={getFotos}>Mostrar Fotografías</button>
+        <h1>{nombrePeriodico}</h1>
+  
         <div className='fotografias-container'>
         {fotos.map((fotografia) => {
   // Verifica que el campo 'images' exista y tenga al menos una imagen

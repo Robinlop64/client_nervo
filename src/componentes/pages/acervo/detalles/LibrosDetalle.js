@@ -56,7 +56,7 @@ export const LibrosDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco'>
+        <div className='marco_libros'>
           {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
           {fotografia.images && fotografia.images.map((image, index) => (
             <img
@@ -67,7 +67,7 @@ export const LibrosDetalle = () => {
             />
           ))}
         </div>
-          <div className='contenido_fotodetalle'>
+          <div className='contenido_librosDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
             <h4>Ficha catalográfica</h4>
             <p><span id='spanAzul'>Título:</span> <span>{fotografia.titulo}</span></p>

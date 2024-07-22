@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 export const Libros = () => {
   const [temas, setTemas] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     getTemas();
   }, []);

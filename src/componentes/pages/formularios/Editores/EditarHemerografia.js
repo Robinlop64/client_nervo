@@ -272,7 +272,7 @@ export const EditarHemerografia = () => {
                   <option value="Actualidades madrileñas">Actualidades madrileñas</option>
                   <option value="La varita de la virtud">La varita de la virtud</option>
                   <option value="Desde parís">Desde parís</option>
-                  <option value="Desde Madrid">Desde Madrid</option>                      
+                  <option value="Desde Madrid">Desde Madrid</option>
 
                   <option value="Actualidades">Actualidades</option>
                   <option value="Actualidades españolas">Actualidades españolas</option>
@@ -506,10 +506,22 @@ export const EditarHemerografia = () => {
                 <label>Tema:</label>
                 <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
                   <option value={fotografia.tema}>{fotografia.tema}</option>
-                  <option value="1"> tema 1</option>
-                  <option value="2"> tema 2 </option>
-                  <option value="El Nacional"> El Nacional </option>
-                  <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                  <option value="El Nacional">El Nacional</option>
+                  <option value="El Imparcial">El Imparcial</option>
+                  <option value="El Mundo">El Mundo</option>
+                  <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
+                  <option value="El País">El País</option>
+                  <option value="El Paladín">El Paladín</option>
+                  <option value="El Plata">El Plata</option>
+                  <option value="El Siglo">El Siglo</option>
+                  <option value="El Telégrafo">El Telégrafo</option>
+                  <option value="La Defensa">La Defensa</option>
+                  <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
+                  <option value="La Mañana">La Mañana</option>
+                  <option value="La Nación">La Nación</option>
+                  <option value="La Razón">La Razón </option>
+                  <option value="La Prensa">La Prensa</option>
+                  <option value="México Libre">México Libre</option>
                 </select>
               </div>
 

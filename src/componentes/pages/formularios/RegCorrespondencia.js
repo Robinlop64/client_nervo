@@ -298,16 +298,7 @@ export const RegCorrespondencia = () => {
                                 />
                             </div>
 
-                            <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de páginas</label>
-                                <input
-                                    type="number"
-                                    id="numeroEdicionInput"
-                                    name="numero_paginas"
-                                    value={formulario.numero_paginas || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
+                            
                             <div className="form-group">
                                 <label>Título</label>
                                 <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
@@ -319,32 +310,9 @@ export const RegCorrespondencia = () => {
                             <div className='divisor_form2'>
                            
                             
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Idioma</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="idioma"
-                                    placeholder="idioma"
-                                    value={formulario.idioma }
-                                    onChange={cambiado}
-                                />
-                            </div>
+                           
                             
-                            <div className="form-group">
-                                <label>Formato</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="formato"
-                                    value={formulario.formato || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                </select>
-                            </div>
+                            
                             
                             <div className="form-group" id="seccion">
                                 <label htmlFor="seccion">Anexos</label>
@@ -359,30 +327,19 @@ export const RegCorrespondencia = () => {
                             </div>
 
 
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Estado de la carta</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="estado_carta"
-                                    placeholder="estado de la carta"
-                                    value={formulario.estado_carta || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Notas</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
-                                    placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    name="notas"
+                                    placeholder=""
+                                    value={formulario.notas || ''}
                                     onChange={cambiado}
                                 />
                             </div>

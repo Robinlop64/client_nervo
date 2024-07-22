@@ -181,7 +181,10 @@ export const RegMonumentos = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
-                        
+                        <div className="form-group">
+                                <label>Nombre de la obra</label>
+                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
+                            </div>
                             <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Tipo de monumentos</label>
                                 <select
@@ -191,21 +194,32 @@ export const RegMonumentos = () => {
                                     onChange={cambiado}
                                 >
                                     <option value="">Seleccionar tipo de monumentos</option>
-                                    <option value="Carta">Carta</option>
-                                    <option value="Postal">Postal</option>
-                                    <option value="Telegrama">Telegrama</option>
-                                    <option value="Tarjeta">Tarjeta</option>
+                                    <option value="Estatuas y esculturas">Estatuas y esculturas</option>
+                                    <option value="Placas conmemorativas">Placas conmemorativas</option>
+                                    <option value="Monumentos arquitectónicos">Monumentos arquitectónicos</option>
+                                    <option value="Espacios públicos y parques">Espacios públicos y parques</option>
+                                    <option value="Museos y centros culturales">Museos y centros culturales</option>
+                                    <option value="Bibliotecas y archivos">Bibliotecas y archivos</option>
+                                    <option value="Instituciones educativas">Instituciones educativas</option>
+                                    <option value="Calles y avenidas">Calles y avenidas</option>
+                                    <option value="Obras de arte">Obras de arte</option>
+                                    <option value="Lugares de sepultura">Lugares de sepultura</option>
+
                                     
                                 </select>
                             </div>
 
                             <div className="form-group" id='autor'>
-                                <label>Descripción física :</label>
+                                <label>Características físicas :</label>
                                 <input type="text" className='autor' name="descripcion_fisica" placeholder="Autor" value={formulario.descripcion_fisica || ''} onChange={cambiado} />
+                            </div>
+                            <div className="form-group" id='autor'>
+                                <label>Autor (es) :</label>
+                                <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
                             </div>
                             
                             <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>ubicacion</label>
+                            <label id='fecha_publicacionLabel'>Ubicación</label>
                             <input
                                 type="text"
                                 name="ubicacion"
@@ -224,12 +238,13 @@ export const RegMonumentos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
+                           
                             <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>placa</label>
+                            <label id='fecha_publicacionLabel'>Inscripciones</label>
                             <input
                                 type="text"
-                                name="placa"
-                                value={formulario.placa}
+                                name="inscripciones"
+                                value={formulario.inscripciones}
                                 onChange={cambiado}
                             />
                             </div>
@@ -237,34 +252,17 @@ export const RegMonumentos = () => {
 
                            
                             <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Evento</label>
+                                <label htmlFor="columnas">Fecha de inauguracion</label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     id="columnasInput"
-                                    name="evento"
+                                    name="fecha_inauguracion"
                                     placeholder="evento"
-                                    value={formulario.evento || ''}
+                                    value={formulario.fecha_inauguracion || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">descripcion-contexto</label>
-                                <select
-                                    id="nombreSeudonimos"
-                                    name="descripcion_contexto"
-                                    value={formulario.descripcion_contexto || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar medio </option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
-                            </div>
+                           
 
                         
                             
@@ -280,10 +278,7 @@ export const RegMonumentos = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Título</label>
-                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
-                            </div>
+                           
 
                             
                             
@@ -296,25 +291,25 @@ export const RegMonumentos = () => {
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Descripción /contexto</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
-                                    placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    name="descripcion_contexto"
+                                    placeholder=""
+                                    value={formulario.descripcion_contexto || ''}
                                     onChange={cambiado}
                                 />
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
+                                    name="pendientes"
+                                    placeholder=""
+                                    value={formulario.pendientes || ''}
                                     onChange={cambiado}
                                 />
                             </div>

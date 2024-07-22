@@ -69,7 +69,7 @@ export const LibrosTema = () => {
   return (
     <div
       key={fotografia._id}
-      className='fotografia-item'
+      className='libros-item'
       onClick={() => handleFotoClick(fotografia)}
     >
       {firstImage ? (

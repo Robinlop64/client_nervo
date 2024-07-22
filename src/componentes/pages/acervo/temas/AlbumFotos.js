@@ -55,8 +55,8 @@ export const AlbumFotos = () => {
     
       <main className='main_album'>
         <div className='container_fotografia'>
-          <h3>Fotografías</h3>
-          <button onClick={getFotos}>Mostrar Fotografías</button>
+          <h1>Fotografías</h1>
+
           <div className='fotografias-container'>
             {fotos.map((fotografia) => {
               const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;

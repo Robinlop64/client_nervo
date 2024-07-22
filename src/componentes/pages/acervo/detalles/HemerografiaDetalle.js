@@ -46,7 +46,7 @@ export const HemerografiaDetalle = () => {
 
   return (
     <main className='main_fotodetalle'>
-      <div id='nav'>
+      <div id='nav3'>
         <p>{getNavigationPath()}</p>
       </div>
       <div className="container_fotodetalle">
@@ -56,7 +56,7 @@ export const HemerografiaDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco'>
+        <div className='marco_hemerografia'>
           {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
           {fotografia.images && fotografia.images.map((image, index) => (
             <img
@@ -67,8 +67,9 @@ export const HemerografiaDetalle = () => {
             />
           ))}
         </div>
-          <div className='contenido_fotodetalle'>
+          <div className='contenido_hemerografiaDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
+            <h4>Ficha catalográfica</h4>
             <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
             <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
             <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>

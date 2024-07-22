@@ -183,27 +183,32 @@ export const RegDocumentacion = () => {
                         <div className='divisor_form'>
                         
                             <div className="form-group" id="nombrePeriodico">
+                            <div className="form-group">
+                                <label>Título</label>
+                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
+                            </div>
                                 <label htmlFor="nombrePeriodico">Tipo de documentacion</label>
-                                <select
+                                <input
+                                    type='text'
                                     id="nombrePeriodicoSelect"
                                     name="tipo_documentacion"
                                     value={formulario.tipo_documentacion || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar tipo de documentacion</option>
-                                    <option value="Carta">Carta</option>
-                                    <option value="Postal">Postal</option>
-                                    <option value="Telegrama">Telegrama</option>
-                                    <option value="Tarjeta">Tarjeta</option>
-                                    
-                                </select>
+                                </input>
                             </div>
 
                             <div className="form-group" id='autor'>
-                                <label>Emisor :</label>
-                                <input type="text" className='autor' name="emisor" placeholder="Autor" value={formulario.emisor || ''} onChange={cambiado} />
+                                <label>Institución que lo emite :</label>
+                                <input type="text" className='autor' name="institucion_emisor" placeholder="" value={formulario.institucion_emisor || ''} onChange={cambiado} />
+                            </div><div className="form-group" id='autor'>
+                                <label>Emisor:</label>
+                                <input type="text" className='autor' name="emisor" placeholder="" value={formulario.emisor || ''} onChange={cambiado} />
                             </div>
-                            
+                            <div className="form-group" id='autor'>
+                                <label>Destinatario :</label>
+                                <input type="text" className='autor' name="destinatario" placeholder="" value={formulario.destinatario || ''} onChange={cambiado} />
+                            </div>
                             <div className="form-group" id="FechaPublicacion">
                             <label id='fecha_publicacionLabel'>Fecha de emisión</label>
                             <input
@@ -236,35 +241,8 @@ export const RegDocumentacion = () => {
 
 
                            
-                            <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Propósito</label>
-                                <input
-                                    type="text"
-                                    id="columnasInput"
-                                    name="proposito"
-                                    placeholder="proposito"
-                                    value={formulario.proposito || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Medio de envío</label>
-                                <select
-                                    id="nombreSeudonimos"
-                                    name="medio_envio"
-                                    value={formulario.medio_envio || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar medio </option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
-                            </div>
+                           
+
 
                             
                             <div className="form-group" id="seccion">
@@ -296,30 +274,17 @@ export const RegDocumentacion = () => {
                             </div>
 
                             <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de páginas</label>
+                                <label htmlFor="numeroEdicion">Número de expediente o registro</label>
                                 <input
                                     type="number"
                                     id="numeroEdicionInput"
-                                    name="numero_paginas"
-                                    value={formulario.numero_paginas || ''}
+                                    name="numero_expediente"
+                                    value={formulario.numero_expediente || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Acceso al documento</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="documento"
-                                    placeholder="documento"
-                                    value={formulario.documento || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Título</label>
-                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
-                            </div>
+                         
+                           
 
                             
                             
@@ -327,82 +292,37 @@ export const RegDocumentacion = () => {
                             <div className='divisor_form2'>
                            
                             
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Idioma</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="idioma"
-                                    placeholder="idioma"
-                                    value={formulario.idioma }
-                                    onChange={cambiado}
-                                />
-                            </div>
+                           
                             
-                            <div className="form-group">
-                                <label>Formato</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="formato"
-                                    value={formulario.formato || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                </select>
-                            </div>
+                           
+                        
+
                             
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Anexos</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="anexos"
-                                    placeholder="anexos"
-                                    value={formulario.anexos || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Estado de la carta</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="estado_carta"
-                                    placeholder="estado de la carta"
-                                    value={formulario.estado_carta || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Contenido del documento</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
-                                    placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    name="contenido"
+                                    placeholder="Contenido del documento"
+                                    value={formulario.contenido || ''}
                                     onChange={cambiado}
                                 />
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
+                                    name="pendientes"
+                                    placeholder=""
+                                    value={formulario.pendientes || ''}
                                     onChange={cambiado}
                                 />
                             </div>

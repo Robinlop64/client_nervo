@@ -185,7 +185,8 @@ h1 {
 }
 
 #nav3 {
-  width: 100%;
+  width: 75%;
+  margin: 0px auto;
   background-color: #5e5e5e;
   height: 40px;
   font-family: PoiretOne;
@@ -194,8 +195,10 @@ h1 {
   align-items: center;
   justify-content: center;
   height: 100%;
+  min-height: 30px;
   font-size: 20px;
   border-top: 2px solid #800;
+  border-radius: 10px 10px 0px 0px;
 }
 
 #nav3 ul {
@@ -386,6 +389,7 @@ h1 {
   height: 100%;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 
 .container_acervo{
@@ -421,7 +425,6 @@ h1 {
 
 .clasificacion {
   border-radius: 10px;
-  box-shadow: 0px 0px 0px #0672A8;
   margin: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -433,6 +436,7 @@ h1 {
   text-decoration: none;
   color: inherit;
   background: linear-gradient(to bottom, white,#0672A8);
+  transition: all 300ms
 }
 
 .clasificacion article {
@@ -464,24 +468,18 @@ h1 {
   font-family: marguerite;
 }
 
-.acervo_pages :hover {
-  
+.clasificacion:hover {
   color: #800;
-  border-top: 3px #0672A8;
-  border-left: 3px #0672A8;
-  border-right: 3px #0672A8;
-  border-bottom: 3px #0672A8;
-  .mascara img{
-    box-shadow: 0px 0px 6px #800;
-  }
+  border-top: 3px solid #0672A8;
+  border-left: 3px solid #800;
+  border-right: 3px solid #0672A8;
+  border-bottom: 3px solid #800;
 }
 
 .clasificacion .mascara img:hover {
   width: 80%;
   border-radius: 10px;
   box-shadow: 0px 0px 6px white;
-
-
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------*/
@@ -600,6 +598,7 @@ h1 {
   height: 100%;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 .container_fotografia {
   max-width: 85%;
@@ -618,7 +617,7 @@ h1 {
   display: block;
   float: left;
   border-radius: 10px;
-  box-shadow: 0px 0px 6px #0672A8;
+  box-shadow: 0px 0px 0px #0672A8;
   margin: 10px;
   padding-top: 25px;
   padding-bottom: 25px;
@@ -635,12 +634,29 @@ h1 {
 
 .fotografia-item img {
   width: 100%;
+  margin: 0px auto;
+  float: none;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px #333;
+  
+}
+.fotografia-item:hover{
+  box-shadow: 0px 0px 6px #333;
+  color: #800;
+  p{
+    color: #800;
+    border-bottom:2px solid #333;
+  }
+  img{
+    box-shadow: 0px 0px 18px #333;
+  }
 }
 .hemerografia-item {
   display: block;
   float: left;
   border-radius: 10px;
-  box-shadow: 0px 0px 6px #0672A8;
+  box-shadow: 0px 0px 0px #0672A8;
   margin: 10px;
   padding-top: 25px;
   padding-bottom: 25px;
@@ -655,8 +671,67 @@ h1 {
   height: 350px;
 }
 
-.hemerografia-item img {
+.hemerografia-item img{
   width: 100%;
+  max-height: 200px;
+  margin: 0px auto;
+  float: none;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px #333;
+  
+}
+.hemerografia-item:hover{
+  box-shadow: 0px 0px 6px #333;
+  color: #800;
+  p{
+    color: #800;
+    border-bottom:2px solid #333;
+  }
+  img{
+    box-shadow: 0px 0px 18px #333;
+  }
+}
+
+.libros-item {
+  display: block;
+  float: left;
+  border-radius: 10px;
+  box-shadow: 0px 0px 0px #0672A8;
+  margin: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 25px;
+  margin-left: 20px;
+  display: block;
+  width: 16%;
+  margin-left: 10px;
+  text-decoration: none;
+  color: inherit;
+  height: 350px;
+}
+
+.libros-item img{
+  width: 100%;
+  max-height: 300px;
+  margin: 0px auto;
+  float: none;
+  margin-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px #333;
+  
+}
+.libros-item:hover{
+  box-shadow: 0px 0px 6px #333;
+  color: #800;
+  p{
+    color: #800;
+    border-bottom:2px solid #333;
+  }
+  img{
+    box-shadow: 0px 0px 18px #333;
+  }
 }
 .numero_foto{
   color: #0672A8;
@@ -701,7 +776,7 @@ h1 {
   padding: 20px;
   height: 100%;
   background-color: white;
-  border-radius: 8px;
+  border-radius:0px 0px 10px 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #0672A8;
   box-sizing: border-box;
@@ -802,7 +877,17 @@ h1 {
   text-align: center;
   font-family: marguerite;
   font-size: 30px;
-  color: #800;
+  color:white;
+  background: linear-gradient(to top, white,#0672A8);
+  border-radius: 10px 10px 10px 10px;
+}
+.contenido_hemerografiaDetalle h3 {
+  text-align: center;
+  font-family: marguerite;
+  font-size: 30px;
+  color:white;
+  background: linear-gradient(to top, white,#0672A8);
+  border-radius: 10px 10px 10px 10px;
 }
 
 .contenido_fotodetalle p {
@@ -828,6 +913,133 @@ h1 {
   margin-bottom: 20px;
   border-bottom:2px solid #0672A8;
 
+}
+#spanAzul{
+  color: #800;
+  margin-right: 10px;
+}
+
+.contenido_hemerografiaDetalle {
+  height: 100%;
+  padding: 10px;
+  margin-top: 25px;
+  color: #333;
+  width: 50%;
+  display: block;
+  float: right;
+}
+
+.contenido_hemerografiaDetalle h3 {
+  text-align: center;
+  font-family: marguerite;
+  font-size: 30px;
+  color:white;
+  background: linear-gradient(to top, white,#0672A8);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.contenido_hemerografiaDetalle p {
+  display: flex;
+  justify-content:left;  
+  margin: 5px 0;
+  padding-bottom: 5px;
+  font-family: PoiretOne;
+  font-size: 20px;
+  color: black;
+  color: #800;
+
+}
+
+.contenido_hemerografiaDetalle p:last-child {
+  border-bottom: none;
+}
+.contenido_hemerografiaDetalle h4 {
+  text-align:left;
+  font-family: PoiretOne;
+  font-size: 25px;
+  color: #0672A8;
+  margin-bottom: 20px;
+  border-bottom:2px solid #0672A8;
+
+}
+.marco_hemerografia {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  text-align: center;
+  margin: 10px;
+  display: block;
+  float: left;
+}
+.marco_hemerografia img{
+  max-width: 100%;
+}
+
+.contenido_librosDetalle {
+  height: 100%;
+  padding: 10px;
+  margin-top: 25px;
+  color: #333;
+  width: 50%;
+  display: block;
+  float: right;
+}
+
+.contenido_librosDetalle h3 {
+  text-align: center;
+  font-family: marguerite;
+  font-size: 30px;
+  color:white;
+  background: linear-gradient(to top, white,#0672A8);
+  border-radius: 10px 10px 10px 10px;
+}
+.contenido_librosDetalle h3 {
+  text-align: center;
+  font-family: marguerite;
+  font-size: 30px;
+  color:white;
+  background: linear-gradient(to top, white,#0672A8);
+  border-radius: 10px 10px 10px 10px;
+}
+.contenido_librosDetalle p {
+  display: flex;
+  justify-content:left;  
+  margin: 5px 0;
+  padding-bottom: 5px;
+  font-family: PoiretOne;
+  font-size: 20px;
+  color: black;
+  color: #800;
+
+}
+
+.contenido_librosDetalle p:last-child {
+  border-bottom: none;
+}
+.contenido_librosDetalle h4 {
+  text-align:left;
+  font-family: PoiretOne;
+  font-size: 25px;
+  color: #0672A8;
+  margin-bottom: 20px;
+  border-bottom:2px solid #0672A8;
+
+}
+.marco_libros {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  text-align: center;
+  margin: 10px;
+  display: block;
+  float: left;
+}
+.marco_libros img{
+  max-width: 100%;
 }
 #spanAzul{
   color: #800;
@@ -866,6 +1078,7 @@ h1 {
   height: 100%;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 
 h1 {
@@ -886,6 +1099,7 @@ h1 {
   min-height: 600px;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 .contenedor_main_registro{
   max-width: 900px;
@@ -949,6 +1163,9 @@ h1 {
 .contenedor_formulario_foto h2{
   text-align: center;
   font-size: 40px;
+  color: #0672A8;
+}
+.contenedor_formulario_foto h1{
   color: #0672A8;
 }
 
@@ -1462,6 +1679,7 @@ min-width: 50%;
 
 .cronologia_item h1 {
   font-size: 19px;
+  font-family:PoiretOne ;
 }
 
 /*                              Paises        */
@@ -1470,6 +1688,7 @@ min-width: 50%;
   height: 9300px;
   display: flex;
   justify-content: center;
+  border-top: 4px solid #800;
 }
 
 #main3 h1 {
@@ -1668,6 +1887,13 @@ textarea {
 .container_fotografia h3{
   font-family: marguerite;
   font-size: 40px;
+  color: #0672A8 ;
+  border-bottom: #0672A8 solid 3px;
+  margin-bottom: 10px;
+}
+.container_fotografia h1{
+  font-family: marguerite;
+  font-size: 40px;
   color: #800 ;
   border-bottom: #0672A8 solid 3px;
   margin-bottom: 10px;
@@ -1677,7 +1903,7 @@ textarea {
     display: block;
     float: left;
     border-radius: 10px;
-    box-shadow: 0px 0px 6px #0672A8;
+    box-shadow: 0px 0px 6px #333;
     margin: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1691,17 +1917,24 @@ textarea {
     color: inherit;
     height: 250px;
     text-align: center;
+    
   
 }
 .albumes_item:hover{
   background-color: #0672A8;
-  color: white;
+  box-shadow: 0px 0px 0px #333;
+  color: #800;
 }
 .albumes_item:hover >h3{
   background-color: #0672A8;
-  color: white;
+  color: #800;
   border-bottom: white solid 3px;
 } 
+.albumes_item:hover >p{
+  background-color: #0672A8;
+  color: white;
+} 
+
 .albumes_item img{
   width: 80%;
   max-height: 120px;
@@ -1710,7 +1943,6 @@ textarea {
 }
 .albumes_item h3{
   font-size: 23px;
-  color: #800;
   
 }
 .albumes_item p{

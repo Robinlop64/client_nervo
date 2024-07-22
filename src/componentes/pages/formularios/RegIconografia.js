@@ -201,7 +201,7 @@ export const RegIconografia = () => {
 
                             </div>
                             <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Medidas</label>
+                                <label htmlFor="numeroEdicion">Dimenciones</label>
                                 <input
                                     type="number"
                                     id="numeroEdicionInput"
@@ -268,7 +268,7 @@ export const RegIconografia = () => {
                                 </select>
                             </div>
                             <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Corriente</label>
+                                <label htmlFor="seccion">Corriente artística</label>
                                 <input
                                     type="text"
                                     id="seccionInput"
@@ -282,19 +282,9 @@ export const RegIconografia = () => {
                             <div className='divisor_form2'>
                            
                             
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Idioma</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="idioma"
-                                    placeholder="idioma"
-                                    value={formulario.idioma }
-                                    onChange={cambiado}
-                                />
-                            </div>
+                            
                             <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Superficie</label>
+                                <label htmlFor="columnas">Materiales</label>
                                 <input
                                     type="text"
                                     id="columnasInput"
@@ -304,21 +294,7 @@ export const RegIconografia = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Técnica impresión</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="tecnica_impresion"
-                                    value={formulario.tecnica_impresion || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                </select>
-                            </div>
-                            
+                         
                             
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
@@ -326,13 +302,13 @@ export const RegIconografia = () => {
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Notas</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
-                                    placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    name="notas"
+                                    placeholder=""
+                                    value={formulario.notas || ''}
                                     onChange={cambiado}
                                 />
                             </div>
