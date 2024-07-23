@@ -1955,3 +1955,45 @@ textarea {
 
 
 /*--------------------------------------temas fotografia fin---------------------------------------*/
+
+.ciudad{
+  max-width: 100%;
+  min-width: 100%;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}
+.institucion_contenedor{
+  display: block;
+    float: left;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px #333;
+    margin: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 20px;
+    display: block;
+    width: 19%;
+    margin-left: 10px;
+    text-decoration: none;
+    color: inherit;
+    height: 250px;
+    text-align: center;
+}
+.contenedor_instituciones {
+  max-width: 70%;
+  min-width: 70%;
+  padding: 20px;
+  height: 100;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  text-align: center;
+}

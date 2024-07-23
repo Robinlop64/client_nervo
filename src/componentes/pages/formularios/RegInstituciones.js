@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
 import { Api } from '../../../hooks/Api';
 import { useState, useEffect } from 'react';
+
 const data = {
     México: {
         Tepic: [
@@ -101,7 +102,8 @@ const data = {
         "Rio de Janeiro": ["NA"]
     }
 };
-export const RegPeriodicos = () => {
+
+export const RegInstituciones = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
@@ -111,7 +113,6 @@ export const RegPeriodicos = () => {
     const [selectedPais, setSelectedPais] = useState('');
     const [selectedCiudad, setSelectedCiudad] = useState('');
     const [saved, setSaved] = useState('not sended');
-
 
     useEffect(() => {
         setSaved("")
@@ -143,7 +144,7 @@ export const RegPeriodicos = () => {
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/instituciones/registrar", "POST", nueva_foto);
         console.log(nueva_foto)
         if (datos.status === "successs") {
             console.log("status success")
@@ -153,8 +154,8 @@ export const RegPeriodicos = () => {
                 formData.append(`files`, file);
             });
             console.log("formdata",formData)
-            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/instituciones/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/instituciones/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
 
             setResultado(true);
             setSaved("saved");
@@ -183,7 +184,7 @@ export const RegPeriodicos = () => {
                         <div className='divisor_form'>
                         
                             <div className="form-group" id="nombrePeriodico">
-                                <label htmlFor="nombrePeriodico">Periódico</label>
+                                <label htmlFor="nombrePeriodico">Nombre de la institución</label>
                                 <select
                                     id="nombrePeriodicoSelect"
                                     name="nombre_periodico"
@@ -214,25 +215,16 @@ export const RegPeriodicos = () => {
 
                             </div>
                             <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de edición</label>
+                                <label htmlFor="numeroEdicion">Tipo de institución</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="numeroEdicionInput"
-                                    name="numero_edicion"
-                                    value={formulario.numero_edicion}
+                                    name="tipo_institucion"
+                                    value={formulario.tipo_institucion}
                                     onChange={cambiado}
                                 />
                             </div>
                         
-                            <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>Fecha de publicación</label>
-                            <input
-                                type="date"
-                                name="fecha_publicacion"
-                                value={formulario.fecha_publicacion}
-                                onChange={cambiado}
-                            />
-                            </div>
 
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de registro</label>
@@ -244,117 +236,12 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Encabezado</label>
-                                <input id='encabezado' type="textarea" name="encabezado" placeholder="Encabezado" value={formulario.encabezado|| ''} onChange={cambiado} />
-                            </div>
-
-                            <div className="form-group" id='autor'>
-                                <label>Autor:</label>
-                                <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Seudónimo</label>
-                                <select
-                                    id="nombreSeudonimos"
-                                    name="seudonimos"
-                                    value={formulario.seudonimos || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="Amado Nervo">Amado Nervo</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Sección</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="seccion"
-                                    value={formulario.seccion || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar sección</option>
-                                    <option value="Fuegos Fatuos">Fuegos Fatuos</option>
-                                    <option value="Pimientos dulces">Pimietos dulces</option>
-                                    <option value="Página literaria">Página literaria</option>
-                                    <option value="Literatura">Literatura</option>
-                                    <option value="Actualidades europeas">Actualidades europeas</option>
-                                    <option value="Asuntos femeninos">Asuntos femeninos</option>
-                                    <option value="Actualidades literarias">Actualidades literarias</option>
-                                    <option value="Actualidades madrileñas">Actualidades madrileñas</option>
-                                    <option value="La varita de la virtud">La varita de la virtud</option>
-                                    <option value="Desde parís">Desde parís</option>
-                                    <option value="Desde Madrid">Desde Madrid</option>                      
-
-                                    <option value="Actualidades">Actualidades</option>
-                                    <option value="Actualidades españolas">Actualidades españolas</option>
-                                    <option value="Plaso ibañes">Plaso ibañes</option>
-                                    <option value="El Imparcial">"El Imparcial"</option>
-                                    <option value="De Amado Nervo">De Amado Nervo</option>
-                                    <option value="La literatura maravillosa">La literatura maravillosa</option>
-                                    <option value="Crónicas frívolas">Crónicas frívolas</option>
-                                    <option value="Literatura nacional">Literatura nacional</option>
-                                    <option value="Sociales">Sociales</option>
-                                    <option value="Poesía">Poesía</option>
-                                    <option value="Literaria">Literaria</option>
-
-
-                                    <option value="NA">NA</option>
-
-                                </select>
-                            </div>
                             </div>
                             <div className='divisor_form2'>
                            
                             
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Página (s)</label>
-                                <input
-                                    type="text"
-                                    id="paginaInput"
-                                    name="numero_paginas"
-                                    placeholder="Página"
-                                    value={formulario.numero_paginas }
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Columnas</label>
-                                <input
-                                    type="text"
-                                    id="columnasInput"
-                                    name="columnas"
-                                    placeholder="Columnas"
-                                    value={formulario.columnas || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Género periodístico</label>
-                                <select
-                                    id="generoPeriodistico"
-                                    name="genero_periodistico"
-                                    value={formulario.genero_periodistico || ''}
-                                    onChange={cambiado}
-                                >
-                                    <option value="">Seleccionar género</option>
-                                    <option value="notas">Notas</option>
-                                    <option value="articulos">Artículos</option>
-                                    <option value="cronicas">Crónicas</option>
-                                    <option value="frases">Frases</option>
-                                    <option value="Poesía">Poesía</option>
-                                    <option value="pendiente">Pendiente</option>
-                                </select>
-                            </div>
-                            
                             <div className="form-group" id="lugarPublicacion">
-                                <label htmlFor="encabezado">Lugar de publicación</label>
+                                <label htmlFor="encabezado">Maps</label>
                                 <input
                                     type="text"
                                     id="lugarPublicacionInput"
@@ -364,34 +251,19 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="periodicidad">
-                                <label htmlFor="tipoPublicacion">Periodicidad</label>
-                                <select
-                                    type="text"
-                                    id="periodicidadInput"
-                                    name="periodicidad"
-                                    placeholder="Tipo de publicación"
-                                    value={formulario.periodicidad || ''}
-                                    onChange={cambiado}
-                                >
-                                <option value="">Seleccionar periodicidad</option>
-                                <option value="Diaria">Diaria</option>
-                                <option value="Semanal">Semanal</option>
-                                <option value="Mensual">Mensual</option>
-                                </select>
-                            </div>
+                            
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Notas</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
+                                    name="notas_relevantes"
                                     placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    value={formulario.notas_relevantes || ''}
                                     onChange={cambiado}
                                 />
                             </div>

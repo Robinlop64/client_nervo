@@ -52,6 +52,12 @@ export const Registro = () => {
               Audiovisuales
             </button>
           </NavLink>
+          
+          <NavLink to="/admin/registro/instituciones">
+            <button>
+              Instituciones
+            </button>
+          </NavLink>
         </div>
 
       </div>

@@ -63,6 +63,26 @@ import { EditarDocumentacion } from '../componentes/pages/formularios/Editores/E
 import { EditarPartituras } from '../componentes/pages/formularios/Editores/EditarPartituras';
 import { EditarObjetos } from '../componentes/pages/formularios/Editores/EditarObjetos';
 import { EditarMonumentos } from '../componentes/pages/formularios/Editores/EditarMonumentos';
+import { RegInstituciones } from '../componentes/pages/formularios/RegInstituciones';
+import { InstitucionesDetalle } from '../componentes/pages/acervo/detalles/InstitucionesDetalles';
+import { FotografiasInstitucion} from '../componentes/pages/instituciones/FotografiasInstitucion';
+import { IconografiaInstitucion } from '../componentes/pages/instituciones/IconografiaInstitucion';
+import { LibrosInstitucion } from '../componentes/pages/instituciones/LibrosInstitucion';
+import { HemerografiaInstitucion } from '../componentes/pages/instituciones/HemerografiaInstitucion';
+import { PartiturasInstitucion } from '../componentes/pages/instituciones/PartiturasInstitucion';
+import { ObjetosInstitucion } from '../componentes/pages/instituciones/ObjetosInstitucion';
+import { MonumentosInstitucion } from '../componentes/pages/instituciones/MonumentosInstitucion';
+import { CorrespondenciaInstitucion } from '../componentes/pages/instituciones/CorrespondenciaInstitucion';
+import { DocumentacionInstitucion } from '../componentes/pages/instituciones/DocumentacionInstitucion';
+import { HemerografiaInstitucionTema } from '../componentes/pages/instituciones/temas/HemerografiaInstitucionTema';
+import { IconografiaInstitucionTema } from '../componentes/pages/instituciones/temas/IconografiaInstitucionTema';
+import { DocumentacionInstitucionTema } from '../componentes/pages/instituciones/temas/DocumentacionInstitucionTemas';
+import { LibrosInstitucionTema } from '../componentes/pages/instituciones/temas/LibrosInstitucionTema';
+import { PartiturasInstitucionTema } from '../componentes/pages/instituciones/temas/PartiturasInstitucionTema';
+import { CorrespondenciaInstitucionTema } from '../componentes/pages/instituciones/temas/CorrespondenciaInstitucionTema';
+import { ObjetosInstitucionTema } from '../componentes/pages/instituciones/temas/ObjetosInstitucionTemas';
+import { MonumentosInstitucionTema } from '../componentes/pages/instituciones/temas/MonumentosInstitucionTemas';
+import { FotografiaInstitucionTema } from '../componentes/pages/instituciones/temas/FotografiaInstitucionTema';
 
 export const Rutas = () => {
   return (
@@ -90,6 +110,7 @@ export const Rutas = () => {
             <Route path="registro/monumentos" element={<RegMonumentos />} />
             <Route path="registro/audiovisuales" element={<RegAudiovisuales />} />
             <Route path="fotografias" element={<Fotografias2 />} />
+            
             <Route path="fotografias/:id" element={<FotoDetalle />} />
             <Route path="fotografias2" element={<Fotografias2 />} />
             <Route path="tema/Cortejo fúnebre" element={<Cortejo />} />
@@ -117,13 +138,14 @@ export const Rutas = () => {
             <Route path="/admin/registro/partituras" element={<RegPartituras />} />
             <Route path="/admin/registro/monumentos" element={<RegMonumentos />} />
             <Route path="/admin/registro/audiovisuales" element={<RegAudiovisuales />} />
-
+            <Route path="/admin/registro/instituciones" element={<RegInstituciones />} />
 
             <Route path="/admin/fotografias" element={<Fotografias2 />} />
             <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
             <Route path="/admin/tema/Repatriación de los restos de Amado Nervo" element={<Cortejo />} />
             <Route path="/admin/album/:id" element={<AlbumFotos />} />
+            
 
             <Route path="/admin/hemerografia" element={<Hemerografia />} />
             <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
@@ -166,6 +188,27 @@ export const Rutas = () => {
             <Route path="/admin/monumentos/tema/:id" element={<MonumentosTema />} />
             <Route path="/admin/monumentos/:id" element={<MonumentosDetalle />} />
             <Route path="/admin/editar/monumentos/:id" element={<EditarMonumentos />} />
+
+            <Route path="/admin/instituciones/:id" element={<InstitucionesDetalle />} />
+            <Route path="/admin/fotografias/institucion/:id" element={<FotografiasInstitucion/>} />
+            <Route path="/admin/iconografia/institucion/:id" element={<IconografiaInstitucion/>} />
+            <Route path="/admin/libros/institucion/:id" element={<LibrosInstitucion/>} />
+            <Route path="/admin/hemerografia/institucion/:id" element={<HemerografiaInstitucion/>} />
+            <Route path="/admin/correspondencia/institucion/:id" element={<CorrespondenciaInstitucion/>} />
+            <Route path="/admin/documentacion/institucion/:id" element={<DocumentacionInstitucion/>} />
+            <Route path="/admin/partituras/institucion/:id" element={<PartiturasInstitucion/>} />
+            <Route path="/admin/objetos/institucion/:id" element={<ObjetosInstitucion/>} />
+            <Route path="/admin/monumentos/institucion/:id" element={<MonumentosInstitucion/>} />
+
+            <Route path="/admin/fotografia/:institucionId/:tema" element={<FotografiaInstitucionTema />} />
+            <Route path="/admin/hemerografia/:institucionId/:tema" element={<HemerografiaInstitucionTema />} />
+            <Route path="/admin/iconografia/:institucionId/:tema" element={<IconografiaInstitucionTema />} />
+            <Route path="/admin/documentacion/:institucionId/:tema" element={<DocumentacionInstitucionTema />} />
+            <Route path="/admin/libros/:institucionId/:tema" element={<LibrosInstitucionTema />} />
+            <Route path="/admin/partituras/:institucionId/:tema" element={<PartiturasInstitucionTema />} />
+            <Route path="/admin/correspondencia/:institucionId/:tema" element={<CorrespondenciaInstitucionTema />} />
+            <Route path="/admin/objetos/:institucionId/:tema" element={<ObjetosInstitucionTema />} />
+            <Route path="/admin/monumentos/:institucionId/:tema" element={<MonumentosInstitucionTema />} />
 
 
             <Route path='/admin/logout' element={<Logout/>}/>
