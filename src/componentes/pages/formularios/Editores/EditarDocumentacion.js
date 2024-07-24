@@ -377,23 +377,16 @@ export const EditarDocumentacion = () => {
                             </div>
                             
 
-                            <div className="form-group">
+                            <div className="form-group" id='ubicacion_fisica'>
                                 <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={fotografia.ubicacion_fisica} onChange={cambiado}>
-                                    <option defaultValue={fotografia.ubicacion_fisica}>{fotografia.ubicacion_fisica}</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                                <input type='text' name="ubicacion_fisica" defaultValue={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                                </input>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" id='ubicacion_fisica'>
                                 <label>Colección:</label>
-                                <select name="coleccion" value={fotografia.coleccion || ''} onChange={cambiado}>
-                                    <option defaultValue={fotografia.coleccion}>{fotografia.coleccion}</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
+                                <input name="coleccion" defaultValue={formulario.coleccion || ''} onChange={cambiado}>
+                            
+                                </input>
                             </div>
 
 
