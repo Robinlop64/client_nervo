@@ -261,7 +261,6 @@ export const EditarHemerografia = () => {
                   onChange={cambiado}
                 >
                   <option value={fotografia.seccion}>{fotografia.seccion}</option>
-                  <option value="">Seleccionar sección</option>
                   <option value="Fuegos Fatuos">Fuegos Fatuos</option>
                   <option value="Pimientos dulces">Pimietos dulces</option>
                   <option value="Página literaria">Página literaria</option>
@@ -282,6 +281,9 @@ export const EditarHemerografia = () => {
                   <option value="La literatura maravillosa">La literatura maravillosa</option>
                   <option value="Crónicas frívolas">Crónicas frívolas</option>
                   <option value="Literatura nacional">Literatura nacional</option>
+                  <option value="Sociales">Sociales</option>
+                  <option value="Poesía">Poesía</option>
+                  <option value="Literaria">Literaria</option>
                   <option value="NA">NA</option>
 
                 </select>
@@ -325,6 +327,7 @@ export const EditarHemerografia = () => {
                   <option value="cronicas">Crónicas</option>
                   <option value="frases">Frases</option>
                   <option value="pendiente">Pendiente</option>
+                  <option value="Poesía">Poesía</option>
                 </select>
               </div>
 

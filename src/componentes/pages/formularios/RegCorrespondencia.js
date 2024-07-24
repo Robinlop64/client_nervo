@@ -144,22 +144,32 @@ export const RegCorrespondencia = () => {
         e.preventDefault();
         let nueva_foto = formulario;
         const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/registrar", "POST", nueva_foto);
-        console.log(nueva_foto)
+    
         if (datos.status === "successs") {
-            console.log("status success")
+            console.log("status success");
+    
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
-            Array.from(fileInput.files).forEach((file, index) => {
-                formData.append(`files`, file);
+            Array.from(fileInput.files).forEach((file) => {
+                formData.append('files', file);
             });
-            console.log("formdata",formData)
+    
             const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-
+    
+            // Nueva sección para subir los archivos PDF
+            const pdfInput = document.querySelector("#pdf");
+            const pdfFormData = new FormData();
+            Array.from(pdfInput.files).forEach((file) => {
+                pdfFormData.append('pdfs', file);
+            });
+    
+            const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const { pdfSubida2 } = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setResultado(true);
             setSaved("saved");
         } else {
-            console.log("status error")
+            console.log("status error");
             setSaved("error");
         }
     };
@@ -181,7 +191,10 @@ export const RegCorrespondencia = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
-                        
+                        <div className="form-group">
+                                <label>Título</label>
+                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
+                            </div>
                             <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Tipo de correspondencia</label>
                                 <select
@@ -198,16 +211,7 @@ export const RegCorrespondencia = () => {
                                     
                                 </select>
                             </div>
-
-                            <div className="form-group" id='autor'>
-                                <label>Remitente:</label>
-                                <input type="text" className='autor' name="remitente" placeholder="Autor" value={formulario.remitente || ''} onChange={cambiado} />
-                            </div>
-                            <div className="form-group" id='autor'>
-                                <label>Destinatario:</label>
-                                <input type="text" className='autor' name="destinatario" placeholder="destinatario" value={formulario.destinatario || ''} onChange={cambiado} />
-                            </div>
-                            <div className="form-group" id="FechaPublicacion">
+                            <div className="form-group" id="FechaCorrespondencia">
                             <label id='fecha_publicacionLabel'>Fecha de envío</label>
                             <input
                                 type="date"
@@ -217,7 +221,7 @@ export const RegCorrespondencia = () => {
                             />
                             </div>
 
-                            <div className="form-group" id="FechaPublicacion">
+                            <div className="form-group" id="FechaCorrespondencia">
                             <label id='fecha_publicacionLabel'>Fecha de recepción</label>
                             <input
                                 type="date"
@@ -226,10 +230,29 @@ export const RegCorrespondencia = () => {
                                 onChange={cambiado}
                             />
                             </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de registro</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_registro"
+                                    value={formulario.numero_registro || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id='corriente'>
+                                <label>Remitente:</label>
+                                <input type="text" className='autor' name="remitente" placeholder="Autor" value={formulario.remitente || ''} onChange={cambiado} />
+                            </div>
+                            <div className="form-group" id='corriente'>
+                                <label>Destinatario:</label>
+                                <input type="text" className='autor' name="destinatario" placeholder="destinatario" value={formulario.destinatario || ''} onChange={cambiado} />
+                            </div>
+                            
 
 
                             <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Lugar de origen</label>
+                                <label htmlFor="columnas">Origen</label>
                                 <input
                                     type="text"
                                     id="columnasInput"
@@ -240,7 +263,7 @@ export const RegCorrespondencia = () => {
                                 />
                             </div>
                             <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Lugar de destino</label>
+                                <label htmlFor="columnas">Destino</label>
                                 <input
                                     type="text"
                                     id="columnasInput"
@@ -268,18 +291,21 @@ export const RegCorrespondencia = () => {
                                     <option value="X.Y.Z">X.Y.Z</option>
                                 </select>
                             </div>
-
-                            
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Asunto</label>
+                            <div className="form-group" id="columnas">
+                                <label htmlFor="seccion">Anexos</label>
                                 <input
                                     type="text"
                                     id="seccionInput"
-                                    name="asunto"
-                                    placeholder="asunto"
-                                    value={formulario.asunto || ''}
+                                    name="anexos"
+                                    placeholder="anexos"
+                                    value={formulario.anexos || ''}
                                     onChange={cambiado}
                                 />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label>Asunto</label>
+                                <input id='encabezado' type="textarea" name="asunto" placeholder="" value={formulario.asunto|| ''} onChange={cambiado} />
                             </div>
 
 
@@ -287,22 +313,10 @@ export const RegCorrespondencia = () => {
                         
                             
 
-                            <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de registro</label>
-                                <input
-                                    type="number"
-                                    id="numeroEdicionInput"
-                                    name="numero_registro"
-                                    value={formulario.numero_registro || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
+                            
 
                             
-                            <div className="form-group">
-                                <label>Título</label>
-                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
-                            </div>
+                            
 
                             
                             
@@ -314,22 +328,17 @@ export const RegCorrespondencia = () => {
                             
                             
                             
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Anexos</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="anexos"
-                                    placeholder="anexos"
-                                    value={formulario.anexos || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
+                          
 
 
-                            <div className='form-group'>
+                            <div className='form-group' id='images'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
+                            </div>
+
+                            <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">

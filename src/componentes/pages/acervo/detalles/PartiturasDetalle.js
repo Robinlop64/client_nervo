@@ -46,7 +46,7 @@ export const PartiturasDetalle = () => {
 
   return (
     <main className='main_fotodetalle'>
-      <div id='nav'>
+      <div id='nav3'>
         <p>{getNavigationPath()}</p>
       </div>
       <div className="container_fotodetalle">

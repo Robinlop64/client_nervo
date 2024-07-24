@@ -18,7 +18,7 @@ export const InstitucionesDetalle = () => {
 
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `http://localhost:3900/api/instituciones/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/instituciones/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
@@ -35,15 +35,15 @@ export const InstitucionesDetalle = () => {
     const fetchCounts = async (nombreInstitucion) => {
       try {
         const responses = await Promise.all([
-          fetch(`http://localhost:3900/api/fotografia/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/documentacion/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/correspondencia/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/iconografia/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/libros/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/hemerografia/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/partituras/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/objetos/numero-institucion/${nombreInstitucion}`),
-          fetch(`http://localhost:3900/api/monumentos/numero-institucion/${nombreInstitucion}`)
+          fetch(`https://backend-prueba-apel.onrender.com/api/fotografia/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/documentacion/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/correspondencia/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/iconografia/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/libros/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/hemerografia/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/partituras/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/objetos/numero-institucion/${nombreInstitucion}`),
+          fetch(`https://backend-prueba-apel.onrender.com/api/monumentos/numero-institucion/${nombreInstitucion}`)
         ]);
 
         const data = await Promise.all(responses.map(res => res.json()));

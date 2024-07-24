@@ -81,7 +81,7 @@ export const HemerografiaInstitucionTema = () => {
             );
           })}
         </div>
-      </div>
+      </div>s
     </main>
   );
 };

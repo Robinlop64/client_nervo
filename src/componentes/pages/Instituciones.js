@@ -7,7 +7,7 @@ export const Instituciones = () => {
 
   const handleButtonClick = async (pais) => {
     try {
-      const response = await fetch(`http://localhost:3900/api/instituciones/pais/${pais}`);
+      const response = await fetch(`https://backend-prueba-apel.onrender.com/api/instituciones/pais/${pais}`);
       const data = await response.json();
       const instituciones = data.insti;
       console.log('Instituciones:', instituciones);
@@ -32,6 +32,10 @@ export const Instituciones = () => {
     navigate(`/admin/instituciones/${id}`);
   };
 
+  const handleEditClick = (event, fotografiaId) => {
+    event.stopPropagation();
+    navigate(`/admin/editar/institucion/${fotografiaId}`);
+  };
   const paises = [
     'Argentina', 'Canadá', 'Cuba', 'España', 'Estados Unidos',
     'Francia', 'Inglaterra', 'México', 'Portugal', 'Uruguay', 'Venezuela'
@@ -63,7 +67,10 @@ export const Instituciones = () => {
                         
                         
                       />
+                      
                     )}
+                    <button onClick={(event) => handleEditClick(event, institucion._id)}>Editar</button>
+                    <button onClick={(event) => handleEditClick(event, institucion._id)}>Borrar</button>
                   </div>
                 ))}
               </ul>

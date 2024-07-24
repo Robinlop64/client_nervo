@@ -43,7 +43,7 @@ export const HemerografiaInstitucion = () => {
                 >
                     <article>
                   <img id='img_temas'
-                    src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${tema.fotoAleatoria}`}
+                    src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${tema.nombreImagen}`}
                     alt={`${tema.tema} foto`}
                   />
                   <div className="contenido_temas">

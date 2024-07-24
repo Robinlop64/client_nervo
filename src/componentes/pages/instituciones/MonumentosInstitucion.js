@@ -43,7 +43,7 @@ export const MonumentosInstitucion = () => {
                 >
                     <article>
                   <img id='img_temas'
-                    src={`https://backend-prueba-apel.onrender.com/imagenes/monumentos/${tema.fotoAleatoria}`}
+                    src={`https://backend-prueba-apel.onrender.com/imagenes/monumentos/${tema.nombreImagen}`}
                     alt={`${tema.tema} foto`}
                   />
                   <div className="contenido_temas">

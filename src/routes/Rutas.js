@@ -83,6 +83,7 @@ import { CorrespondenciaInstitucionTema } from '../componentes/pages/institucion
 import { ObjetosInstitucionTema } from '../componentes/pages/instituciones/temas/ObjetosInstitucionTemas';
 import { MonumentosInstitucionTema } from '../componentes/pages/instituciones/temas/MonumentosInstitucionTemas';
 import { FotografiaInstitucionTema } from '../componentes/pages/instituciones/temas/FotografiaInstitucionTema';
+import { EditarInstitucion } from '../componentes/pages/formularios/Editores/EditarInstitucion';
 
 export const Rutas = () => {
   return (
@@ -210,6 +211,7 @@ export const Rutas = () => {
             <Route path="/admin/objetos/:institucionId/:tema" element={<ObjetosInstitucionTema />} />
             <Route path="/admin/monumentos/:institucionId/:tema" element={<MonumentosInstitucionTema />} />
 
+            <Route path="/admin/editar/institucion/:id" element={<EditarInstitucion />} />
 
             <Route path='/admin/logout' element={<Logout/>}/>
           </Route>
