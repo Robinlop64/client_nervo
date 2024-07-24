@@ -152,17 +152,16 @@ export const EditarDocumentacion = () => {
     e.preventDefault();
     let nueva_foto = formulario;
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/documentacion/editar/" + id, "PUT", nueva_foto);
+    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/editar/" + id, "PUT", nueva_foto);
     if (datos.status == "success") {
-      const fileInput = document.querySelector("#file");
-      const formData = new FormData();
-      Array.from(fileInput.files).forEach((file, index) => {
-        formData.append(`files`, file);
-      });
-      setSaved("saved");
+        const fileInput = document.querySelector("#file");
+        const formData = new FormData();
+        Array.from(fileInput.files).forEach((file, index) => {
+            formData.append(`files`, file);
+        });
 
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/documentacion/registrar-imagen/" + id, "POST", formData, true);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/documentacion/editar-imagen/" + id, "POST", formData, true);
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-imagen/" + id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/correspondencia/editar-imagen/" + id, "POST", formData, true);
 
       setResultado(true);
       setSaved("saved");
@@ -272,7 +271,7 @@ export const EditarDocumentacion = () => {
                                 />
                             </div>
                             <div className="form-group" id="numeroEdicion">
-                                <label htmlFor="numeroEdicion">Número de expediente o registro</label>
+                                <label htmlFor="numeroEdicion">Número de expediente/carpeta</label>
                                 <input
                                     type="number"
                                     id="numeroEdicionInput"
@@ -296,9 +295,14 @@ export const EditarDocumentacion = () => {
                         
 
                             
-                            <div className='form-group'>
+                            <div className='form-group' id='images'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
+                            </div>
+
+                            <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">

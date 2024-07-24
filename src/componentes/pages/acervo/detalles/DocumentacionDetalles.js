@@ -69,14 +69,14 @@ export const DocumentacionDetalle = () => {
         </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
+            <p><span>Institución emisora:</span> <span>{fotografia.emisor}</span></p>
+            <p><span>Fecha de emisión:</span> <span>{fotografia.fecha_emision}</span></p>
+            <p><span>Lugar de emisión:</span> <span>{fotografia.lugar_emision}</span></p>
+            <p><span>Destinatario:</span> <span>{fotografia.destinatario}</span></p>
+            <p><span>Número de expediente/carpeta:</span> <span>{fotografia.numero_expediente}</span></p>
+            <p><span>Contenido del documento</span> <span>{fotografia.contenido}</span></p>
+            <p><span>Notas:</span> <span>{fotografia.notas}</span></p>
           </div>
         </div>
       </div>

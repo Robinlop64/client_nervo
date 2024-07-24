@@ -2021,3 +2021,7 @@ textarea {
   box-sizing: border-box;
   text-align: center;
 }
+#ubicacion_fisica input{
+  max-width: 200px;
+  min-width: 200px;
+}

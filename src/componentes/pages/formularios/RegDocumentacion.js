@@ -144,22 +144,32 @@ export const RegDocumentacion = () => {
         e.preventDefault();
         let nueva_foto = formulario;
         const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/documentacion/registrar", "POST", nueva_foto);
-        console.log(nueva_foto)
+    
         if (datos.status === "successs") {
-            console.log("status success")
+            console.log("status success");
+    
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
-            Array.from(fileInput.files).forEach((file, index) => {
-                formData.append(`files`, file);
+            Array.from(fileInput.files).forEach((file) => {
+                formData.append('files', file);
             });
-            console.log("formdata",formData)
+    
             const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/documentacion/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/documentacion/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-
+    
+            // Nueva sección para subir los archivos PDF
+            const pdfInput = document.querySelector("#pdf");
+            const pdfFormData = new FormData();
+            Array.from(pdfInput.files).forEach((file) => {
+                pdfFormData.append('pdfs', file);
+            });
+    
+            const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/documentacion/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const { pdfSubida2 } = await Api(`https://backend-google-fnsu.onrender.com/api/documentacion/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setResultado(true);
             setSaved("saved");
         } else {
-            console.log("status error")
+            console.log("status error");
             setSaved("error");
         }
     };
@@ -292,9 +302,14 @@ export const RegDocumentacion = () => {
                         
 
                             
-                            <div className='form-group'>
+                            <div className='form-group' id='images'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
+                            </div>
+
+                            <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
@@ -369,23 +384,16 @@ export const RegDocumentacion = () => {
                             </div>
                             
 
-                            <div className="form-group">
+                            <div className="form-group" id='ubicacion_fisica'>
                                 <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                                <input type='text' name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                                </input>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" id='ubicacion_fisica'>
                                 <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
+                                <input name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+                            
+                                </input>
                             </div>
 
 

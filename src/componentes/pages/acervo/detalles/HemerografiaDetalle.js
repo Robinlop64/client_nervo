@@ -71,13 +71,17 @@ export const HemerografiaDetalle = () => {
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
             <h4>Ficha catalográfica</h4>
             <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
+            <p><span>Periódico:</span> <span>{fotografia.nombre_periodico}</span></p>
+            <p><span>Número de edición:</span> <span>{fotografia.numero_edicion}</span></p>
+            <p><span>Fecha de publicación:</span> <span>{fotografia.fecha_publicacion}</span></p>
             <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            <p><span>Seudónimo:</span> <span>{fotografia.seudonimo}</span></p>
+            <p><span>Páginas:</span> <span>{fotografia.numero_paginas}</span></p>
+            <p><span>Columnas:</span> <span>{fotografia.numero_columnas}</span></p>
+            <p><span>Género periodístico:</span> <span>{fotografia.genero_periodistico}</span></p>
+            <p><span>Lugar de publicación:</span> <span>{fotografia.lugar_publicacion}</span></p>
+            <p><span>Periodicidad:</span> <span>{fotografia.periodicidad}</span></p>
+
           </div>
         </div>
       </div>
