@@ -187,29 +187,15 @@ export const RegDocumentacion = () => {
                                 <label>Título</label>
                                 <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
                             </div>
-                                <label htmlFor="nombrePeriodico">Tipo de documentacion</label>
-                                <input
-                                    type='text'
-                                    id="nombrePeriodicoSelect"
-                                    name="tipo_documentacion"
-                                    value={formulario.tipo_documentacion || ''}
-                                    onChange={cambiado}
-                                >
-                                </input>
+                                
+                            
+                           
+                            <div className="form-group" id='nombrePeriodico'>
+                                <label>Tipo :</label>
+                                <input type="text" className='autor' name="tipo_documentacion" placeholder="Tipo de documentación" value={formulario.tipo_documentacion || ''} onChange={cambiado} />
                             </div>
 
-                            <div className="form-group" id='autor'>
-                                <label>Institución que lo emite :</label>
-                                <input type="text" className='autor' name="institucion_emisor" placeholder="" value={formulario.institucion_emisor || ''} onChange={cambiado} />
-                            </div><div className="form-group" id='autor'>
-                                <label>Emisor:</label>
-                                <input type="text" className='autor' name="emisor" placeholder="" value={formulario.emisor || ''} onChange={cambiado} />
-                            </div>
-                            <div className="form-group" id='autor'>
-                                <label>Destinatario :</label>
-                                <input type="text" className='autor' name="destinatario" placeholder="" value={formulario.destinatario || ''} onChange={cambiado} />
-                            </div>
-                            <div className="form-group" id="FechaPublicacion">
+                            <div className="form-group" id="FechaCorrespondencia">
                             <label id='fecha_publicacionLabel'>Fecha de emisión</label>
                             <input
                                 type="date"
@@ -218,7 +204,16 @@ export const RegDocumentacion = () => {
                                 onChange={cambiado}
                             />
                             </div>
-                            <div className="form-group" id='columnas' >
+                            <div className="form-group" id="FechaCorrespondencia">
+                            <label id='fecha_publicacionLabel'>Vigencia</label>
+                            <input
+                                type="date"
+                                name="vigencia"
+                                value={formulario.vigencia}
+                                onChange={cambiado}
+                            />
+                            </div>
+                            <div className="form-group" id='corriente' >
                                 <label htmlFor="columnas">Lugar de emisión</label>
                                 <input
                                     type="text"
@@ -229,38 +224,14 @@ export const RegDocumentacion = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>Vigencia</label>
-                            <input
-                                type="date"
-                                name="vigencia"
-                                value={formulario.vigencia}
-                                onChange={cambiado}
-                            />
                             </div>
-
-
-                           
-                           
-
-
-                            
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Notas relevantes</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="notas_relevantes"
-                                    placeholder="notas relevantes"
-                                    value={formulario.notas_relevantes || ''}
-                                    onChange={cambiado}
-                                />
+                            <div className="form-group" id='nombrePeriodico'>
+                                <label>Institución :</label>
+                                <input type="text" className='autor' name="institucion_emisor" placeholder="Institución emisora del documento" value={formulario.institucion_emisor || ''} onChange={cambiado} />
+                            </div><div className="form-group" id='nombrePeriodico'>
+                                <label>Emisor:</label>
+                                <input type="text" className='autor' name="emisor" placeholder="" value={formulario.emisor || ''} onChange={cambiado} />
                             </div>
-
-
-                         
-                        
-                            
 
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de registro</label>
@@ -272,7 +243,30 @@ export const RegDocumentacion = () => {
                                     onChange={cambiado}
                                 />
                             </div>
+                            <div className="form-group" id='nombrePeriodico'>
+                                <label>Destinatario :</label>
+                                <input type="text" className='autor' name="destinatario" placeholder="" value={formulario.destinatario || ''} onChange={cambiado} />
+                            </div>
+                            
+                            
 
+
+                           
+                           
+
+
+                            
+                            <div className="form-group" id="nombrePeriodico">
+                                <label htmlFor="seccion">Notas</label>
+                                <input
+                                    type="text"
+                                    id=""
+                                    name="notas_relevantes"
+                                    placeholder="Notas relevantes"
+                                    value={formulario.notas_relevantes || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de expediente o registro</label>
                                 <input
