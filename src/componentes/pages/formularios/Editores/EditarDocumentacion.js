@@ -152,7 +152,7 @@ export const EditarDocumentacion = () => {
     e.preventDefault();
     let nueva_foto = formulario;
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/editar/" + id, "PUT", nueva_foto);
+    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/documentacion/editar/" + id, "PUT", nueva_foto);
     if (datos.status == "success") {
         const fileInput = document.querySelector("#file");
         const formData = new FormData();
@@ -160,8 +160,8 @@ export const EditarDocumentacion = () => {
             formData.append(`files`, file);
         });
 
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-imagen/" + id, "POST", formData, true);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/correspondencia/editar-imagen/" + id, "POST", formData, true);
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/documentacion/registrar-imagen/" + id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/documentacion/editar-imagen/" + id, "POST", formData, true);
 
       setResultado(true);
       setSaved("saved");
