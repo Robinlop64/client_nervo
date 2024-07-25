@@ -189,8 +189,8 @@ export const RegMonumentos = () => {
                                 <label htmlFor="nombrePeriodico">Tipo de monumentos</label>
                                 <select
                                     id="nombrePeriodicoSelect"
-                                    name="tipo_monumentos"
-                                    value={formulario.tipo_monumentos || ''}
+                                    name="tipo_monumento"
+                                    value={formulario.tipo_monumento || ''}
                                     onChange={cambiado}
                                 >
                                     <option value="">Seleccionar tipo de monumentos</option>
