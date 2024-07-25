@@ -335,7 +335,7 @@ export const EditarDocumentacion = () => {
                                 <select
                                     id="pais"
                                     name='pais'
-                                    value={fotografia.pais}
+                                    defaultValue={fotografia.pais}
                                     onChange={cambiado}>
 
                                     <option defaultValue={fotografia.pais}>{fotografia.pais}</option>
@@ -352,7 +352,7 @@ export const EditarDocumentacion = () => {
                                 <select
                                     id="ciudad"
                                     name="ciudad"
-                                    value={fotografia.ciudad}
+                                    defaultValue={fotografia.ciudad}
                                     onChange={cambiado}
                                 >
                                     <option defaultValue={fotografia.ciudad}>{fotografia.ciudad}</option>
@@ -366,7 +366,7 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group">
                                 <label>Institución:</label>
-                                <select id="institucion" name='institucion' value={fotografia.institucion} onChange={cambiado}>
+                                <select id="institucion" name='institucion' defaultValue={fotografia.institucion} onChange={cambiado}>
                                     <option defaultValue={fotografia.institucion}>{fotografia.institucion}</option>
                                     {instituciones.map((institucion, index) => (
                                         <option key={index} value={institucion}>
@@ -395,7 +395,7 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group">
                                 <label>Año de adquisición:</label>
-                                <select id='adq' name="fecha_adquisicion" value={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
+                                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
                                     <option defaultValue={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
@@ -423,7 +423,7 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group">
                                 <label>Hallazgo:</label>
-                                <select id='hallazgo' name="hallazgo" value={fotografia.hallazgo || ''} onChange={cambiado}>
+                                <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
@@ -431,7 +431,7 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group">
                                 <label>Persona que registra:</label>
-                                <select name="persona_registra" value={fotografia.persona_registra || ''} onChange={cambiado}>
+                                <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
                                     <option value="Mayra Fonseca">Mayra Fonseca</option>
                                     <option value="Robin">Robin</option>
                                     <option value="Xoely">Xoely</option>
@@ -440,7 +440,7 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group">
                                 <label>Tema:</label>
-                                <select name="tema" value={fotografia.tema || ''} onChange={cambiado}>
+                                <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
                                     <option value={fotografia.tema}>{fotografia.tema}</option>
                                     <option value="Labor diplomática">Labor diplomática</option>
                                     <option value="El Nacional"> El Nacional </option>
