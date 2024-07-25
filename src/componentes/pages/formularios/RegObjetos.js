@@ -181,30 +181,29 @@ export const RegObjetos = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
-                        
+                        <div className="form-group">
+                                <label>Título</label>
+                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
+                            </div>
                             <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Tipo de objetos</label>
-                                <select
+                                <input
                                     id="nombrePeriodicoSelect"
+                                    type='text'
                                     name="tipo_objetos"
                                     value={formulario.tipo_objetos || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar tipo de objetos</option>
-                                    <option value="Carta">Carta</option>
-                                    <option value="Postal">Postal</option>
-                                    <option value="Telegrama">Telegrama</option>
-                                    <option value="Tarjeta">Tarjeta</option>
-                                    
-                                </select>
+                
+                                </input>
                             </div>
 
-                            <div className="form-group" id='autor'>
+                            <div className="form-group" id='nombrePeriodico'>
                                 <label>Descripción física :</label>
-                                <input type="text" className='autor' name="descripcion_fisica" placeholder="descripcion_fisica" value={formulario.descripcion_fisica || ''} onChange={cambiado} />
+                                <input type="text" className='autor' name="descripcion_fisica" placeholder="descripcion física" value={formulario.descripcion_fisica || ''} onChange={cambiado} />
                             </div>
                             
-                            <div className="form-group" id="FechaPublicacion">
+                            <div className="form-group" id="corriente">
                             <label id='fecha_publicacionLabel'>procedencia</label>
                             <input
                                 type="text"
@@ -212,24 +211,7 @@ export const RegObjetos = () => {
                                 value={formulario.procedencia}
                                 onChange={cambiado}
                             />
-                            </div>
-                            
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Descripción-contexto</label>
-                                <input
-                                    type="text"
-                                    id="seccionInput"
-                                    name="descripcion_contexto"
-                                    placeholder="notas relevantes"
-                                    value={formulario.descripcion_contexto || ''}
-                                    onChange={cambiado}
-                                />
-                            </div>
-
-
-                         
-                        
-                            
+                            </div>   
 
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de registro</label>
@@ -242,10 +224,7 @@ export const RegObjetos = () => {
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Título</label>
-                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
-                            </div>
+                            
 
                             
                             
@@ -258,25 +237,25 @@ export const RegObjetos = () => {
                             </div>
                             <div className='divisor_form'>
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Descripción / contexto</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="resumen"
+                                    name="descripcion_contexto"
                                     placeholder="Resumen"
-                                    value={formulario.resumen || ''}
+                                    value={formulario.descripcion_contexto || ''}
                                     onChange={cambiado}
                                 />
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
+                                    name="pendientes"
                                     placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
+                                    value={formulario.pendientes || ''}
                                     onChange={cambiado}
                                 />
                             </div>

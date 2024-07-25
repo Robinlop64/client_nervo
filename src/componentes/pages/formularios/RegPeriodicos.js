@@ -269,6 +269,7 @@ export const RegPeriodicos = () => {
                                     <option value="Joie">Joie</option>
                                     <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
                                     <option value="X.Y.Z">X.Y.Z</option>
+                                    <option value="Quirino Ordaz">Quirino Ordaz</option>
                                 </select>
                             </div>
                             <div className="form-group">
@@ -350,6 +351,8 @@ export const RegPeriodicos = () => {
                                     <option value="frases">Frases</option>
                                     <option value="Poesía">Poesía</option>
                                     <option value="pendiente">Pendiente</option>
+                                    <option value="Noticias">Noticias</option>
+                                    <option value="Cuento">Cuento</option>
                                 </select>
                             </div>
                             

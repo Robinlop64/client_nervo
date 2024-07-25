@@ -250,6 +250,7 @@ export const EditarHemerografia = () => {
                   <option value="Joie">Joie</option>
                   <option value="Versión española de Amado Nervo">Versión española de Amado Nervo</option>
                   <option value="X.Y.Z">X.Y.Z</option>
+                  <option value="Quirino Ordaz">Quirino Ordaz</option>
                 </select>
               </div>
               <div className="form-group">
@@ -284,6 +285,7 @@ export const EditarHemerografia = () => {
                   <option value="Sociales">Sociales</option>
                   <option value="Poesía">Poesía</option>
                   <option value="Literaria">Literaria</option>
+                  
                   <option value="NA">NA</option>
 
                 </select>
@@ -328,6 +330,8 @@ export const EditarHemerografia = () => {
                   <option value="frases">Frases</option>
                   <option value="pendiente">Pendiente</option>
                   <option value="Poesía">Poesía</option>
+                  <option value="Noticias">Noticias</option>
+                  <option value="Cuento">Cuento</option>
                 </select>
               </div>
 
