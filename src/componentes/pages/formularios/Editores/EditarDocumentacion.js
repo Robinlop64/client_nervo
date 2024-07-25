@@ -195,7 +195,7 @@ export const EditarDocumentacion = () => {
                            
                             <div className="form-group" id='nombrePeriodico'>
                                 <label>Tipo :</label>
-                                <input type="text" className='autor' name="tipo_documento" placeholder="Tipo de documentación" defaultValue={fotografia.tipo_documento || ''} onChange={cambiado} />
+                                <input type="text" className='autor' name="tipo_documento" placeholder="Tipo de documentación " defaultValue={fotografia.tipo_documento || ''} onChange={cambiado} />
                             </div>
 
                             <div className="form-group" id="FechaCorrespondencia">
