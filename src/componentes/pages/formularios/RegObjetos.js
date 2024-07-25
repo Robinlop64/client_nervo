@@ -380,7 +380,7 @@ export const RegObjetos = () => {
                                 <label>Tema:</label>
                                 <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
                                     <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
+                                    <option value="Personales"> Personales</option>
                                     <option value="2"> tema 2 </option>
                                     <option value="El Nacional"> El Nacional </option>
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
