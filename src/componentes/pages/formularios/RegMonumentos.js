@@ -434,10 +434,16 @@ export const RegMonumentos = () => {
                                 <label>Tema:</label>
                                 <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
                                     <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                                    <option value="Estatuas y esculturas">Estatuas y esculturas</option>
+                                    <option value="Placas conmemorativas">Placas conmemorativas</option>
+                                    <option value="Monumentos arquitectónicos">Monumentos arquitectónicos</option>
+                                    <option value="Espacios públicos y parques">Espacios públicos y parques</option>
+                                    <option value="Museos y centros culturales">Museos y centros culturales</option>
+                                    <option value="Bibliotecas y archivos">Bibliotecas y archivos</option>
+                                    <option value="Instituciones educativas">Instituciones educativas</option>
+                                    <option value="Calles y avenidas">Calles y avenidas</option>
+                                    <option value="Obras de arte">Obras de arte</option>
+                                    <option value="Lugares de sepultura">Lugares de sepultura</option>
                                 </select>
                             </div>                       
                             </div>
