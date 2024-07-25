@@ -379,12 +379,12 @@ export const EditarDocumentacion = () => {
 
                             <div className="form-group" id='ubicacion_fisica'>
                                 <label>Ubicación física:</label>
-                                <input type='text' name="ubicacion_fisica" defaultValue={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                                <input type='text' name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
                                 </input>
                             </div>
                             <div className="form-group" id='ubicacion_fisica'>
                                 <label>Colección:</label>
-                                <input name="coleccion" defaultValue={formulario.coleccion || ''} onChange={cambiado}>
+                                <input name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
                             
                                 </input>
                             </div>
