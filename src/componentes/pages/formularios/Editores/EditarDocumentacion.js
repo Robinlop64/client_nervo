@@ -442,8 +442,7 @@ export const EditarDocumentacion = () => {
                                 <label>Tema:</label>
                                 <select name="tema" value={fotografia.tema || ''} onChange={cambiado}>
                                     <option defaultValue={fotografia.tema}>{fotografia.tema}</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
+                                    <option value="Labor diplomática">Labor diplomática</option>
                                     <option value="El Nacional"> El Nacional </option>
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
                                 </select>

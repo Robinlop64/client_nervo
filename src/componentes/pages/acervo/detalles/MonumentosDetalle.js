@@ -68,15 +68,15 @@ export const MonumentosDetalle = () => {
           ))}
         </div>
           <div className='contenido_fotodetalle'>
-            <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
+            <h3>{capitalizeFirstLetter(fotografia.titulo)}</h3>
             <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            <p><span>Tipo de monumento:</span> <span>{fotografia.tipo_monumento}</span></p>
+            <p><span>características físicas:</span> <span>{fotografia.descripcion_fisica}</span></p>
+            <p><span>Ubicación:</span> <span>{fotografia.ubicacion}</span></p>
+            <p><span>Entidad:</span> <span>{fotografia.entidad}</span></p>
+            <p><span>Inscripciones:</span> <span>{fotografia.inscripciones}</span></p>
+            <p><span>Fecha de inauguración:</span> <span>{fotografia.descripcion}</span></p>
+           
           </div>
         </div>
       </div>
