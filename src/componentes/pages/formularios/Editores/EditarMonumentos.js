@@ -115,14 +115,14 @@ export const EditarMonumentos = () => {
 
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/monumentos/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/monumentos/icon/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.docu);
+        setFotografia(datos.monu);
       } else {
         // Manejo de error
       }

@@ -441,7 +441,7 @@ export const EditarDocumentacion = () => {
                             <div className="form-group">
                                 <label>Tema:</label>
                                 <select name="tema" value={fotografia.tema || ''} onChange={cambiado}>
-                                    <option defaultValue={fotografia.tema}>{fotografia.tema}</option>
+                                    <option value={fotografia.tema}>{fotografia.tema}</option>
                                     <option value="Labor diplomática">Labor diplomática</option>
                                     <option value="El Nacional"> El Nacional </option>
                                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
