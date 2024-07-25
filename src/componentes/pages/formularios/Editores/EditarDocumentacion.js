@@ -273,7 +273,7 @@ export const EditarDocumentacion = () => {
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de expediente/carpeta</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="numeroEdicionInput"
                                     name="numero_expediente"
                                     defaultValue={fotografia.numero_expediente || ''}

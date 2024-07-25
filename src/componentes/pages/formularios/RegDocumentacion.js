@@ -280,7 +280,7 @@ export const RegDocumentacion = () => {
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de expediente o registro</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="numeroEdicionInput"
                                     name="numero_expediente"
                                     value={formulario.numero_expediente || ''}
