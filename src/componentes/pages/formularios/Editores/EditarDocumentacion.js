@@ -98,7 +98,10 @@ const data = {
 
   Brasil: {
     "Rio de Janeiro": ["NA"]
-  }
+  },
+  Cuba: {
+    "La Habana": ["Hotel Inglaterra"]
+}
 };
 export const EditarDocumentacion = () => {
   const { formulario, enviado, cambiado, resetFormulario, setFormulario } = useForm({});

@@ -99,6 +99,9 @@ const data = {
 
     Brasil: {
         "Rio de Janeiro": ["NA"]
+    },
+    Cuba: {
+        "La Habana": ["Hotel Inglaterra"]
     }
 };
 export const RegDocumentacion = () => {
