@@ -271,13 +271,8 @@ export const EditarCorrespondencia = () => {
                   onChange={cambiado}
                 >
                   <option value={fotografia.medio_envio}>{fotografia.medio_envio} </option>
-                  <option value="Román">Román</option>
-                  <option value="Rip-Rip">Rip-Rip</option>
-                  <option value="Tricio">Tricio</option>
-                  <option value="Benedictus">Benedictus</option>
-                  <option value="Joie">Joie</option>
-                  <option value="Versión española de Amado Nervo">Versión española de Amado Nervo</option>
-                  <option value="X.Y.Z">X.Y.Z</option>
+                  <option value="Correo Postal">Correo Postal</option>
+                  <option value="Telégrafo">Telégrafo</option>
                 </select>
               </div>
               <div className="form-group" id="columnas">
@@ -292,7 +287,7 @@ export const EditarCorrespondencia = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Asunto</label>
+                <label>Mensaje</label>
                 <input id='encabezado' type="textarea" name="asunto" placeholder="" defaultValue={fotografia.asunto || ''} onChange={cambiado} />
               </div>
             </div>
@@ -376,21 +371,14 @@ export const EditarCorrespondencia = () => {
               </div>
               <div className="form-group">
                 <label>Ubicación física:</label>
-                <select name="ubicacion_fisica" value={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                  <option value="">Seleccionar ubicación</option>
-                  <option value="Biblioteca">Biblioteca</option>
-                  <option value="Archivo">Archivo</option>
-                  <option value="Museo">Museo</option>
-                  <option value="Fondo reservado">Fondo reservado</option>
-                </select>
+                <input type='text' name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
+                </input>
               </div>
               <div className="form-group">
                 <label>Colección:</label>
-                <select name="coleccion" value={fotografia.coleccion || ''} onChange={cambiado}>
-                  <option value="">Seleccionar la colección</option>
-                  <option value="Privada">Privada</option>
-                  <option value="Pública">Pública</option>
-                </select>
+                <input type='text' name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
+        
+                </input>
               </div>
               <div className="form-group">
                 <label>Año de adquisición:</label>
@@ -431,13 +419,9 @@ export const EditarCorrespondencia = () => {
               </div>
               <div className="form-group">
                 <label>Tema:</label>
-                <select name="tema" value={fotografia.tema || ''} onChange={cambiado}>
-                  <option value="">Seleccionar el tema</option>
-                  <option value="1">tema 1</option>
-                  <option value="2">tema 2</option>
-                  <option value="El Nacional">El Nacional</option>
-                  <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                </select>
+                <input type='text' name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
+                  
+                </input>
               </div>
             </div>
             <button className="button" onClick={guardar_foto}>Enviar</button>

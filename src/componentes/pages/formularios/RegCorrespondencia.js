@@ -282,13 +282,9 @@ export const RegCorrespondencia = () => {
                                     onChange={cambiado}
                                 >
                                     <option value="">Seleccionar medio </option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
+                                    <option value="Correo Postal">Correo Postal</option>
+                                    <option value="Telégrafo">Telégrafo</option>
+                          
                                 </select>
                             </div>
                             <div className="form-group" id="columnas">
@@ -304,7 +300,7 @@ export const RegCorrespondencia = () => {
                             </div>
                             
                             <div className="form-group">
-                                <label>Asunto</label>
+                                <label>Mensaje</label>
                                 <input id='encabezado' type="textarea" name="asunto" placeholder="" value={formulario.asunto|| ''} onChange={cambiado} />
                             </div>
 
@@ -415,21 +411,15 @@ export const RegCorrespondencia = () => {
 
                             <div className="form-group">
                                 <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                                <input type='text' name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                    
+                                </input>
                             </div>
                             <div className="form-group">
                                 <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
+                                <input type='text' name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+    
+                                </input>
                             </div>
 
 
@@ -483,13 +473,9 @@ export const RegCorrespondencia = () => {
 
                             <div className="form-group">
                                 <label>Tema:</label>
-                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                                </select>
+                                <input type='text' name="tema" value={formulario.tema || ''} onChange={cambiado}>
+                                   
+                                </input>
                             </div>                       
                             </div>
                         <button className="button" onClick={guardar_foto}>Enviar</button>
