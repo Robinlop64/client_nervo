@@ -257,29 +257,22 @@ export const EditarIconografia = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="nombreSeudonimos">Técnica</label>
-                                <select
+                                <input
+                                    type='text'
                                     id="nombreSeudonimos"
                                     name="tecnica"
                                     defaultValue={fotografia.tecnica || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value={fotografia.tecnica}>{fotografia.tecnica}</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
+                                </input>
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Corriente artística</label>
+                            <div className="form-group" id="columnas">
+                                <label htmlFor="seccion">Corriente</label>
                                 <input
                                     type="text"
                                     id="seccionInput"
                                     name="corriente"
-                                    placeholder="corriente"
+                                    placeholder="Corriente artística"
                                     defaultValue={fotografia.corriente || ''}
                                     onChange={cambiado}
                                 />
@@ -320,13 +313,13 @@ export const EditarIconografia = () => {
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
-                                    placeholder="Transcripción"
-                                    defaultValue={fotografia.transcripcion || ''}
+                                    name="pendientes"
+                                    placeholder=""
+                                    defaultValue={fotografia.pendientes || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -381,21 +374,15 @@ export const EditarIconografia = () => {
 
                             <div className="form-group">
                                 <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                                <input type='text' name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
+                                  
+                                </input>
                             </div>
                             <div className="form-group">
                                 <label>Colección:</label>
-                                <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
-                                    <option value={fotografia.coleccion}>{fotografia.coleccion}</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
+                                <input type='text' name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
+                                   
+                                </input>
                             </div>
 
 
@@ -404,26 +391,9 @@ export const EditarIconografia = () => {
 
                             <div className="form-group">
                                 <label>Año de adquisición:</label>
-                                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
-                                    <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-
-                                </select>
+                                <input type='text' id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
+                                    
+                                </input>
                             </div>
 
 
@@ -449,13 +419,9 @@ export const EditarIconografia = () => {
 
                             <div className="form-group">
                                 <label>Tema:</label>
-                                <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                                    <option value={fotografia.tema}>{fotografia.tema}</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                                </select>
+                                <input type='text' name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
+                            
+                                </input>
                             </div>                       
                             </div>
                         <button className="button" onClick={guardar_foto}>Enviar</button>

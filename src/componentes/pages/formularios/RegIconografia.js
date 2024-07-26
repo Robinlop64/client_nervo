@@ -251,29 +251,23 @@ export const RegIconografia = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="nombreSeudonimos">Técnica</label>
-                                <select
+                                <input
+                                    type='text'
                                     id="nombreSeudonimos"
                                     name="tecnica"
                                     value={formulario.tecnica || ''}
                                     onChange={cambiado}
                                 >
-                                    <option value="">Seleccionar seudónimo</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                </select>
+                    
+                                </input>
                             </div>
-                            <div className="form-group" id="seccion">
-                                <label htmlFor="seccion">Corriente artística</label>
+                            <div className="form-group" id="columnas">
+                                <label htmlFor="seccion">Corriente:</label>
                                 <input
                                     type="text"
                                     id="seccionInput"
                                     name="corriente"
-                                    placeholder="corriente"
+                                    placeholder="Corriente artística"
                                     value={formulario.corriente || ''}
                                     onChange={cambiado}
                                 />
@@ -289,7 +283,7 @@ export const RegIconografia = () => {
                                     type="text"
                                     id="columnasInput"
                                     name="superficie"
-                                    placeholder="superficie"
+                                    placeholder="Materiales"
                                     value={formulario.superficie || ''}
                                     onChange={cambiado}
                                 />
@@ -314,13 +308,13 @@ export const RegIconografia = () => {
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Transcripción</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="transcripcion"
+                                    name="pendientes"
                                     placeholder="Transcripción"
-                                    value={formulario.transcripcion || ''}
+                                    value={formulario.pendientes || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -373,23 +367,17 @@ export const RegIconografia = () => {
                             </div>
                             
 
-                            <div className="form-group">
-                                <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                            <div className="form-group" id=''>
+                                <label>Ubicación:</label>
+                                <input type='text' placeholder='Ubicación física' name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
+                                 
+                                </input>
                             </div>
                             <div className="form-group">
                                 <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
+                                <input type='text' name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+                                 
+                                </input>
                             </div>
 
 
@@ -443,13 +431,8 @@ export const RegIconografia = () => {
 
                             <div className="form-group">
                                 <label>Tema:</label>
-                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="1"> tema 1</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                                </select>
+                                <input type='text' name="tema" value={formulario.tema || ''} onChange={cambiado}>
+                                </input>
                             </div>                       
                             </div>
                         <button className="button" onClick={guardar_foto}>Enviar</button>
