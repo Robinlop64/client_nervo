@@ -275,11 +275,9 @@ export const RegFotografia = () => {
                 </div>
                 <div className="form-group">
                   <label>Colección:</label>
-                  <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                    <option value="">Seleccionar la colección</option>
-                    <option value="Privada">Privada</option>
-                    <option value="Creación">Pública</option>
-                  </select>
+                  <input  type='text' name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
+                    
+                  </input>
                 </div>
                 <div className="form-group" id='fecha'>
                   <label>Fecha:</label>
@@ -331,6 +329,8 @@ export const RegFotografia = () => {
                   <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
                     <option value="dw">Seleccionar el tema</option>
                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
+                    <option value="Álbum familiar">Álbum familiar</option>
+
                   </select>
                 </div>
 
@@ -343,7 +343,7 @@ export const RegFotografia = () => {
               </div>
 
 
-              <h3>Campos específicos Fotografía</h3>
+          
               <div className='campos_fotografia' >
                 <div className="form-group">
                   <label>Número de foto:</label>
