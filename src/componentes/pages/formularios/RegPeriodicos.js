@@ -184,6 +184,20 @@ export const RegPeriodicos = () => {
                         
                             <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Periódico</label>
+                                <input
+                                    type='text'
+                                    id="nombrePeriodicoSelect"
+                                    name="nombre_periodico"
+                                    value={formulario.nombre_periodico || ''}
+                                    onChange={cambiado}
+                                >
+                    
+                                
+
+                                </input>
+                      {/*
+       
+      
                                 <select
                                     id="nombrePeriodicoSelect"
                                     name="nombre_periodico"
@@ -212,6 +226,8 @@ export const RegPeriodicos = () => {
                                 </select>
 
 
+                                */}
+       
                             </div>
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de edición</label>
@@ -220,6 +236,16 @@ export const RegPeriodicos = () => {
                                     id="numeroEdicionInput"
                                     name="numero_edicion"
                                     value={formulario.numero_edicion}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de carpeta</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_carpeta"
+                                    value={formulario.numero_carpeta}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -551,6 +577,7 @@ export const RegPeriodicos = () => {
                                     <option value="La Razón">La Razón </option>
                                     <option value="La Prensa">La Prensa</option>
                                     <option value="México Libre">México Libre</option>
+                                    <option value="Recortes de prensa">Recortes de prensa</option>
                                 </select>
                             </div>
                             
