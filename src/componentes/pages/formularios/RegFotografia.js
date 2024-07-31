@@ -211,6 +211,78 @@ export const RegFotografia = () => {
                   <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
                 </div>
 
+                
+                
+
+                
+              
+                <div className="form-group" id='numeroFotografia'>
+                  <label>Número de foto:</label>
+                  <input type="number" name="numero_foto"  value={formulario.numero_foto || ''} onChange={cambiado} />
+                </div>
+                
+                
+                <div className="form-group">
+                <label>Número de álbum:</label>
+                  <select name="numero_album" id="num_album" value={formulario.numero_album || ''} onChange={cambiado} >
+                  <option value="">Número de álbum</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                  </select>
+                </div>
+                <div className="form-group" id='fechaFoto'>
+                  <label>Fecha:</label>
+                  <input type="date" name="fecha" className="small-input" placeholder="Año" value={formulario.fecha || ''} onChange={cambiado} />
+                  
+                </div>
+
+                <div className="form-group">
+                  <label>Formato:</label>
+                  <input type="text" name="formato" placeholder="Formato" value={formulario.formato || ''} onChange={cambiado} />
+                </div>
+
+                <div className="form-group">
+                  <label>Cámara:</label>
+                  <input type="text" name="camara" placeholder="Cámara" value={formulario.camara || ''} onChange={cambiado} />
+                </div>
+
+
+                <div className='form-group' >
+                  <label htmlFor='file0'>Imagen</label>
+                  <input type='file' name='file0' id="file"/>
+                </div>
+              
+
+                <div className='divisor_form'>
+                            <div className="form-group"id="resumen">
+                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <textarea
+                                    type="text"
+                                    id="resumenInput"
+                                    name="resumen"
+                                    placeholder=""
+                                    value={formulario.resumen || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group"id="transcripcion">
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
+                                <textarea
+                                    type="text"
+                                    id="transcripcionInput"
+                                    name="pendientes"
+                                    placeholder="Transcripción"
+                                    value={formulario.pendientes || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            </div>
+
                 <div className="form-group">
                   <label>País:</label>
                   <select
@@ -279,16 +351,17 @@ export const RegFotografia = () => {
                     
                   </input>
                 </div>
-                <div className="form-group" id='fecha'>
-                  <label>Fecha:</label>
-                  <input type="number" name="anio" className="small-input" placeholder="Año" value={formulario.anio || ''} onChange={cambiado} />
-                  <input type="number" name="mes" className="small-input" placeholder="Mes" value={formulario.mes || ''} onChange={cambiado} />
-                  <input type="number" name="dia" className="small-input" placeholder="Día" value={formulario.dia || ''} onChange={cambiado} />
-                </div>
+               
 
                 
                
-
+                <div className="form-group">
+                  <label>Hallazgo:</label>
+                  <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
+                    <option value="No">No</option>
+                    <option value="Sí">Sí</option>
+                  </select>
+                </div>
                 <div className="form-group">
                   <label>Año de adquisición:</label>
                   <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
@@ -300,6 +373,13 @@ export const RegFotografia = () => {
                     <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
                   </select>
                 </div>
 
@@ -307,20 +387,16 @@ export const RegFotografia = () => {
 
 
 
-                <div className="form-group">
-                  <label>Hallazgo:</label>
-                  <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
-                    <option value="No">No</option>
-                    <option value="Sí">Sí</option>
-                  </select>
-                </div>
+                
 
                 <div className="form-group">
                   <label>Persona que registra:</label>
                   <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
+                  <option value="">Seleccionar Persona</option>
                     <option value="Mayra Fonseca">Mayra Fonseca</option>
                     <option value="Robin">Robin</option>
                     <option value="Xoely">Xoely</option>
+                    <option value="Perla">Perla</option>
                   </select>
                 </div>
 
@@ -333,53 +409,6 @@ export const RegFotografia = () => {
 
                   </select>
                 </div>
-
-                
-
-                <div className='form-group'>
-                  <label htmlFor='file0'>Imagen</label>
-                  <input type='file' name='file0' id="file"/>
-                </div>
-              </div>
-
-
-          
-              <div className='campos_fotografia' >
-                <div className="form-group">
-                  <label>Número de foto:</label>
-                  <input type="number" name="numero_foto"  value={formulario.numero_foto || ''} onChange={cambiado} />
-                </div>
-
-                
-                <div className="form-group">
-                <label>Número de álbum:</label>
-                  <select name="numero_album" id="num_album" value={formulario.numero_album || ''} onChange={cambiado} >
-                  <option value="">Número de álbum</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Formato:</label>
-                  <input type="text" name="formato" placeholder="Formato" value={formulario.formato || ''} onChange={cambiado} />
-                </div>
-
-                <div className="form-group">
-                  <label>Cámara:</label>
-                  <input type="text" name="camara" placeholder="Cámara" value={formulario.camara || ''} onChange={cambiado} />
-                </div>
-
-                <div className="form-group">
-                  <label id='descripcion_label'>Descripción:</label>
-                  <textarea name="descripcion" placeholder="Descripción" value={formulario.descripcion || ''} onChange={cambiado} />
-                </div>
-
-
               </div>
               <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>

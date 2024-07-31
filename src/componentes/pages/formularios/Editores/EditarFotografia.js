@@ -206,11 +206,11 @@ export const EditarFotografia = () => {
 
           <div>
 
-            <h1>Formulario de Edición de bienes de {fotografia.titulo} </h1>
+            <h1>Formulario de registro de bienes</h1>
 
 
             <div className='frame_botones_registro' id="regresar_boton">
-            <NavLink to={`/admin/album/${fotografia.numero_album}`}>
+              <NavLink to="/registro">
                 <button className="button">Regresar</button>
               </NavLink>
             </div>
@@ -221,13 +221,85 @@ export const EditarFotografia = () => {
 
                 <div className="form-group">
                   <label>Título:</label>
-                  <input type="textarea" name="titulo" placeholder="Título" defaultValue={fotografia.titulo || ""} onChange={cambiado} />
+                  <input type="textarea" name="titulo" placeholder="Título" defaultValue={fotografia.titulo || ''} onChange={cambiado} />
                 </div>
 
                 <div className="form-group" id='autor'>
                   <label>Autor:</label>
                   <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor || ''} onChange={cambiado} />
                 </div>
+
+                
+                
+
+                
+              
+                <div className="form-group" id='numeroFotografia'>
+                  <label>Número de foto:</label>
+                  <input type="number" name="numero_foto"  defaultValue={fotografia.numero_foto || ''} onChange={cambiado} />
+                </div>
+                
+                
+                <div className="form-group">
+                <label>Número de álbum:</label>
+                  <select name="numero_album" id="num_album" defaultValue={fotografia.numero_album || ''} onChange={cambiado} >
+                  <option value={fotografia.numero_album}>{fotografia.numero_album}</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                  </select>
+                </div>
+                <div className="form-group" id='fechaFoto'>
+                  <label>Fecha:</label>
+                  <input type="date" name="fecha" className="small-input" placeholder="Año" defaultValue={fotografia.fecha || ''} onChange={cambiado} />
+                  
+                </div>
+
+                <div className="form-group">
+                  <label>Formato:</label>
+                  <input type="text" name="formato" placeholder="Formato" defaultValue={fotografia.formato || ''} onChange={cambiado} />
+                </div>
+
+                <div className="form-group">
+                  <label>Cámara:</label>
+                  <input type="text" name="camara" placeholder="Cámara" defaultValue={fotografia.camara || ''} onChange={cambiado} />
+                </div>
+
+
+                <div className='form-group' >
+                  <label htmlFor='file0'>Imagen</label>
+                  <input type='file' name='file0' id="file"/>
+                </div>
+              
+
+                <div className='divisor_form'>
+                            <div className="form-group"id="resumen">
+                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                                <textarea
+                                    type="text"
+                                    id="resumenInput"
+                                    name="resumen"
+                                    placeholder=""
+                                    defaultValue={fotografia.resumen || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+
+                            <div className="form-group"id="transcripcion">
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
+                                <textarea
+                                    type="text"
+                                    id="transcripcionInput"
+                                    name="pendientes"
+                                    placeholder="Transcripción"
+                                    defaultValue={fotografia.pendientes || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            </div>
 
                 <div className="form-group">
                   <label>País:</label>
@@ -237,9 +309,9 @@ export const EditarFotografia = () => {
                     defaultValue={fotografia.pais || ''}
                     onChange={cambiado}>
 
-                    <option value="">Seleccionar país</option>
+                    <option value={fotografia.pais}>{fotografia.pais}</option>
                     {paises.map((pais) => (
-                      <option key={pais} name="paises" defaultValue={pais}>
+                      <option key={pais} name="paises" value={pais}>
                         {pais}
                       </option>
                     ))}
@@ -260,7 +332,7 @@ export const EditarFotografia = () => {
                     defaultValue={fotografia.ciudad || ''}
                     onChange={cambiado}
                   >
-                    <option value="">Seleccionar ciudad</option>
+                    <option value={fotografia.ciudad}>{fotografia.ciudad}</option>
                     {ciudades.map((ciudad) => (
                       <option key={ciudad} value={ciudad}>
                         {ciudad}
@@ -272,9 +344,9 @@ export const EditarFotografia = () => {
                 <div className="form-group">
                   <label>Institución:</label>
                   <select id="institucion" name='institucion' defaultValue={fotografia.institucion || ""} onChange={cambiado}>
-                    <option value="">Seleccionar institución</option>
+                    <option value={fotografia.institucion}>{fotografia.institucion}</option>
                     {instituciones.map((institucion, index) => (
-                      <option key={index} defaultValue={institucion}>
+                      <option key={index} value={institucion}>
                         {institucion}
                       </option>
                     ))}
@@ -284,7 +356,7 @@ export const EditarFotografia = () => {
 
                 <div className="form-group">
                   <label>Ubicación física:</label>
-                  <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
+                  <select name="ubicacion_fisica" value={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
                     <option value="">Seleccionar ubicación</option>
                     <option value="Biblioteca">Biblioteca</option>
                     <option value="Archivo">Archivo</option>
@@ -293,26 +365,26 @@ export const EditarFotografia = () => {
                 </div>
                 <div className="form-group">
                   <label>Colección:</label>
-                  <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
-                    <option value="">Seleccionar la colección</option>
-                    <option value="Privada">Privada</option>
-                    <option value="Creación">Pública</option>
+                  <input  type='text' name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
+                    
+                  </input>
+                </div>
+               
+
+                
+               
+                <div className="form-group">
+                  <label>Hallazgo:</label>
+                  <select id='hallazgo' name="hallazgo" value={fotografia.hallazgo || ''} onChange={cambiado}>
+                  <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
+                    <option value="No">No</option>
+                    <option value="Sí">Sí</option>
                   </select>
                 </div>
-                <div className="form-group" id='fecha'>
-                  <label>Fecha:</label>
-                  <input type="number" name="anio" className="small-input" placeholder="Año" defaultValue={fotografia.anio || ''} onChange={cambiado} />
-                  <input type="number" name="mes" className="small-input" placeholder="Mes" defaultValue={fotografia.mes || ''} onChange={cambiado} />
-                  <input type="number" name="dia" className="small-input" placeholder="Día" defaultValue={fotografia.dia || ''} onChange={cambiado} />
-                </div>
-
-
-
-
                 <div className="form-group">
                   <label>Año de adquisición:</label>
                   <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
-                    <option value="">Seleccionar año</option>
+                  <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
                     <option value="2020">2020</option>
                     <option value="2019">2019</option>
                     <option value="2018">2018</option>
@@ -320,6 +392,13 @@ export const EditarFotografia = () => {
                     <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
                   </select>
                 </div>
 
@@ -327,78 +406,27 @@ export const EditarFotografia = () => {
 
 
 
-                <div className="form-group">
-                  <label>Hallazgo:</label>
-                  <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
-                    <option value="No">No</option>
-                    <option value="Sí">Sí</option>
-                  </select>
-                </div>
+                
 
                 <div className="form-group">
                   <label>Persona que registra:</label>
                   <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
+                  <option value={fotografia.persona_registra}>{fotografia.persona_registra}</option>
                     <option value="Mayra Fonseca">Mayra Fonseca</option>
                     <option value="Robin">Robin</option>
                     <option value="Xoely">Xoely</option>
+                    <option value="Perla">Perla</option>
                   </select>
                 </div>
 
                 <div className="form-group">
                   <label>Tema:</label>
                   <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                    <option value="dw">Seleccionar el tema</option>
+                    <option value={fotografia.tema}>{fotografia.tema}</option>
                     <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                  </select>
-                </div>
-
-
-
-                <div className='form-group'>
-                  <label htmlFor='file0'>Imagen</label>
-                  <div className='marco'>
-                    <img src={imageUrl} alt={fotografia.titulo} className='fotografia-img-large' />
-                  </div>
-                  <input type='file' name='file0' id="file" />
-                </div>
-              </div>
-
-
-              <h3>Campos específicos Fotografía</h3>
-              <div className='campos_fotografia' >
-                <div className="form-group">
-                  <label>Número de foto:</label>
-                  <input type="number" name="numero_foto" defaultValue={fotografia.numero_foto || ''} onChange={cambiado} />
-                </div>
-
-
-                <div className="form-group">
-                  <label>Número de álbum:</label>
-                  <select name="numero_album" id="num_album" defaultValue={fotografia.numero_album || ''} onChange={cambiado} >
-                    <option value="">Número de álbum</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
+                    <option value="Álbum familiar">Álbum familiar</option>
 
                   </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Formato:</label>
-                  <input type="text" name="formato" placeholder="Formato" defaultValue={fotografia.formato || ''} onChange={cambiado} />
-                </div>
-
-                <div className="form-group">
-                  <label>Cámara:</label>
-                  <input type="text" name="camara" placeholder="Cámara" defaultValue={fotografia.camara || ''} onChange={cambiado} />
-                </div>
-
-                <div className="form-group">
-                  <label id='descripcion_label'>Descripción:</label>
-                  <textarea name="descripcion" placeholder="Descripción" defaultValue={fotografia.descripcion || ''} onChange={cambiado} />
                 </div>
               </div>
               <button className="button" onClick={guardar_foto}>Enviar</button>

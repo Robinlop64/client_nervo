@@ -84,6 +84,7 @@ import { ObjetosInstitucionTema } from '../componentes/pages/instituciones/temas
 import { MonumentosInstitucionTema } from '../componentes/pages/instituciones/temas/MonumentosInstitucionTemas';
 import { FotografiaInstitucionTema } from '../componentes/pages/instituciones/temas/FotografiaInstitucionTema';
 import { EditarInstitucion } from '../componentes/pages/formularios/Editores/EditarInstitucion';
+import { FotografiaTema } from '../componentes/pages/acervo/temas/FotografiaTema';
 
 export const Rutas = () => {
   return (
@@ -145,6 +146,7 @@ export const Rutas = () => {
             <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
             <Route path="/admin/tema/Repatriación de los restos de Amado Nervo" element={<Cortejo />} />
+            <Route path="/admin/tema/:id" element={<FotografiaTema />} />
             <Route path="/admin/album/:id" element={<AlbumFotos />} />
             
 
