@@ -70,7 +70,7 @@ export const Instituciones = () => {
                       
                     )}
                     <button onClick={(event) => handleEditClick(event, institucion._id)}>Editar</button>
-                    <button onClick={(event) => handleEditClick(event, institucion._id)}>Borrar</button>
+                    <button onClick={(event) => handleEditClick(event, institucion.nombre)}>Borrar</button>
                   </div>
                 ))}
               </ul>

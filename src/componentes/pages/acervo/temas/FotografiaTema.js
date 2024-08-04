@@ -30,7 +30,7 @@ export const FotografiaTema = () => {
   };
 
   const handleFotoClick = (fotografia) => {
-    navigate(`/admin/fotografia/${fotografia._id}`);
+    navigate(`/admin/fotografias/${fotografia._id}`);
   };
 
   const handleDeleteClick = async (event, fotografiaId) => {

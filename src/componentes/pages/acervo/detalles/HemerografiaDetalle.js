@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const HemerografiaDetalle = () => {
   const { id } = useParams();
@@ -32,10 +34,10 @@ export const HemerografiaDetalle = () => {
     const { pais, institucion, tema } = fotografia;
     return (
       <>
-        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
+        {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
+        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
-        <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
+        {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
   };
@@ -43,6 +45,15 @@ export const HemerografiaDetalle = () => {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const renderField = (label, value) => {
+    return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
+  }
+
+  const formatFechaPublicacion = (fecha) => {
+    if (!fecha) return '';
+    return format(new Date(fecha), "EEEE, dd MMMM yyyy", { locale: es });
+  }
 
   return (
     <main className='main_fotodetalle'>
@@ -56,32 +67,31 @@ export const HemerografiaDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco_hemerografia'>
-          {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
-          {fotografia.images && fotografia.images.map((image, index) => (
-            <img
-              key={index}
-              src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
-              alt={`${fotografia.titulo} ${index + 1}`}
-              className='fotografia-img-large'
-            />
-          ))}
-        </div>
+          <div className='marco_hemerografia'>
+            {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
+            {fotografia.images && fotografia.images.map((image, index) => (
+              <img
+                key={index}
+                src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                alt={`${fotografia.titulo} ${index + 1}`}
+                className='fotografia-img-large'
+              />
+            ))}
+          </div>
           <div className='contenido_hemerografiaDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
             <h4>Ficha catalográfica</h4>
-            <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
-            <p><span>Periódico:</span> <span>{fotografia.nombre_periodico}</span></p>
-            <p><span>Número de edición:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Fecha de publicación:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Seudónimo:</span> <span>{fotografia.seudonimo}</span></p>
-            <p><span>Páginas:</span> <span>{fotografia.numero_paginas}</span></p>
-            <p><span>Columnas:</span> <span>{fotografia.numero_columnas}</span></p>
-            <p><span>Género periodístico:</span> <span>{fotografia.genero_periodistico}</span></p>
-            <p><span>Lugar de publicación:</span> <span>{fotografia.lugar_publicacion}</span></p>
-            <p><span>Periodicidad:</span> <span>{fotografia.periodicidad}</span></p>
-
+            {renderField("Título", fotografia.encabezado)}
+            {renderField("Periódico", fotografia.nombre_periodico)}
+            {renderField("Número de edición", fotografia.numero_edicion)}
+            {renderField("Fecha de publicación", formatFechaPublicacion(fotografia.fecha_publicacion))}
+            {renderField("Autor", fotografia.autor)}
+            {renderField("Seudónimo", fotografia.seudonimo)}
+            {renderField("Páginas", fotografia.numero_paginas)}
+            {renderField("Columnas", fotografia.numero_columnas)}
+            {renderField("Género periodístico", fotografia.genero_periodistico)}
+            {renderField("Lugar de publicación", fotografia.lugar_publicacion)}
+            {renderField("Periodicidad", fotografia.periodicidad)}
           </div>
         </div>
       </div>

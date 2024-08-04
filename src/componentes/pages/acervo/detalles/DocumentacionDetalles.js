@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const DocumentacionDetalle = () => {
   const { id } = useParams();
@@ -36,10 +38,10 @@ export const DocumentacionDetalle = () => {
     const { pais, institucion, tema } = fotografia;
     return (
       <>
-        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
+        {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
+        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
-        <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
+        {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
   };
@@ -47,6 +49,15 @@ export const DocumentacionDetalle = () => {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const renderField = (label, value) => {
+    return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
+  }
+
+  const formatFechaEmision = (fecha) => {
+    if (!fecha) return '';
+    return format(new Date(fecha), "EEEE, dd MMMM yyyy", { locale: es });
+  }
 
   return (
     <main className='main_fotodetalle'>
@@ -73,28 +84,27 @@ export const DocumentacionDetalle = () => {
           </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
-            <p><span>Institución emisora:</span> <span>{fotografia.emisor}</span></p>
-            <p><span>Fecha de emisión:</span> <span>{fotografia.fecha_emision}</span></p>
-            <p><span>Lugar de emisión:</span> <span>{fotografia.lugar_emision}</span></p>
-            <p><span>Destinatario:</span> <span>{fotografia.destinatario}</span></p>
-            <p><span>Número de expediente/carpeta:</span> <span>{fotografia.numero_expediente}</span></p>
-            <p><span>Contenido del documento:</span> <span>{fotografia.contenido}</span></p>
-            <p><span>Notas:</span> <span>{fotografia.notas}</span></p>
-            
+            {renderField("Título", fotografia.titulo)}
+            {renderField("Institución emisora", fotografia.emisor)}
+            {renderField("Fecha de emisión", formatFechaEmision(fotografia.fecha_emision))}
+            {renderField("Lugar de emisión", fotografia.lugar_emision)}
+            {renderField("Destinatario", fotografia.destinatario)}
+            {renderField("Número de expediente/carpeta", fotografia.numero_expediente)}
+            {renderField("Contenido del documento", fotografia.contenido)}
+            {renderField("Notas", fotografia.notas)}
           </div>
           <div className='marco'>
-          {fotografia.pdfs[0] && (
+            {pdfNombre && (
               <div className='pdf-viewer'>
                 <embed 
-                  src={`https://backend-prueba-apel.onrender.com/imagenes/documentacion/pdf/${fotografia.pdfs[0].nombre}`} 
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/documentacion/pdf/${pdfNombre}`} 
                   width="100%" 
                   height="600px" 
                   type="application/pdf" 
                 />
               </div>
             )}
-            </div>
+          </div>
         </div>
       </div>
     </main>

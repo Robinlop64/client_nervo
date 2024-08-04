@@ -32,10 +32,10 @@ export const LibrosDetalle = () => {
     const { pais, institucion, tema } = fotografia;
     return (
       <>
-        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
+        {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
+        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
-        <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
+        {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
   };
@@ -43,6 +43,10 @@ export const LibrosDetalle = () => {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const renderField = (label, value) => {
+    return value ? <p><span id='spanAzul'>{label}:</span> <span>{value}</span></p> : null;
+  }
 
   return (
     <main className='main_fotodetalle'>
@@ -56,33 +60,32 @@ export const LibrosDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco_libros'>
-          {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
-          {fotografia.images && fotografia.images.map((image, index) => (
-            <img
-              key={index}
-              src={`https://backend-prueba-apel.onrender.com/imagenes/libros/${image.nombre}`}
-              alt={`${fotografia.titulo} ${index + 1}`}
-              className='fotografia-img-large'
-            />
-          ))}
-        </div>
+          <div className='marco_libros'>
+            {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
+            {fotografia.images && fotografia.images.map((image, index) => (
+              <img
+                key={index}
+                src={`https://backend-prueba-apel.onrender.com/imagenes/libros/${image.nombre}`}
+                alt={`${fotografia.titulo} ${index + 1}`}
+                className='fotografia-img-large'
+              />
+            ))}
+          </div>
           <div className='contenido_librosDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
             <h4>Ficha catalográfica</h4>
-            <p><span id='spanAzul'>Título:</span> <span>{fotografia.titulo}</span></p>
-            <p><span id='spanAzul'>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span id='spanAzul'>Prólogo:</span> <span>{fotografia.prologo}</span></p>
-            <p><span id='spanAzul'>Compilador (es):</span> <span>{fotografia.compiladores}</span></p>
-            <p><span id='spanAzul'>Editorial:</span> <span>{fotografia.editorial}</span></p>
-            <p><span id='spanAzul'>Año de publicación:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span id='spanAzul'>Lugar de edición:</span> <span>{fotografia.lugar_edicion}</span></p>
-            <p><span id='spanAzul'>Año de reimpresión	:</span> <span>{fotografia.fehca_reimpresion}</span></p>
-            <p><span id='spanAzul'>Volumen:</span> <span>{fotografia.volumen}</span></p>
-            <p><span id='spanAzul'>Número de páginas:</span> <span>{fotografia.numero_paginas}</span></p>
-            <p><span id='spanAzul'>ISBN:</span> <span>{fotografia.isbn}</span></p>
-            <p><span id='spanAzul'>Colección/Serie:</span> <span>{fotografia.coleccion_serie}</span></p>
-
+            {renderField("Título", fotografia.titulo)}
+            {renderField("Autor", fotografia.autor)}
+            {renderField("Prólogo", fotografia.prologo)}
+            {renderField("Compilador (es)", fotografia.compiladores)}
+            {renderField("Editorial", fotografia.editorial)}
+            {renderField("Año de publicación", fotografia.fecha_publicacion)}
+            {renderField("Lugar de edición", fotografia.lugar_edicion)}
+            {renderField("Año de reimpresión", fotografia.fehca_reimpresion)}
+            {renderField("Volumen", fotografia.volumen)}
+            {renderField("Número de páginas", fotografia.numero_paginas)}
+            {renderField("ISBN", fotografia.isbn)}
+            {renderField("Colección/Serie", fotografia.coleccion_serie)}
           </div>
         </div>
       </div>

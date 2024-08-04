@@ -32,10 +32,10 @@ export const CorrespondenciaDetalle = () => {
     const { pais, institucion, tema } = fotografia;
     return (
       <>
-        <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span> /
+        {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
+        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
-        <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
+        {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
   };
@@ -43,6 +43,10 @@ export const CorrespondenciaDetalle = () => {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const renderField = (label, value) => {
+    return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
+  }
 
   return (
     <main className='main_fotodetalle'>
@@ -56,27 +60,27 @@ export const CorrespondenciaDetalle = () => {
           <h2>{fotografia.tema}</h2>
         </div>
         <div className='ficha_fotografia'>
-        <div className='marco'>
-          {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
-          {fotografia.images && fotografia.images.map((image, index) => (
-            <img
-              key={index}
-              src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${image.nombre}`}
-              alt={`${fotografia.titulo} ${index + 1}`}
-              className='fotografia-img-large'
-            />
-          ))}
-        </div>
+          <div className='marco'>
+            {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
+            {fotografia.images && fotografia.images.map((image, index) => (
+              <img
+                key={index}
+                src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${image.nombre}`}
+                alt={`${fotografia.titulo} ${index + 1}`}
+                className='fotografia-img-large'
+              />
+            ))}
+          </div>
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            <p><span>Título:</span> <span>{fotografia.encabezado}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.fecha_publicacion}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Numero Edicion:</span> <span>{fotografia.numero_edicion}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            {renderField("Título", fotografia.encabezado)}
+            {renderField("Autor", fotografia.autor)}
+            {renderField("Fecha", fotografia.fecha_publicacion)}
+            {renderField("Colección", fotografia.coleccion)}
+            {renderField("Numero Edicion", fotografia.numero_edicion)}
+            {renderField("Número de Foto", fotografia.numero_foto)}
+            {renderField("Descripción", fotografia.descripcion)}
+            {renderField("Ubicación del bien", fotografia.institucion)}
           </div>
         </div>
       </div>

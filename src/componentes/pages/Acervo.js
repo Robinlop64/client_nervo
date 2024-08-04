@@ -15,7 +15,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/fotografiasub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/fotografias.jpg" 
                     alt="Fotografía" 
                   />
                 </div>
@@ -30,7 +30,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/dibujosub.png" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/iconografia.png" 
                     alt="Iconografía" 
                   />
                 </div>
@@ -45,7 +45,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/librosub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/libros.jpg" 
                     alt="Libros" 
                   />
                 </div>
@@ -60,7 +60,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/hemerografiasub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/hemerografia.jpg" 
                     alt="Publicaciones periódicas" 
                   />
                 </div>
@@ -75,7 +75,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/correspondenciasub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/correspondencia.jpg" 
                     alt="Correspondencia" 
                   />
                 </div>
@@ -90,7 +90,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/documentosub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/documentacion.jpg" 
                     alt="Documentación" 
                   />
                 </div>
@@ -105,7 +105,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/partiturasub.png" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/partituras.png" 
                     alt="Partituras" 
                   />
                 </div>
@@ -120,7 +120,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/objetosub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/objetos.jpg" 
                     alt="Objetos personales" 
                   />
                 </div>
@@ -135,7 +135,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/monumentosub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/monumentos.jpg" 
                     alt="Monumentos" 
                   />
                 </div>
@@ -150,7 +150,7 @@ export const Acervo = () => {
               <article>
                 <div className='mascara'>
                   <img 
-                    src="https://nervodigital.com.mx/acervo/imgs/audiovisualsub.jpg" 
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/audiovisuales.jpg" 
                     alt="Audiovisuales" 
                   />
                 </div>

@@ -30,7 +30,6 @@ export const FotoDetalle = () => {
 
   const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
 
-
   const getNavigationPath = () => {
     const { pais, institucion, tema } = fotografia;
     return (
@@ -42,9 +41,15 @@ export const FotoDetalle = () => {
       </>
     );
   };
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  const renderField = (label, value) => {
+    return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
+  }
+
   return (
     <main className='main_fotodetalle'>
       <div id='nav3'>
@@ -63,19 +68,17 @@ export const FotoDetalle = () => {
           <div className='contenido_fotodetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
             <h4>Ficha catalográfica</h4>
-            <p><span>Título:</span> <span>{fotografia.titulo}</span></p>
-            <p><span>Autor:</span> <span>{fotografia.autor}</span></p>
-            <p><span>Fecha:</span> <span>{fotografia.anio}{fotografia.mes && `/${fotografia.mes}`}{fotografia.dia && `/${fotografia.dia}`}</span></p>
-            <p><span>Colección:</span> <span>{fotografia.coleccion}</span></p>
-            <p><span>Álbum:</span> <span>{fotografia.numero_album}</span></p>
-            <p><span>Número de Foto:</span> <span>{fotografia.numero_foto}</span></p>
-            <p><span>Descripción:</span> <span>{fotografia.descripcion}</span></p>
-            <p><span>Ubicación del bien:</span> <span>{fotografia.institucion}</span></p>
+            {renderField("Título", fotografia.titulo)}
+            {renderField("Autor", fotografia.autor)}
+            {renderField("Fecha", `${fotografia.anio}${fotografia.mes ? `/${fotografia.mes}` : ''}${fotografia.dia ? `/${fotografia.dia}` : ''}`)}
+            {renderField("Colección", fotografia.coleccion)}
+            {renderField("Álbum", fotografia.numero_album)}
+            {renderField("Número de Foto", fotografia.numero_foto)}
+            {renderField("Descripción", fotografia.descripcion)}
+            {renderField("Ubicación del bien", fotografia.institucion)}
           </div>
-
         </div>
       </div>
     </main>
   );
-
 }
