@@ -184,47 +184,61 @@ export const EditarHemerografia = () => {
           <form onSubmit={guardar_foto}>
             <h2>Campos generales</h2>
             <div className='divisor_form'>
-              <div className="form-group" id="nombrePeriodico">
-                <label htmlFor="nombrePeriodico">Periódico</label>
-                <select
-                  id="nombrePeriodicoSelect"
-                  name="nombre_periodico"
-                  defaultValue={fotografia.nombre_periodico}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.nombre_periodico}>{fotografia.nombre_periodico}</option>
-                  <option value="El Nacional">El Nacional</option>
-                </select>
+            <div className="form-group" id="nombrePeriodico">
+                                <label htmlFor="nombrePeriodico">Periódico</label>
+                                <input
+                                    type='text'
+                                    id="nombrePeriodicoSelect"
+                                    name="nombre_periodico"
+                                    defaultValue={fotografia.nombre_periodico || ''}
+                                    onChange={cambiado}
+                                >
+                    
+                                
+
+                                </input>
               </div>
               <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de edición</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_edicion"
-                  defaultValue={fotografia.numero_edicion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="FechaPublicacion">
-                <label id='fecha_publicacionLabel'>Fecha de publicación</label>
-                <input
-                  type="date"
-                  name="fecha_publicacion"
-                  defaultValue={fotografia.fecha_publicacion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de registro</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_registro"
-                  defaultValue={fotografia.numero_registro || ''}
-                  onChange={cambiado}
-                />
-              </div>
+                                <label htmlFor="numeroEdicion">Número de edición</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_edicion"
+                                    defaultValue={fotografia.numero_edicion}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de carpeta</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_carpeta"
+                                    defaultValue={fotografia.numero_carpeta}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                        
+                            <div className="form-group" id="FechaPublicacion">
+                            <label id='fecha_publicacionLabel'>Fecha de publicación</label>
+                            <input
+                                type="date"
+                                name="fecha_publicacion"
+                                defaultValue={fotografia.fecha_publicacion}
+                                onChange={cambiado}
+                            />
+                            </div>
+
+                            <div className="form-group" id="numeroEdicion">
+                                <label htmlFor="numeroEdicion">Número de registro</label>
+                                <input
+                                    type="number"
+                                    id="numeroEdicionInput"
+                                    name="numero_registro"
+                                    defaultValue={fotografia.numero_registro || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
               <div className="form-group">
                 <label>Encabezado</label>
                 <input id='encabezado' type="textarea" name="encabezado" placeholder="Título" defaultValue={fotografia.encabezado || ''} onChange={cambiado} />
