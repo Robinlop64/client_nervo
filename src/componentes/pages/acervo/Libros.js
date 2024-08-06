@@ -41,7 +41,7 @@ export const Libros = () => {
               <article>
                 <img
                   id='img_temas'
-                  src={`https://backend-prueba-apel.onrender.com/imagenes/libros/${tema.nombreImagen}`}
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/general/Temas/libros/${tema.tema}.jpg`}
                   alt={`${tema.tema} foto`}
                 />
                 <div className="contenido_temas">

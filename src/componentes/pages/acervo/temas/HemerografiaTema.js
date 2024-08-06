@@ -78,8 +78,11 @@ export const HemerografiaTema = () => {
         <p>No hay imagen disponible</p>
       )}
       <p className='numero_foto'>{fotografia.numero_registro}</p>
-      <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
+
+    <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
       <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+
+  
     </div>
   );
 })}

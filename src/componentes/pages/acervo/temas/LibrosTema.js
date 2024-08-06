@@ -80,6 +80,8 @@ export const LibrosTema = () => {
       <p className='numero_foto'>{fotografia.numero_foto}</p>
       <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
       <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+
+
     </div>
   );
 })}
