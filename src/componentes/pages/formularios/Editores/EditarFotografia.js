@@ -419,14 +419,10 @@ export const EditarFotografia = () => {
                   </select>
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" id='tema'>
                   <label>Tema:</label>
-                  <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                    <option value={fotografia.tema}>{fotografia.tema}</option>
-                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                    <option value="Álbum familiar">Álbum familiar</option>
-
-                  </select>
+                  <input type='text' name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}/>
+                    
                 </div>
               </div>
               <button className="button" onClick={guardar_foto}>Enviar</button>

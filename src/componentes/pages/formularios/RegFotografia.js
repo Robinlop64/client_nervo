@@ -399,15 +399,11 @@ export const RegFotografia = () => {
                     <option value="Perla">Perla</option>
                   </select>
                 </div>
-
-                <div className="form-group">
+              
+                <div className="form-group" id='tema'>
                   <label>Tema:</label>
-                  <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                    <option value="dw">Seleccionar el tema</option>
-                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                    <option value="Álbum familiar">Álbum familiar</option>
-
-                  </select>
+                  <input type='text' name="tema" value={formulario.tema || ''} onChange={cambiado}/>
+                  
                 </div>
               </div>
               <button className="button" onClick={guardar_foto}>Enviar</button>

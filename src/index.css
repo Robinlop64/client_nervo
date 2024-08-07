@@ -833,7 +833,10 @@ h1 {
 
 }
 
-
+#tema input{
+  max-width: 250px;
+  min-width: 250px;
+}
 .barra_fotodetalle{
   border-bottom:2px solid #0672A8;
   height: 70px;
