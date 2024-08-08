@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Cortejo = () => {
+export const CarpetasRecortes = () => {
   const [albumes, setAlbumes] = useState([]);
   const navigate = useNavigate();
 
@@ -10,7 +10,7 @@ export const Cortejo = () => {
   }, []);
 
   const getAlbumes = async () => {
-    const url = "https://backend-prueba-apel.onrender.com/api/hemerografia/listar-carpetas";
+    const url = "http://localhost:3900/api/hemerografia/listar-carpetas";
     const peticion = await fetch(url, {
       method: "GET"
     });
@@ -25,14 +25,14 @@ export const Cortejo = () => {
   };
 
   const handleAlbumClick = (album) => {
-    navigate(`/admin/album/${album}`);
+    navigate(`/admin/hemerografia/carpeta/${album}`);
   };
 
   return (
     <div>
       <main id='main2'>
         <div className='container_fotografia'>
-          <h1>Álbumes</h1>
+          <h1>Carpetas</h1>
           
           <div className='albumes-container'>
             {albumes.map((album, index) => {
@@ -45,7 +45,7 @@ export const Cortejo = () => {
                   
                   {album.fotoAleatoria && (
                     <img 
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/fotografias/${album.fotoAleatoria}`}
+                      src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${album.fotoAleatoria}`}
                       alt={`Foto aleatoria del álbum ${album.album}`} 
                       
                     />

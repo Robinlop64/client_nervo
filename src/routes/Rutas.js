@@ -85,6 +85,8 @@ import { MonumentosInstitucionTema } from '../componentes/pages/instituciones/te
 import { FotografiaInstitucionTema } from '../componentes/pages/instituciones/temas/FotografiaInstitucionTema';
 import { EditarInstitucion } from '../componentes/pages/formularios/Editores/EditarInstitucion';
 import { FotografiaTema } from '../componentes/pages/acervo/temas/FotografiaTema';
+import { CarpetasRecortes } from '../componentes/pages/acervo/temas/CarpetasRecortes';
+import { CarpetaRecortes } from '../componentes/pages/acervo/temas/CarpetaRecortes';
 
 export const Rutas = () => {
   return (
@@ -151,9 +153,11 @@ export const Rutas = () => {
             
 
             <Route path="/admin/hemerografia" element={<Hemerografia />} />
+            <Route path="/admin/hemerografia/tema/Recortes de prensa" element={<CarpetasRecortes />} />
             <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
             <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
             <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
+            <Route path="/admin/hemerografia/carpeta/:id" element={<CarpetaRecortes/>} />
 
             <Route path="/admin/iconografia" element={<Iconografia />} />
             <Route path="/admin/iconografia/tema/:id" element={<IconografiaTema />} />
