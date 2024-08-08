@@ -162,40 +162,39 @@ export const EditarFotografia = () => {
 
   const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
   const guardar_foto = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     
     let nueva_foto = formulario;
-    console.log("datos formulario es si recoje con el useform", nueva_foto)
+    console.log("datos formulario es si recoje con el useform", nueva_foto);
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto)
-    console.log(id)
+    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto);
+    console.log(id);
     if (datos.status == "success") {
-      const fileInput = document.querySelector("#file")
-      console.log("Si llegaste aqui es pq success")
-      console.log("si se recoje el archivo", fileInput.files)
-      setSaved("saved")
-      const formData = new FormData
-      formData.append("file0", fileInput.files[0])
+        const fileInput = document.querySelector("#file");
+        console.log("Si llegaste aqui es pq success");
+        console.log("si se recoje el archivo", fileInput.files);
 
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
+        if (fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append("file0", fileInput.files[0]);
 
-      const { subida3, cargando3 } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/editar-foto/" + id, "PUT",nueva_foto)
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true)
-      
-      console.log("Datos de subida3")
-      console.log(subida)
+            const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true);
+            const { subida3, cargando3 } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto);
+            const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true);
+            
+            console.log("Datos de subida3");
+            console.log(subida);
+        }
 
-
-      setResultado(true)
-      setSaved("saved")
+        setResultado(true);
+        setSaved("saved");
 
     } else {
-      setSaved("error")
+        setSaved("error");
     }
-    console.log(datos)
-    
+    console.log(datos);
+}
 
-  }
 
 
 
