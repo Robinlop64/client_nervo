@@ -185,10 +185,8 @@ export const EditarFotografia = () => {
             console.log("Datos de subida3");
             console.log(subida);
         }
-
         setResultado(true);
         setSaved("saved");
-
     } else {
         setSaved("error");
     }

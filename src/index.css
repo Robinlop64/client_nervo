@@ -2059,3 +2059,7 @@ textarea {
   max-width: 200px;
   min-width: 200px;
 }
+#bienesTotales{
+  color: #005f88;
+  font-family: marguerite;
+}

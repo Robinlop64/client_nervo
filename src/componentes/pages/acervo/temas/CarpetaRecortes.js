@@ -13,7 +13,7 @@ export const CarpetaRecortes = () => {
   }, [id]);
 
   const getFotos = async () => {
-    const url = `http://localhost:3900/api/hemerografia/listar/carpeta/${id}`;
+    const url = `https://backend-prueba-apel.onrender.com/api/hemerografia/listar/carpeta/${id}`;
     const peticion = await fetch(url, {
       method: "GET"
     });

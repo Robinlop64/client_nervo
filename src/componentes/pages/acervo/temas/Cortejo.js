@@ -10,7 +10,7 @@ export const Cortejo = () => {
   }, []);
 
   const getAlbumes = async () => {
-    const url = "https://backend-prueba-apel.onrender.com/api/hemerografia/listar-carpetas";
+    const url = "https://backend-prueba-apel.onrender.com/api/fotografia/listar-albumes";
     const peticion = await fetch(url, {
       method: "GET"
     });
