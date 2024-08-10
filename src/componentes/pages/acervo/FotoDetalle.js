@@ -35,7 +35,7 @@ export const FotoDetalle = () => {
     return (
       <>
         <span onClick={() => navigate(`/pais/${pais}`)}>{pais} /</span> 
-        <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion} /</span> 
+        <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion} /</span> 
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias / </span> 
         <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>
       </>

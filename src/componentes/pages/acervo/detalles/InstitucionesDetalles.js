@@ -79,7 +79,7 @@ export const InstitucionesDetalle = () => {
       <>
         <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span> /
         <span onClick={() => navigate(`/admin/fotografias`)}>{ciudad}</span> /
-        <span onClick={() => navigate(`/institucion/${nombre}`)}>{nombre}</span> /
+        <span onClick={() => navigate(`admin/instituciones/${nombre}`)}>{nombre}</span> /
       </>
     );
   };

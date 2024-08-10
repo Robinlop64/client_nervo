@@ -33,7 +33,7 @@ export const CorrespondenciaDetalle = () => {
     return (
       <>
         {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
-        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
+        {institucion && <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
         {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>

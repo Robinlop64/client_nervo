@@ -58,7 +58,7 @@ export const Instituciones = () => {
               <h2>{ciudad}</h2>
               <ul>
                 {ciudades[ciudad].map(institucion => (
-                  <div key={institucion.id} className='institucion_contenedor' onClick={() => handleImageClick(institucion._id)} style={{ cursor: 'pointer' }}>
+                  <div key={institucion.id} className='institucion_contenedor' onClick={() => handleImageClick(institucion.nombre)} style={{ cursor: 'pointer' }}>
                     <p>{institucion.nombre}</p>
                     {institucion.images && institucion.images.length > 0 && (
                       <img

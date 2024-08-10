@@ -8,7 +8,7 @@ export const LibrosDetalle = () => {
 
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/libros/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/libros/libro/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
@@ -33,7 +33,7 @@ export const LibrosDetalle = () => {
     return (
       <>
         {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
-        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
+        {institucion && <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
         {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>

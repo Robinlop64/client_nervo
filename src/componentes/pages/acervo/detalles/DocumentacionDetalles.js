@@ -11,7 +11,7 @@ export const DocumentacionDetalle = () => {
 
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/documentacion/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/documentacion/docu/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
@@ -39,7 +39,7 @@ export const DocumentacionDetalle = () => {
     return (
       <>
         {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
-        {institucion && <span onClick={() => navigate(`/institucion/${institucion}`)}>{institucion}</span>} /
+        {institucion && <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion}</span>} /
         <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
         {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
