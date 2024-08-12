@@ -4,7 +4,7 @@ import { useForm } from '../../../hooks/useForm';
 import { Api } from '../../../hooks/Api';
 import { useState, useEffect } from 'react';
 
-export const RegObjetos = () => {
+export const RegPeriodicos2 = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
@@ -14,6 +14,7 @@ export const RegObjetos = () => {
     const [selectedPais, setSelectedPais] = useState('');
     const [selectedCiudad, setSelectedCiudad] = useState('');
     const [saved, setSaved] = useState('not sended');
+
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -37,7 +38,6 @@ export const RegObjetos = () => {
       };
       fetchData();
     }, []);
-
     useEffect(() => {
         setSaved("")
     }, [formulario])
@@ -68,7 +68,7 @@ export const RegObjetos = () => {
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/objetos/registrar", "POST", nueva_foto);
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/periodicos/registrar", "POST", nueva_foto);
         console.log(nueva_foto)
         if (datos.status === "successs") {
             console.log("status success")
@@ -78,8 +78,8 @@ export const RegObjetos = () => {
                 formData.append(`files`, file);
             });
             console.log("formdata",formData)
-            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/objetos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/objetos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/periodicos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/periodicos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
 
             setResultado(true);
             setSaved("saved");
@@ -106,38 +106,55 @@ export const RegObjetos = () => {
                         <h2>Campos generales</h2>
 
                         <div className='divisor_form'>
-                        <div className="form-group">
-                                <label>Título</label>
-                                <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
-                            </div>
+                        
                             <div className="form-group" id="nombrePeriodico">
-                                <label htmlFor="nombrePeriodico">Tipo de objetos</label>
+                                <label htmlFor="nombrePeriodico">Periódico</label>
                                 <input
-                                    id="nombrePeriodicoSelect"
                                     type='text'
-                                    name="tipo_objetos"
-                                    value={formulario.tipo_objetos || ''}
+                                    id="nombrePeriodicoSelect"
+                                    name="nombre_periodico"
+                                    value={formulario.nombre_periodico || ''}
                                     onChange={cambiado}
                                 >
-                
-                                </input>
-                            </div>
+                    
+                                
 
-                            <div className="form-group" id='nombrePeriodico'>
-                                <label>Descripción física :</label>
-                                <input type="text" className='autor' name="descripcion_fisica" placeholder="descripcion física" value={formulario.descripcion_fisica || ''} onChange={cambiado} />
+                                </input>
+                      {/*
+       
+      
+                                <select
+                                    id="nombrePeriodicoSelect"
+                                    name="nombre_periodico"
+                                    value={formulario.nombre_periodico || ''}
+                                    onChange={cambiado}
+                                >
+                    
+                                    <option value="">Seleccionar Periódico</option>
+                                    <option value="El Nacional">El Nacional</option>
+                                    <option value="El Imparcial">El Imparcial</option>
+                                    <option value="El Mundo">El Mundo</option>
+                                    <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
+                                    <option value="El País">El País</option>
+                                    <option value="El Paladín">El Paladín</option>
+                                    <option value="El Plata">El Plata</option>
+                                    <option value="El Siglo">El Siglo</option>
+                                    <option value="El Telégrafo">El Telégrafo</option>
+                                    <option value="La Defensa">La Defensa</option>
+                                    <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
+                                    <option value="La Mañana">La Mañana</option>
+                                    <option value="La Nación">La Nación</option>
+                                    <option value="La Razón">La Razón </option>
+                                    <option value="La Prensa">La Prensa</option>
+                                    <option value="México Libre">México Libre</option>
+
+                                </select>
+
+
+                                */}
+       
                             </div>
                             
-                            <div className="form-group" id="corriente">
-                            <label id='fecha_publicacionLabel'>procedencia</label>
-                            <input
-                                type="text"
-                                name="procedencia"
-                                value={formulario.procedencia}
-                                onChange={cambiado}
-                            />
-                            </div>   
-
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de registro</label>
                                 <input
@@ -148,43 +165,59 @@ export const RegObjetos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-
                             
-
-                            
-                            
-                        </div>
-                            <div className='divisor_form2'>
+                  
                            
+                            
+                     
+                            <div className="form-group" id="periodicidad">
+                                <label htmlFor="tipoPublicacion">Periodicidad</label>
+                                <select
+                                    type="text"
+                                    id="periodicidadInput"
+                                    name="periodicidad"
+                                    placeholder="Tipo de publicación"
+                                    value={formulario.periodicidad || ''}
+                                    onChange={cambiado}
+                                >
+                                <option value="">Seleccionar periodicidad</option>
+                                <option value="Diaria">Diaria</option>
+                                <option value="Semanal">Semanal</option>
+                                <option value="Mensual">Mensual</option>
+                                </select>
+                            </div>
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
                             </div>
-                            <div className='divisor_form'>
+                            </div>
+                            <div className='divisor_form2'>
+                           
+                           
+                         
                             <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Descripción / contexto</label>
+                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
                                 <textarea
                                     type="text"
                                     id="resumenInput"
-                                    name="descripcion_contexto"
+                                    name="resumen"
                                     placeholder="Resumen"
-                                    value={formulario.descripcion_contexto || ''}
+                                    value={formulario.resumen || ''}
                                     onChange={cambiado}
                                 />
                             </div>
 
                             <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
+                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendiente</label>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
-                                    name="pendientes"
-                                    placeholder="Transcripción"
-                                    value={formulario.pendientes || ''}
+                                    name="pendiente"
+                                    value={formulario.pendiente || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            </div>
+                        
 
                             <div className="form-group">
                                 <label>País:</label>
@@ -220,98 +253,32 @@ export const RegObjetos = () => {
                                 </select>
                             </div>
 
-                            <div className="form-group">
-                                <label>Institución:</label>
-                                <select id="institucion" name='institucion' value={formulario.institucion || ""} onChange={cambiado}>
-                                    <option value="">Seleccionar institución</option>
-                                    {instituciones.map((institucion, index) => (
-                                        <option key={index} value={institucion}>
-                                            {institucion}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                           
                             
 
-                            <div className="form-group">
-                                <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
-                            </div>
+                          
 
 
 
 
 
-                            <div className="form-group">
-                                <label>Año de adquisición:</label>
-                                <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
-                                    <option value="">Seleccionar año</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-
-                                </select>
-                            </div>
-
-
-
-
-
-                            <div className="form-group">
-                                <label>Hallazgo:</label>
-                                <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
-                                    <option value="No">No</option>
-                                    <option value="Sí">Sí</option>
-                                </select>
-                            </div>
+                            
 
                             <div className="form-group">
                                 <label>Persona que registra:</label>
                                 <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
-                                    <option value="Mayra Fonseca">Mayra Fonseca</option>
+                                    <option value="">Seleccionar persona que registra</option>
+                                    <option value="Mayra Fonseca">Mayra</option>
                                     <option value="Robin">Robin</option>
                                     <option value="Xoely">Xoely</option>
+                                    <option value="Perla">Perla</option>
                                 </select>
                             </div>
 
-                            <div className="form-group">
-                                <label>Tema:</label>
-                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="Personales"> Personales</option>
-                                    <option value="2"> tema 2 </option>
-                                    <option value="El Nacional"> El Nacional </option>
-                                    <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                                </select>
-                            </div>                       
+                            
                             </div>
+   
+                          
                         <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
               <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>

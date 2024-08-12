@@ -59,17 +59,19 @@ export const Instituciones = () => {
               <ul>
                 {ciudades[ciudad].map(institucion => (
                   <div key={institucion.id} className='institucion_contenedor' onClick={() => handleImageClick(institucion.nombre)} style={{ cursor: 'pointer' }}>
-                    <p>{institucion.nombre}</p>
+                    
                     {institucion.images && institucion.images.length > 0 && (
+                      
                       <img
                         src={`https://backend-prueba-apel.onrender.com/imagenes/instituciones/${institucion.images[0].nombre}`}
                         alt={institucion.nombre}
                         
                         
                       />
-                      
+                    
                     )}
-                    <button onClick={(event) => handleEditClick(event, institucion._id)}>Editar</button>
+                    <p>{institucion.nombre}</p>
+                    <button onClick={(event) => handleEditClick(event, institucion.nombre)}>Editar</button>
                     <button onClick={(event) => handleEditClick(event, institucion.nombre)}>Borrar</button>
                   </div>
                 ))}

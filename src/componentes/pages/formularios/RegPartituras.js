@@ -3,115 +3,40 @@ import { NavLink } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
 import { Api } from '../../../hooks/Api';
 import { useState, useEffect } from 'react';
-const data = {
-    México: {
-        Tepic: [
-            "Casa Museo Amado Nervo",
-            "Biblioteca Magna de la Universidad Autónoma de Nayarit (UAN)",
-            "Hemeroteca de la UAN",
-            "Archivo General del Estado de Nayarit",
-            "Archivo Histórico de la Diócesis de Tepic",
-            "Fototeca Centro INAH Tepic"
-        ],
-        Compostela: ["Colecciones Particulares"],
-        Mazatlán: ["Archivo Histórico Municipal de Mazatlán"],
-        Guadalajara: [
-            "Biblioteca Pública del Estado de Jalisco “Juan José Arreola”",
-            "Colecciones Particulares"
-        ],
-        Monterrey: [
-            "Biblioteca Miguel de Cervantes Saavedra. Tecnológico de Monterrey (ITESM)",
-            "Biblioteca Universitaria de la Universidad Autónoma de Nuevo León (UANL)"
-        ],
-        Pachuca: ["Fototeca Nacional del Instituto Nacional de Antropología e Historia (INAH)"],
-        CDMX: [
-            "Biblioteca Nacional de México",
-            "Hemeroteca Nacional de México",
-            "Casa Museo Alfonso Reyes (Capilla Alfonsina)",
-            "Archivo Histórico Genaro Estrada. Secretaria de Relaciones Exteriores",
-            "Archivo General de la Nación",
-            "Colecciones Particulares"
-        ]
-    },
-    España: {
-        Madrid: [
-            "Biblioteca Nacional de España",
-            "Instituto del Patrimonio Cultural de España /Universidad Complutense de Madrid",
-            "Ateneo de Madrid",
-            "Biblioteca Octavio Paz. Instituto de México en España",
-            "Archivo Histórico Nacional",
-            "Real Academia Española",
-            "Registro Civil de Madrid",
-            "Cementerio Sacramental San Lorenzo y San José",
-            "Hemeroteca Municipal del Ayuntamiento de Madrid",
-            "Archivo General de Palacio"
-        ],
-        Barcelona: ["Archivo Histórico Fotográfico"]
-    },
-    Francia: {
-        París: [
-            "Embajada de México en Francia",
-            "Mairie De París Du 14",
-            "Archivo de París",
-            "Instituto Cultural México en Francia",
-            "Biblioteca Nacional de Francia"
-        ]
-    },
-    Portugal: {
-        Lisboa: [
-            "Embajada de México en Portugal",
-            "Archivo Diplomático del Ministerio de Negocios Extranjeros en Portugal",
-            "Torre Do Tombo de la Universidad de Portugal",
-            "Biblioteca Nacional de Portugal",
-            "Hemeroteca Municipal de Lisboa"
-        ]
-    },
-    Argentina: {
-        Buenos_Aires: [
-            "Biblioteca de la Legislatura Portuaria",
-            "Biblioteca del Congreso de la Nación",
-            "Biblioteca Nacional Mariano Moreno",
-            "Embajada de México en Argentina",
-            "Archivo Ministerio de Relaciones Exteriores, cancillería Argentina",
-            "Archivo General de la Nación",
-            "Jardín del Rosedal"
-        ]
-    },
-    Uruguay: {
-        Montevideo: [
-            "Palacio Santos- Ministerio de Relaciones Exteriores, Instituto Artiga",
-            "Archivo General de la Nación",
-            "Biblioteca Nacional de Uruguay",
-            "Archivo Nacional de la Imagen y la Palabra",
-            "Museo Naval",
-            "Parque Hotel. Merco-sur",
-            "Ateneo de Montevideo",
-            "Biblioteca Amado Nervo",
-            "Cementerio Central",
-            "Centro de Estudios Históricos Navales y Marítimos",
-            "Palacio Legislativo",
-            "Calle Amado Nervo",
-            "Universidad de la República de Uruguay",
-            "Museo Zorrilla",
-            "Busto-monumento Amado Nervo"
-        ]
-    },
 
-    Brasil: {
-        "Rio de Janeiro": ["NA"]
-    }
-};
 export const RegPartituras = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
-    const [paises, setPaises] = useState(Object.keys(data));
+    const [paises, setPaises] = useState([]);
     const [ciudades, setCiudades] = useState([]);
     const [instituciones, setInstituciones] = useState([]);
     const [selectedPais, setSelectedPais] = useState('');
     const [selectedCiudad, setSelectedCiudad] = useState('');
     const [saved, setSaved] = useState('not sended');
+    const [data, setData] = useState(null);
 
+    useEffect(() => {
+      const fetchData = async () => {
+        const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
+        try {
+          const response = await fetch(url, {
+            method: "GET"
+          });
+          const result = await response.json();
+          if (result.status === "success") {
+            setData(result.data);
+            setPaises(Object.keys(result.data));
+          } else {
+            // Manejo de error
+            console.error("Error al obtener los datos", result.message);
+          }
+        } catch (error) {
+          console.error("Error al realizar la petición", error);
+        }
+      };
+      fetchData();
+    }, []);
 
     useEffect(() => {
         setSaved("")

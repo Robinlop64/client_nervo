@@ -185,32 +185,17 @@ export const RegInstituciones = () => {
                         
                             <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Nombre de la institución</label>
-                                <select
+                                <input
+                                    type='text'
                                     id="nombrePeriodicoSelect"
-                                    name="nombre_periodico"
-                                    value={formulario.nombre_periodico || ''}
+                                    name="nombre"
+                                    value={formulario.nombre || ''}
                                     onChange={cambiado}
                                 >
                     
-                                    <option value="">Seleccionar Periódico</option>
-                                    <option value="El Nacional">El Nacional</option>
-                                    <option value="El Imparcial">El Imparcial</option>
-                                    <option value="El Mundo">El Mundo</option>
-                                    <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
-                                    <option value="El País">El País</option>
-                                    <option value="El Paladín">El Paladín</option>
-                                    <option value="El Plata">El Plata</option>
-                                    <option value="El Siglo">El Siglo</option>
-                                    <option value="El Telégrafo">El Telégrafo</option>
-                                    <option value="La Defensa">La Defensa</option>
-                                    <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
-                                    <option value="La Mañana">La Mañana</option>
-                                    <option value="La Nación">La Nación</option>
-                                    <option value="La Razón">La Razón </option>
-                                    <option value="La Prensa">La Prensa</option>
-                                    <option value="México Libre">México Libre</option>
+                     
 
-                                </select>
+                                </input>
 
 
                             </div>
@@ -245,9 +230,20 @@ export const RegInstituciones = () => {
                                 <input
                                     type="text"
                                     id="lugarPublicacionInput"
-                                    name="lugar_publicacion"
-                                    placeholder="Lugar de publicación"
-                                    value={formulario.lugar_publicacion || ''}
+                                    name="maps"
+                                    placeholder=""
+                                    value={formulario.maps || ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
+                            <div className="form-group" id="lugarPublicacion">
+                                <label htmlFor="encabezado">Página web</label>
+                                <input
+                                    type="text"
+                                    id="lugarPublicacionInput"
+                                    name="pagina_web"
+                                    placeholder=""
+                                    value={formulario.pagina_web || ''}
                                     onChange={cambiado}
                                 />
                             </div>
@@ -313,82 +309,6 @@ export const RegInstituciones = () => {
                                     ))}
                                 </select>
                             </div>
-
-                            <div className="form-group">
-                                <label>Institución:</label>
-                                <select id="institucion" name='institucion' value={formulario.institucion || ""} onChange={cambiado}>
-                                    <option value="">Seleccionar institución</option>
-                                    {instituciones.map((institucion, index) => (
-                                        <option key={index} value={institucion}>
-                                            {institucion}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            
-
-                            <div className="form-group">
-                                <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                </select>
-                            </div>
-
-
-
-
-
-                            <div className="form-group">
-                                <label>Año de adquisición:</label>
-                                <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
-                                    <option value="">Seleccionar año</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-                                    <option value="2004">2004</option>
-                                    <option value="2003">2003</option>
-                                    <option value="2002">2002</option>
-
-                                </select>
-                            </div>
-
-
-
-
-
-                            <div className="form-group">
-                                <label>Hallazgo:</label>
-                                <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
-                                    <option value="No">No</option>
-                                    <option value="Sí">Sí</option>
-                                </select>
-                            </div>
-
                             <div className="form-group">
                                 <label>Persona que registra:</label>
                                 <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
@@ -400,28 +320,7 @@ export const RegInstituciones = () => {
                                 </select>
                             </div>
 
-                            <div className="form-group">
-                                <label>Tema:</label>
-                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="El Nacional">El Nacional</option>
-                                    <option value="El Imparcial">El Imparcial</option>
-                                    <option value="El Mundo">El Mundo</option>
-                                    <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
-                                    <option value="El País">El País</option>
-                                    <option value="El Paladín">El Paladín</option>
-                                    <option value="El Plata">El Plata</option>
-                                    <option value="El Siglo">El Siglo</option>
-                                    <option value="El Telégrafo">El Telégrafo</option>
-                                    <option value="La Defensa">La Defensa</option>
-                                    <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
-                                    <option value="La Mañana">La Mañana</option>
-                                    <option value="La Nación">La Nación</option>
-                                    <option value="La Razón">La Razón </option>
-                                    <option value="La Prensa">La Prensa</option>
-                                    <option value="México Libre">México Libre</option>
-                                </select>
-                            </div>
+                        
                             
                             </div>
    

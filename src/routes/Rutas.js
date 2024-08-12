@@ -87,6 +87,8 @@ import { EditarInstitucion } from '../componentes/pages/formularios/Editores/Edi
 import { FotografiaTema } from '../componentes/pages/acervo/temas/FotografiaTema';
 import { CarpetasRecortes } from '../componentes/pages/acervo/temas/CarpetasRecortes';
 import { CarpetaRecortes } from '../componentes/pages/acervo/temas/CarpetaRecortes';
+import { RegPeriodicos2 } from '../componentes/pages/formularios/RegPeriodicos2';
+import { EditarPeriodicos } from '../componentes/pages/formularios/Editores/EditarPeriodicos';
 
 export const Rutas = () => {
   return (
@@ -136,6 +138,8 @@ export const Rutas = () => {
             <Route path="/admin/registro/iconografia" element={<RegIconografia />} />
             <Route path="/admin/registro/libros" element={<RegLibros />} />
             <Route path="/admin/registro/periodicos" element={<RegPeriodicos />} />
+            <Route path="/admin/registro/periodicos2" element={<RegPeriodicos2 />} />
+            <Route path="/admin/editar/periodicos/:id" element={<EditarPeriodicos />} />
             <Route path="/admin/registro/correspondencia" element={<RegCorrespondencia />} />
             <Route path="/admin/registro/documentacion" element={<RegDocumentacion />} />
             <Route path="/admin/registro/objetos" element={<RegObjetos />} />

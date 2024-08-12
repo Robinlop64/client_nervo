@@ -27,7 +27,7 @@ export const CarpetaRecortes = () => {
   };
 
   const handleFotoClick = (fotografia) => {
-    navigate(`/admin/fotografias/${fotografia._id}`);
+    navigate(`/admin/hemerografia/${fotografia._id}`);
   };
 
   const handleDeleteClick = async (event, fotografiaId) => {

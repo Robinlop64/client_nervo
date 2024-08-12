@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 export const InstitucionesDetalle = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState(null);
+  const [imagenPrincipal, setImagenPrincipal] = useState(null);
   const [fotografiaCount, setFotografiaCount] = useState(0);
   const [documentacionCount, setDocumentacionCount] = useState(0);
   const [correspondenciaCount, setCorrespondenciaCount] = useState(0);
@@ -26,6 +27,9 @@ export const InstitucionesDetalle = () => {
       let datos = await peticion.json();
       if (datos.status === "success") {
         setFotografia(datos.hemero);
+        if (datos.hemero.images && datos.hemero.images.length > 0) {
+          setImagenPrincipal(datos.hemero.images[0].nombre); // Establecer la primera imagen como principal
+        }
         fetchCounts(datos.hemero.nombre);
       } else {
         // Manejo de error
@@ -69,6 +73,10 @@ export const InstitucionesDetalle = () => {
     return <div>Loading...</div>;
   }
 
+  const handleImagenClick = (nombreImagen) => {
+    setImagenPrincipal(nombreImagen);
+  };
+
   const handleNavLinkClick = (event) => {
     event.stopPropagation(); // Evita que el evento de clic se propague
   };
@@ -88,6 +96,10 @@ export const InstitucionesDetalle = () => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  const renderField = (label, value) => {
+    return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
+  };
+
   return (
     <main className='main_fotodetalle'>
       <div id='nav3'>
@@ -99,30 +111,58 @@ export const InstitucionesDetalle = () => {
           <h2>{fotografia.nombre}</h2>
         </div>
         <div className='ficha_fotografia'>
-          <div className='marco_hemerografia'>
-            {fotografia.images && fotografia.images.map((image, index) => (
-              <img
-                key={index}
-                src={`https://backend-prueba-apel.onrender.com/imagenes/instituciones/${image.nombre}`}
-                alt={`${fotografia.nombre} ${index + 1}`}
-                className='fotografia-img-large'
-              />
-            ))}
-            <img
-              src={`https://nervodigital.com.mx/acervo/imgs/instituciones/63.jpg`}
+          <div className='marco'>
+            <img id='foto_principal_institucion'
+              src={`https://backend-prueba-apel.onrender.com/imagenes/instituciones/${imagenPrincipal}`}
+              alt={`${fotografia.nombre} principal`}
               className='fotografia-img-large'
             />
+            <div className='thumbnails'>
+              {fotografia.images && fotografia.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/instituciones/${image.nombre}`}
+                  alt={`${fotografia.nombre} ${index + 1}`}
+                  className='fotografia-img-thumbnail'
+                  onClick={() => handleImagenClick(image.nombre)}
+                />
+              ))}
+            </div>
           </div>
           <div className='contenido_hemerografiaDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.nombre)}</h3>
             <h4>Ficha catalográfica</h4>
-            <p><span>Título:</span> <span>{fotografia.nombre}</span></p>
+            {renderField("Nombre de la institución", fotografia.nombre)}
+            {renderField("País", fotografia.pais)}
+            {renderField("Ciudad", fotografia.ciudad)}
+            {fotografia.maps ? (
+              <p>
+                <span>Maps:</span>{" "}
+                <span>
+                  <a href={fotografia.maps} target="_blank" rel="noopener noreferrer">
+                    {fotografia.maps}
+                  </a>
+                </span>
+              </p>
+            ) : null}
+
+            {fotografia.pagina_web ? (
+              <p>
+                <span>Página web:</span>{" "}
+                <span>
+                  <a href={fotografia.pagina_web} target="_blank" rel="noopener noreferrer">
+                    {fotografia.pagina_web}
+                  </a>
+                </span>
+              </p>
+            ) : null}
+            {renderField("Notas relevantes", fotografia.notas_relevantes)}
           </div>
         </div>
 
         <div className='container_acervo'>
           <section className='acervo_pages'>
-            <NavLink to={"/admin/fotografias/institucion/"+fotografia.nombre} className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/fotografias/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img
@@ -137,7 +177,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/iconografia/institucion/"+fotografia.nombre} className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/iconografia/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -152,7 +192,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/libros/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/libros/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -167,7 +207,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/hemerografia/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/hemerografia/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -182,7 +222,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/correspondencia/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/correspondencia/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -197,7 +237,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/documentacion/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/documentacion/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -212,7 +252,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/partituras/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/partituras/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -227,7 +267,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/objetos/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/objetos/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -242,7 +282,7 @@ export const InstitucionesDetalle = () => {
                 </div>
               </article>
             </NavLink>
-            <NavLink to={"/admin/monumentos/institucion/"+fotografia.nombre}  className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to={`/admin/monumentos/institucion/${fotografia.nombre}`} className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 

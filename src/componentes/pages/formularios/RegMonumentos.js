@@ -105,13 +105,35 @@ export const RegMonumentos = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
-    const [paises, setPaises] = useState(Object.keys(data));
+    const [paises, setPaises] = useState([]);
     const [ciudades, setCiudades] = useState([]);
     const [instituciones, setInstituciones] = useState([]);
     const [selectedPais, setSelectedPais] = useState('');
     const [selectedCiudad, setSelectedCiudad] = useState('');
     const [saved, setSaved] = useState('not sended');
+    const [data, setData] = useState(null);
 
+    useEffect(() => {
+      const fetchData = async () => {
+        const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
+        try {
+          const response = await fetch(url, {
+            method: "GET"
+          });
+          const result = await response.json();
+          if (result.status === "success") {
+            setData(result.data);
+            setPaises(Object.keys(result.data));
+          } else {
+            // Manejo de error
+            console.error("Error al obtener los datos", result.message);
+          }
+        } catch (error) {
+          console.error("Error al realizar la petición", error);
+        }
+      };
+      fetchData();
+    }, []);
 
     useEffect(() => {
         setSaved("")

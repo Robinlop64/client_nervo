@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { PeriodicoDetalle } from '../detalles/PeriodicoDetalle';
 
 export const HemerografiaTema = () => {
   const [fotos, setFotos] = useState([]);
@@ -60,6 +61,7 @@ export const HemerografiaTema = () => {
       <div className='container_fotografia'>
         <h1>{nombrePeriodico}</h1>
   
+      <PeriodicoDetalle/>
         <div className='fotografias-container'>
         {fotos.map((fotografia) => {
   // Verifica que el campo 'images' exista y tenga al menos una imagen

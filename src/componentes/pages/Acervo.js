@@ -54,7 +54,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Fotografía</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.fotografias !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.fotografia}</p>
                   )}
@@ -72,7 +72,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Iconografía</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.iconografia !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.iconografia}</p>
                   )}
@@ -90,7 +90,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Libros</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.libros !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.libros}</p>
                   )}
@@ -107,8 +107,8 @@ export const Acervo = () => {
                   />
                 </div>
                 <div className='informacion-clas'>
-                  <h4 className='title'>Publicaciones periódicas</h4>
-                  <p className='description'>Conjunto de las publicaciones periódicas</p>
+                  <h4 className='title'>Hemerografía</h4>
+                  
                   {numeroBienes.hemerografia !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.hemerografia}</p>
                   )}
@@ -126,7 +126,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Correspondencia</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.correspondencia !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.correspondencia}</p>
                   )}
@@ -144,7 +144,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Documentación</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.documentacion !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.documentacion}</p>
                   )}
@@ -162,7 +162,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Partituras</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.partituras !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.partituras}</p>
                   )}
@@ -180,7 +180,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Objetos personales</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.objetos !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.objetos}</p>
                   )}
@@ -198,7 +198,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Monumentos</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.monumentos !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.monumentos}</p>
                   )}
@@ -216,7 +216,7 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Audiovisuales</h4>
-                  <p className='description'>Conjunto de las fotografías</p>
+                  
                   {numeroBienes.audiovisuales !== null && (
                     <p className='description'>Número de bienes: {numeroBienes.audiovisuales}</p>
                   )}

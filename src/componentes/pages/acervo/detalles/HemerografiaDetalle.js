@@ -6,6 +6,7 @@ import { es } from 'date-fns/locale';
 export const HemerografiaDetalle = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState(null);
+  const [imagenPrincipal, setImagenPrincipal] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,9 @@ export const HemerografiaDetalle = () => {
       let datos = await peticion.json();
       if (datos.status === "success") {
         setFotografia(datos.hemero);
+        if (datos.hemero.images && datos.hemero.images.length > 0) {
+          setImagenPrincipal(datos.hemero.images[0].nombre); // Establecer la primera imagen como principal
+        }
       } else {
         // Manejo de error
       }
@@ -36,7 +40,7 @@ export const HemerografiaDetalle = () => {
       <>
         {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
         {institucion && <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion}</span>} /
-        <span onClick={() => navigate(`/admin/fotografias`)}>Fotografias</span> /
+        <span onClick={() => navigate(`/admin/fotografias`)}>{fotografia.tipo_bien}</span> /
         {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
@@ -48,12 +52,16 @@ export const HemerografiaDetalle = () => {
 
   const renderField = (label, value) => {
     return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
-  }
+  };
 
   const formatFechaPublicacion = (fecha) => {
     if (!fecha) return '';
     return format(new Date(fecha), "EEEE, dd MMMM yyyy", { locale: es });
-  }
+  };
+
+  const handleImagenClick = (nombreImagen) => {
+    setImagenPrincipal(nombreImagen);
+  };
 
   return (
     <main className='main_fotodetalle'>
@@ -68,15 +76,22 @@ export const HemerografiaDetalle = () => {
         </div>
         <div className='ficha_fotografia'>
           <div className='marco_hemerografia'>
-            {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
-            {fotografia.images && fotografia.images.map((image, index) => (
-              <img
-                key={index}
-                src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
-                alt={`${fotografia.titulo} ${index + 1}`}
-                className='fotografia-img-large'
-              />
-            ))}
+            <img
+              src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${imagenPrincipal}`}
+              alt={`${fotografia.titulo} principal`}
+              className='fotografia-img-large'
+            />
+            <div className='thumbnails'>
+              {fotografia.images && fotografia.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                  alt={`${fotografia.titulo} ${index + 1}`}
+                  className='fotografia-img-thumbnail'
+                  onClick={() => handleImagenClick(image.nombre)}
+                />
+              ))}
+            </div>
           </div>
           <div className='contenido_hemerografiaDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>

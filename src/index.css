@@ -865,6 +865,7 @@ h1 {
   display: block;
   float: lefts;
   margin: 0px;
+
 }
 
 .contenido_fotodetalle {
@@ -979,6 +980,28 @@ h1 {
 }
 .marco_hemerografia img{
   max-width: 100%;
+}
+
+.marco_hemerografia img.fotografia-img-large {
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.thumbnails img {
+  max-width: 100px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.fotografia-img-thumbnail:hover {
+  opacity: 1;
 }
 
 .contenido_librosDetalle {
@@ -2044,6 +2067,15 @@ textarea {
     height: 250px;
     text-align: center;
 }
+.institucion_contenedor img{
+  width: 100%;
+  margin: 0px auto;
+  float: none;
+  margin-left: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px #333;
+  max-height: 250px;
+}
 .contenedor_instituciones {
   max-width: 70%;
   min-width: 70%;
@@ -2062,4 +2094,32 @@ textarea {
 #bienesTotales{
   color: #005f88;
   font-family: marguerite;
+}
+
+#foto_principal_institucion{
+  min-width: 500px;
+  max-width: 500px;
+}
+.marco_periodico {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  text-align: center;
+  margin: 10px;
+  display: block;
+  float: left;
+}
+.marco_periodico img{
+  max-width: 100%;
+}
+
+.marco_periodico img.fotografia-img-large {
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+.ficha_periodico{
+  height: 100%;
+  min-height: 300px;
 }

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
-export const CorrespondenciaDetalle = () => {
+export const PeriodicoDetalle = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState(null);
   const [imagenPrincipal, setImagenPrincipal] = useState(null);
@@ -9,16 +11,16 @@ export const CorrespondenciaDetalle = () => {
 
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/correspondencia/icon/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/periodicos/periodico/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.Corresp);
-        if (datos.Corresp.images && datos.Corresp.images.length > 0) {
-          setImagenPrincipal(datos.Corresp.images[0].nombre); // Establecer la primera imagen como principal
+        setFotografia(datos.hemero);
+        if (datos.hemero.images && datos.hemero.images.length > 0) {
+          setImagenPrincipal(datos.hemero.images[0].nombre); // Establecer la primera imagen como principal
         }
       } else {
         // Manejo de error
@@ -29,7 +31,7 @@ export const CorrespondenciaDetalle = () => {
   }, [id]);
 
   if (!fotografia) {
-    return <div>Loading...</div>;
+    return <div>Valeria dice que no hay registro</div>;
   }
 
   const getNavigationPath = () => {
@@ -38,7 +40,7 @@ export const CorrespondenciaDetalle = () => {
       <>
         {pais && <span onClick={() => navigate(`/pais/${pais}`)}>{pais}</span>} /
         {institucion && <span onClick={() => navigate(`/admin/instituciones/${institucion}`)}>{institucion}</span>} /
-        <span onClick={() => navigate(`/admin/fotografias`)}>Fotografías</span> /
+        <span onClick={() => navigate(`/admin/fotografias`)}>{fotografia.tipo_bien}</span> /
         {tema && <span onClick={() => navigate(`/tema/${tema}`)}>{tema}</span>}
       </>
     );
@@ -52,25 +54,28 @@ export const CorrespondenciaDetalle = () => {
     return value ? <p><span>{label}:</span> <span>{value}</span></p> : null;
   };
 
+  const formatFechaPublicacion = (fecha) => {
+    if (!fecha) return '';
+    return format(new Date(fecha), "EEEE, dd MMMM yyyy", { locale: es });
+  };
+  const handleEditClick = (event, fotografiaId) => {
+    event.stopPropagation();
+    navigate(`/admin/editar/periodicos/${fotografiaId}`);
+  };
   const handleImagenClick = (nombreImagen) => {
     setImagenPrincipal(nombreImagen);
   };
 
   return (
-    <main className='main_fotodetalle'>
-      <div id='nav3'>
-        <p>{getNavigationPath()}</p>
-      </div>
-      <div className="container_fotodetalle">
-        <button onClick={() => navigate(-1)}>Regresar</button>
-
-        <div className='barra_fotodetalle'>
-          <h2>{fotografia.tema}</h2>
-        </div>
-        <div className='ficha_fotografia'>
-          <div className='marco'>
+    <main>
+    
+     
+ 
+       
+        <div className='ficha_periodico'>
+          <div className='marco_periodico'>
             <img
-              src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${imagenPrincipal}`}
+              src={`https://backend-prueba-apel.onrender.com/imagenes/general/Temas/hemerografia/${fotografia.nombre_periodico}.jpg`}
               alt={`${fotografia.titulo} principal`}
               className='fotografia-img-large'
             />
@@ -78,7 +83,7 @@ export const CorrespondenciaDetalle = () => {
               {fotografia.images && fotografia.images.map((image, index) => (
                 <img
                   key={index}
-                  src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${image.nombre}`}
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/periodicos/${image.nombre}`}
                   alt={`${fotografia.titulo} ${index + 1}`}
                   className='fotografia-img-thumbnail'
                   onClick={() => handleImagenClick(image.nombre)}
@@ -86,19 +91,17 @@ export const CorrespondenciaDetalle = () => {
               ))}
             </div>
           </div>
-          <div className='contenido_fotodetalle'>
+          <div className='contenido_hemerografiaDetalle'>
             <h3>{capitalizeFirstLetter(fotografia.tipo_bien)}</h3>
-            {renderField("Título", fotografia.encabezado)}
-            {renderField("Autor", fotografia.autor)}
-            {renderField("Fecha", fotografia.fecha_publicacion)}
-            {renderField("Colección", fotografia.coleccion)}
-            {renderField("Numero Edicion", fotografia.numero_edicion)}
-            {renderField("Número de Foto", fotografia.numero_foto)}
-            {renderField("Descripción", fotografia.descripcion)}
-            {renderField("Ubicación del bien", fotografia.institucion)}
+            <h4>Ficha catalográfica</h4>
+
+            {renderField("Periódico", fotografia.nombre_periodico)}
+            {renderField("País", fotografia.pais)}
+            {renderField("Ciudad", fotografia.ciudad)}
+            <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
           </div>
         </div>
-      </div>
+    
     </main>
   );
 };
