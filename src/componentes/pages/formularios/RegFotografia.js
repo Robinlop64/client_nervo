@@ -38,11 +38,16 @@ export const RegFotografia = () => {
     };
     fetchData();
   }, []);
-
   useEffect(() => {
     setSaved("");
+    setLoadingProgress(0);
+    setStatuses({
+      peticion1: '',
+      peticion2: '',
+      peticion3: ''
+    });
   }, [formulario]);
-
+  
   useEffect(() => {
     if (formulario.pais) {
       const ciudades = Object.keys(data[formulario.pais]);
@@ -328,17 +333,24 @@ export const RegFotografia = () => {
                     
             
             <div className="progress-bar">
-              <div className="progress" style={{ width: `${loadingProgress}%` }}>
-                {loadingProgress}% 
-              </div>
-            </div>
+  <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
+  <p className="progress-text">{loadingProgress}%</p>
+</div>
+
             <div>
+            <strong id='saved_text'>{statuses.peticion1 === 'successs' ? 'Información registrada correctamente' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
+
+            <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida correctamente al servidor Node' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
+
+            <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error en el servidor de Drive' : ''}</strong>
+     
               <p>Estatus Registro de datos: {statuses.peticion1}</p>
               <p>Estatus Registro de foto: {statuses.peticion2}</p>
               <p>Estatus Guardado de foto en drive: {statuses.peticion3}</p>
             </div>
-            <strong id='saved_text'>{saved === 'saved' ? 'Fotografía registrada correctamente' : ''}</strong>
-            <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
           </div>
         </div>
       </main>

@@ -89,6 +89,8 @@ import { CarpetasRecortes } from '../componentes/pages/acervo/temas/CarpetasReco
 import { CarpetaRecortes } from '../componentes/pages/acervo/temas/CarpetaRecortes';
 import { RegPeriodicos2 } from '../componentes/pages/formularios/RegPeriodicos2';
 import { EditarPeriodicos } from '../componentes/pages/formularios/Editores/EditarPeriodicos';
+import { Secciones } from '../componentes/pages/acervo/temas/Secciones';
+import { Seccion } from '../componentes/pages/acervo/temas/Seccion';
 
 export const Rutas = () => {
   return (
@@ -158,10 +160,12 @@ export const Rutas = () => {
 
             <Route path="/admin/hemerografia" element={<Hemerografia />} />
             <Route path="/admin/hemerografia/tema/Recortes de prensa" element={<CarpetasRecortes />} />
+            <Route path="/admin/hemerografia/tema/Secciones" element={<Secciones />} />
             <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
             <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
             <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
             <Route path="/admin/hemerografia/carpeta/:id" element={<CarpetaRecortes/>} />
+            <Route path="/admin/hemerografia/seccion/:id" element={<Seccion/>} />
 
             <Route path="/admin/iconografia" element={<Iconografia />} />
             <Route path="/admin/iconografia/tema/:id" element={<IconografiaTema />} />
