@@ -118,7 +118,7 @@ export const EditarFotografia = () => {
 
           <div>
 
-            <h1>Formulario de registro de bienes</h1>
+            <h1>Formulario de registro de bienes </h1>
 
 
             <div className='frame_botones_registro' id="regresar_boton">

@@ -45,7 +45,7 @@ export const Api = async (url, metodo, datos_guardar = "",archivo = false) => {
 
 
     return {
-        datos,
-        cargando
+        datos
+ 
     }
 }

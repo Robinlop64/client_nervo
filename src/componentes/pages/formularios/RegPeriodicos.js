@@ -221,6 +221,7 @@ export const RegPeriodicos = () => {
                                     <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
                                     <option value="X.Y.Z">X.Y.Z</option>
                                     <option value="Quirino Ordaz">Quirino Ordaz</option>
+                                    <option value="Triplex">Triplex</option>
                                 </select>
                             </div>
                             <div className="form-group">

@@ -1,16 +1,14 @@
-import React from 'react'
-import { Formugeneral } from './Formugeneral'
+import React from 'react';
+import { Formugeneral } from './Formugeneral';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
 import { Api } from '../../../hooks/Api';
 
-
-
 export const RegFotografia = () => {
-  const { formulario, enviado, cambiado, resetFormulario } = useForm({})
-  const [resultado, setResultado] = useState(false)
+  const { formulario, enviado, cambiado, resetFormulario } = useForm({});
+  const [resultado, setResultado] = useState(false);
   const [fileName, setFileName] = useState('');
   const [paises, setPaises] = useState([]);
   const [ciudades, setCiudades] = useState([]);
@@ -19,19 +17,19 @@ export const RegFotografia = () => {
   const [selectedCiudad, setSelectedCiudad] = useState('');
   const [saved, setSaved] = useState('not sended');
   const [data, setData] = useState(null);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '' });
+
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
       try {
-        const response = await fetch(url, {
-          method: "GET"
-        });
+        const response = await fetch(url, { method: "GET" });
         const result = await response.json();
         if (result.status === "success") {
           setData(result.data);
           setPaises(Object.keys(result.data));
         } else {
-          // Manejo de error
           console.error("Error al obtener los datos", result.message);
         }
       } catch (error) {
@@ -41,18 +39,16 @@ export const RegFotografia = () => {
     fetchData();
   }, []);
 
- useEffect(()=>{
-  setSaved("")
- },[formulario])
+  useEffect(() => {
+    setSaved("");
+  }, [formulario]);
 
   useEffect(() => {
-    
     if (formulario.pais) {
       const ciudades = Object.keys(data[formulario.pais]);
       setCiudades(ciudades);
       if (ciudades.length === 1) {
         setSelectedCiudad(ciudades[0]);
-
       } else {
         setSelectedCiudad('');
         setInstituciones([]);
@@ -67,49 +63,54 @@ export const RegFotografia = () => {
     }
   }, [formulario.ciudad]);
 
-
-
   const guardar_foto = async (e) => {
-        e.preventDefault();
-        let nueva_foto = formulario;
-        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-foto", "POST", nueva_foto);
-        console.log(nueva_foto)
-        if (datos.status === "successs") {
-            console.log("status success")
-            const fileInput = document.querySelector("#file");
-            const formData = new FormData();
-            Array.from(fileInput.files).forEach((file, index) => {
-                formData.append(`files`, file);
-            });
-            console.log("formdata",formData)
-            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
-            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
+    e.preventDefault();
+    let nueva_foto = formulario;
+    try {
+      const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-foto", "POST", nueva_foto);
+      setLoadingProgress(33); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion1: datos.status }));
 
-            setResultado(true);
-            setSaved("saved");
-        } else {
-            console.log("status error")
-            setSaved("error");
-        }
-    };
+      if (datos.status === "successs") {
+        const fileInput = document.querySelector("#file");
+        const formData = new FormData();
+        Array.from(fileInput.files).forEach((file) => {
+          formData.append(`files`, file);
+        });
 
+        const  subida2  = await Api(`https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
+        setLoadingProgress(66); // Incrementa el progreso
+        
+        setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
 
+        const  subida   = await Api(`https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
+        setLoadingProgress(100); // Completa el progreso
+        
+        setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
+
+        setResultado(true);
+        setSaved("saved");
+      } else {
+        setSaved("error");
+      }
+    } catch (error) {
+      setSaved("error");
+      setLoadingProgress(100);
+    }
+  };
 
   return (
     <div>
       <main className='main_registro'>
         <div className='contenedor_formulario_foto'>
-
           <div>
-
             <h1>Formulario de registro de bienes</h1>
-
-
             <div className='frame_botones_registro' id="regresar_boton">
               <NavLink to="/registro">
                 <button className="button">Regresar</button>
               </NavLink>
             </div>
+           
             <form onSubmit={guardar_foto}>
               <h2>Campos generales</h2>
 
@@ -324,10 +325,23 @@ export const RegFotografia = () => {
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
               <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
             </form>
+                    
+            
+            <div className="progress-bar">
+              <div className="progress" style={{ width: `${loadingProgress}%` }}>
+                {loadingProgress}% 
+              </div>
+            </div>
+            <div>
+              <p>Estatus Registro de datos: {statuses.peticion1}</p>
+              <p>Estatus Registro de foto: {statuses.peticion2}</p>
+              <p>Estatus Guardado de foto en drive: {statuses.peticion3}</p>
+            </div>
+            <strong id='saved_text'>{saved === 'saved' ? 'Fotografía registrada correctamente' : ''}</strong>
+            <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
           </div>
-
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
