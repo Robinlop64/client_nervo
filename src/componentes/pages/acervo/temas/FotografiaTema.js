@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { PeriodicoDetalle } from '../detalles/PeriodicoDetalle';
 
 export const FotografiaTema = () => {
   const [fotos, setFotos] = useState([]);
@@ -64,7 +65,7 @@ export const FotografiaTema = () => {
         {fotos.map((fotografia) => {
   // Verifica que el campo 'images' exista y tenga al menos una imagen
   const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
-  const imageUrl = fotografia.image ? `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}` : '';
+  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${firstImage}` : '';
 
   return (
     <div
@@ -72,14 +73,14 @@ export const FotografiaTema = () => {
       className='fotografia-item'
       onClick={() => handleFotoClick(fotografia)}
     >
-      {fotografia.image? (
+      {firstImage ? (
         <img src={imageUrl} className='fotografia-img' alt={`Foto ${fotografia.numero_registro}`} />
       ) : (
         <p>No hay imagen disponible</p>
       )}
       <p className='numero_foto'>{fotografia.numero_registro}</p>
 
-       <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
+    <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
       <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
 
   

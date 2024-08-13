@@ -70,37 +70,28 @@ export const RegFotografia = () => {
 
 
   const guardar_foto = async (e) => {
-    e.preventDefault()
-    let nueva_foto = formulario;
-    console.log("datos formulario",nueva_foto)
+        e.preventDefault();
+        let nueva_foto = formulario;
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-foto", "POST", nueva_foto);
+        console.log(nueva_foto)
+        if (datos.status === "successs") {
+            console.log("status success")
+            const fileInput = document.querySelector("#file");
+            const formData = new FormData();
+            Array.from(fileInput.files).forEach((file, index) => {
+                formData.append(`files`, file);
+            });
+            console.log("formdata",formData)
+            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
+            const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/${datos.articuloGuardado._id}`, "POST", formData, true);
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-foto", "POST", nueva_foto)
-    
-    if (datos.status == "successs") {
-      const fileInput = document.querySelector("#file")
-      console.log("Si llegaste aqui es pq success")
-      console.log("si se recoje el archivo",fileInput.files)
-      setSaved("saved")
-      const formData = new FormData
-      formData.append("file0", fileInput.files[0])
-  
-      
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/" + datos.articuloGuardado._id, "POST", formData, true)
-        
-      console.log("Datos de subida3")
-      console.log(subida)
-      console.log(datos.articuloGuardado._id)
-
-      setResultado(true)
-      setSaved("saved")
-
-    }else{
-      setSaved("error")
-    }
-    console.log(datos)
-    
-  }
+            setResultado(true);
+            setSaved("saved");
+        } else {
+            console.log("status error")
+            setSaved("error");
+        }
+    };
 
 
 
@@ -174,10 +165,10 @@ export const RegFotografia = () => {
                 </div>
 
 
-                <div className='form-group' >
-                  <label htmlFor='file0'>Imagen</label>
-                  <input type='file' name='file0' id="file"/>
-                </div>
+                <div className='form-group'>
+                                <label htmlFor='file0'>Imagen</label>
+                                <input type='file' name='file0' id="file" multiple/>
+                            </div>
               
 
                 <div className='divisor_form'>

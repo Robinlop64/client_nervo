@@ -84,38 +84,29 @@ export const EditarFotografia = () => {
   }, [formulario.ciudad]);
 
 
-  const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
+  const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografia/${fotografia.image}`;
   const guardar_foto = async (e) => {
     e.preventDefault();
-    
     let nueva_foto = formulario;
-    console.log("datos formulario es si recoje con el useform", nueva_foto);
 
     const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto);
-    console.log(id);
     if (datos.status == "success") {
-        const fileInput = document.querySelector("#file");
-        console.log("Si llegaste aqui es pq success");
-        console.log("si se recoje el archivo", fileInput.files);
+      const fileInput = document.querySelector("#file");
+      const formData = new FormData();
+      Array.from(fileInput.files).forEach((file, index) => {
+        formData.append(`files`, file);
+      });
+      setSaved("saved");
 
-        if (fileInput.files.length > 0) {
-            const formData = new FormData();
-            formData.append("file0", fileInput.files[0]);
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/editar-imagen/" + id, "POST", formData, true);
 
-            const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true);
-            const { subida3, cargando3 } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/editar-foto/" + id, "PUT", nueva_foto);
-            const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/fotografia/registrar-imagen/" + id, "POST", formData, true);
-            
-            console.log("Datos de subida3");
-            console.log(subida);
-        }
-        setResultado(true);
-        setSaved("saved");
+      setResultado(true);
+      setSaved("saved");
     } else {
-        setSaved("error");
+      setSaved("error");
     }
-    console.log(datos);
-}
+  }
 
 
 
@@ -190,10 +181,10 @@ export const EditarFotografia = () => {
                 </div>
 
 
-                <div className='form-group' >
-                  <label htmlFor='file0'>Imagen</label>
-                  <input type='file' name='file0' id="file"/>
-                </div>
+                <div className='form-group'>
+                <label htmlFor='file0'>Imagen</label>
+                <input type='file' name='file0' id="file" multiple />
+              </div>
               
 
                 <div className='divisor_form'>
@@ -350,6 +341,14 @@ export const EditarFotografia = () => {
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
               <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
             </form>
+            {fotografia.images && fotografia.images.map((image, index) => (
+              <img
+                key={index}
+                src={`https://backend-prueba-apel.onrender.com/imagenes/fotografias/${image.nombre}`}
+                alt={`${image.nombre}`}
+                className='fotografia-img-large'
+              />
+            ))}
           </div>
 
         </div>

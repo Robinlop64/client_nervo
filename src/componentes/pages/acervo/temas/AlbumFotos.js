@@ -25,8 +25,8 @@ export const AlbumFotos = () => {
     }
   };
 
-  const handleFotoClick = (fotografia) => {
-    navigate(`/admin/fotografias/${fotografia._id}`);
+  const handleFotoClick = (fotos) => {
+    navigate(`/admin/fotografias/${fotos._id}`);
   };
 
   const handleDeleteClick = async (event, fotografiaId) => {
@@ -52,35 +52,42 @@ export const AlbumFotos = () => {
   };
 
   return (
-    
-      <main className='main_album'>
-        <div className='container_fotografia'>
-          <h1>Fotografías</h1>
+    <main className='main_album'>
+      <div className='container_fotografia'>
+        <h1>Álbum {id}</h1>
+  
+        <div className='fotografias-container'>
+        {fotos.map((fotografia) => {
+  // Verifica que el campo 'images' exista y tenga al menos una imagen
+  const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
+  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${firstImage}` : '';
 
-          <div className='fotografias-container'>
-            {fotos.map((fotografia) => {
-              const imageUrl = `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${fotografia.image}`;
-              return (
-                <div
-                  key={fotografia._id}
-                  className='fotografia-item'
-                  onClick={() => handleFotoClick(fotografia)}
-                >
-                  <img src={imageUrl} className='fotografia-img'  />
-                  
-                  <p className='numero_foto'>{fotografia.numero_foto}</p>
+  return (
+    <div
+      key={fotos._id}
+      className='fotografia-item'
+      onClick={() => handleFotoClick(fotografia)}
+    >
+      {true ? (
+        <img src={imageUrl} className='fotografia-img' alt={`Foto ${fotos.numero_registro}`} />
+      ) : (
+        <p>No hay imagen disponible</p>
+      )}
+      <p className='numero_foto'>{fotos.numero_registro}</p>
 
-                  <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
-                  <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+    <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
+      <button onClick={(event) => handleDeleteClick(event, fotos._id)}>Borrar</button>
 
-             
-                  
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </main>
- 
+  
+    </div>
   );
+})}
+
+        </div>
+      </div>
+    </main>
+  );
+ 
+        
+
 };
