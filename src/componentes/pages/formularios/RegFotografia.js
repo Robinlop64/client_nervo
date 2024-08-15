@@ -19,6 +19,7 @@ export const RegFotografia = () => {
   const [data, setData] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '' });
+  const [transcripcion, setTranscripcion] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +104,33 @@ export const RegFotografia = () => {
       setLoadingProgress(100);
     }
   };
+  const handleTranscripcion = async (e) => {
+    e.preventDefault();
+    const fileInput = document.querySelector("#file");
+    const formData = new FormData();
+    if (fileInput.files.length > 0) {
+      formData.append('file', fileInput.files[0]);
 
+      try {
+        const response = await axios.post('http://localhost:3900/api/fotografia/gpt/gpt/transcripcion', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response.data)
+        if (response.data && response.data.transcription) {
+          setTranscripcion(response.data.transcription);
+          formulario.pendientes = response.data.transcription
+        } else {
+          console.error("No se encontró el campo 'transcripcion' en la respuesta.");
+        }
+      } catch (error) {
+        console.error('Error al hacer la petición:', error);
+      }
+    } else {
+      console.error("No se seleccionó ningún archivo.");
+    }
+  };
   return (
     <div>
       <main className='main_registro'>
@@ -351,7 +378,16 @@ export const RegFotografia = () => {
               <p>Estatus Registro de foto: {statuses.peticion2}</p>
               <p>Estatus Guardado de foto en drive: {statuses.peticion3}</p>
             </div>
+            
           </div>
+                    <form>      
+    
+
+                {/* Botón para transcribir */}
+                <button className="button" onClick={handleTranscripcion}>Transcribir</button>
+
+                
+              </form>
         </div>
       </main>
     </div>

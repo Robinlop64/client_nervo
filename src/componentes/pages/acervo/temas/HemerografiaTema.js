@@ -25,7 +25,6 @@ export const HemerografiaTema = () => {
         setNombrePeriodico(datos.fotos[0].nombre_periodico);
       }
     } else {
-      // Manejo de error
       console.error('Error fetching photos:', datos.message);
     }
   };
@@ -36,17 +35,15 @@ export const HemerografiaTema = () => {
 
   const handleDeleteClick = async (event, fotografiaId) => {
     event.stopPropagation();
-    const url = `https://backend-prueba-apel.onrender.com/api/fotografia/${fotografiaId}`;
+    const url = `https://backend-prueba-apel.onrender.com/api/hemerografia/${fotografiaId}`;
     const peticion = await fetch(url, {
       method: "DELETE"
     });
 
     let datos = await peticion.json();
     if (datos.status === "success") {
-      // Refrescar la lista de fotos después de eliminar
       getFotos();
     } else {
-      // Manejo de error
       console.error('Error deleting photo:', datos.message);
     }
   };
@@ -61,34 +58,33 @@ export const HemerografiaTema = () => {
       <div className='container_fotografia'>
         <h1>{nombrePeriodico}</h1>
   
-      <PeriodicoDetalle/>
+        <PeriodicoDetalle />
         <div className='fotografias-container'>
-        {fotos.map((fotografia) => {
-  // Verifica que el campo 'images' exista y tenga al menos una imagen
-  const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
-  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${firstImage}` : '';
+          {fotos.map((fotografia) => {
+            const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
+            const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${firstImage}` : '';
+            const pendiente = fotografia.pendiente; // Verifica si el campo pendiente tiene contenido
 
-  return (
-    <div
-      key={fotografia._id}
-      className='hemerografia-item'
-      onClick={() => handleFotoClick(fotografia)}
-    >
-      {firstImage ? (
-        <img src={imageUrl} className='fotografia-img' alt={`Foto ${fotografia.numero_registro}`} />
-      ) : (
-        <p>No hay imagen disponible</p>
-      )}
-      <p className='numero_foto'>{fotografia.numero_registro}</p>
+            return (
+              <div
+                key={fotografia._id}
+                className={`hemerografia-item ${pendiente ? 'pendiente' : ''}`}
+                onClick={() => handleFotoClick(fotografia)}
+              >
+                {firstImage ? (
+                  <img src={imageUrl} className='fotografia-img' alt={`Foto ${fotografia.numero_registro}`} />
+                ) : (
+                  <p>No hay imagen disponible</p>
+                )}
+                <p className='numero_foto'>{fotografia.numero_registro}</p>
 
-    <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
-      <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+                {pendiente && <p className='pendiente-text'>Pendiente: {pendiente}</p>}
 
-  
-    </div>
-  );
-})}
-
+                <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
+                <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </main>

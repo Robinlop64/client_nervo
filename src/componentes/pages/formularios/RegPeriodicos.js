@@ -81,6 +81,15 @@ export const RegPeriodicos = () => {
             const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
 
+             // Nueva sección para subir los archivos PDF
+             const pdfInput = document.querySelector("#pdf");
+             const pdfFormData = new FormData();
+             Array.from(pdfInput.files).forEach((file) => {
+                 pdfFormData.append('pdfs', file);
+             });
+     
+             //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+             const { pdfSubida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setResultado(true);
             setSaved("saved");
         } else {
@@ -335,9 +344,15 @@ export const RegPeriodicos = () => {
                                 <option value="Mensual">Mensual</option>
                                 </select>
                             </div>
+                           
+<div className='divisor_form'>
                             <div className='form-group'>
                                 <label htmlFor='file0'>Imagen</label>
                                 <input type='file' name='file0' id="file" multiple/>
+                            </div>
+                            <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
                             </div>
                             <div className="form-group"id="resumen">
                                 <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
@@ -508,7 +523,7 @@ export const RegPeriodicos = () => {
                             </div>
                             
                             </div>
-   
+                            </div>
                           
                         <button className="button" onClick={guardar_foto}>Enviar</button>
               <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
