@@ -115,7 +115,20 @@ export const RegPeriodicos = () => {
             setSaved("error");
         }
     };
+    const handleAutoComplete = async (field, promptId) => {
+        const fileInput = document.querySelector("#file");
+        if (fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
 
+            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+            if (datos && datos.message) {
+                cambiado({ target: { name: field, value: datos.message } });
+            }
+        } else {
+            alert("Por favor selecciona una imagen primero.");
+        }
+    };  
     return (
         <div>
             <main className='main_registro'>
@@ -134,7 +147,7 @@ export const RegPeriodicos = () => {
 
                         <div className='divisor_form'>
                         
-                            <div className="form-group" id="nombrePeriodico">
+                        <div className="form-group" id="nombrePeriodico">
                                 <label htmlFor="nombrePeriodico">Periódico</label>
                                 <input
                                     type='text'
@@ -142,44 +155,8 @@ export const RegPeriodicos = () => {
                                     name="nombre_periodico"
                                     value={formulario.nombre_periodico || ''}
                                     onChange={cambiado}
-                                >
-                    
-                                
-
-                                </input>
-                      {/*
-       
-      
-                                <select
-                                    id="nombrePeriodicoSelect"
-                                    name="nombre_periodico"
-                                    value={formulario.nombre_periodico || ''}
-                                    onChange={cambiado}
-                                >
-                    
-                                    <option value="">Seleccionar Periódico</option>
-                                    <option value="El Nacional">El Nacional</option>
-                                    <option value="El Imparcial">El Imparcial</option>
-                                    <option value="El Mundo">El Mundo</option>
-                                    <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
-                                    <option value="El País">El País</option>
-                                    <option value="El Paladín">El Paladín</option>
-                                    <option value="El Plata">El Plata</option>
-                                    <option value="El Siglo">El Siglo</option>
-                                    <option value="El Telégrafo">El Telégrafo</option>
-                                    <option value="La Defensa">La Defensa</option>
-                                    <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
-                                    <option value="La Mañana">La Mañana</option>
-                                    <option value="La Nación">La Nación</option>
-                                    <option value="La Razón">La Razón </option>
-                                    <option value="La Prensa">La Prensa</option>
-                                    <option value="México Libre">México Libre</option>
-
-                                </select>
-
-
-                                */}
-       
+                                />
+                                <button type="button" onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}>Auto</button>
                             </div>
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de edición</label>
@@ -225,6 +202,7 @@ export const RegPeriodicos = () => {
                             <div className="form-group">
                                 <label>Encabezado</label>
                                 <input id='encabezado' type="textarea" name="encabezado" placeholder="Encabezado" value={formulario.encabezado|| ''} onChange={cambiado} />
+                                <button type="button" onClick={() => handleAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}>Auto</button>
                             </div>
 
                             <div className="form-group" id='autor'>
@@ -320,7 +298,7 @@ export const RegPeriodicos = () => {
                                 <select
                                     id="generoPeriodistico"
                                     name="genero_periodistico"
-                                    value={formulario.genero_periodistico || ''}
+                                    Value={formulario.genero_periodistico || ''}
                                     onChange={cambiado}
                                 >
                                     <option value="">Seleccionar género</option>
@@ -333,6 +311,7 @@ export const RegPeriodicos = () => {
                                     <option value="Noticias">Noticias</option>
                                     <option value="Cuento">Cuento</option>
                                 </select>
+                                <button type="button" onClick={() => handleAutoComplete('genero_periodistico', 'De los siguientes generos dime cual es mas probable que sea el de el periodico: Notas, Artículos, Crónicas,Frases, Poesía,Noticias solo contesta con el género')}>Auto</button>
                             </div>
                             
                             <div className="form-group" id="lugarPublicacion">

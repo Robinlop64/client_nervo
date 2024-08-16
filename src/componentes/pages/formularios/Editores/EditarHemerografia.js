@@ -16,6 +16,8 @@ export const EditarHemerografia = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState({});
   const [data, setData] = useState(null);
+  const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,6 +80,8 @@ export const EditarHemerografia = () => {
     let nueva_foto = formulario;
 
     const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/editar/" + id, "PUT", nueva_foto);
+    setLoadingProgress(25); // Incrementa el progreso
+    setStatuses(prev => ({ ...prev, peticion1: datos.status }))
     if (datos.status == "success") {
       const fileInput = document.querySelector("#file");
       const formData = new FormData();
@@ -86,9 +90,23 @@ export const EditarHemerografia = () => {
       });
       setSaved("saved");
 
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + id, "POST", formData, true);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/editar-imagen/" + id, "POST", formData, true);
+      const  subida2= await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + id, "POST", formData, true);
+      
+      setLoadingProgress(50); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
+      const subida = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/editar-imagen/" + id, "POST", formData, true);
+      setLoadingProgress(75); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
+      const pdfInput = document.querySelector("#pdf");
+      const pdfFormData = new FormData();
+      Array.from(pdfInput.files).forEach((file) => {
+          pdfFormData.append('pdfs', file);
+      });
 
+      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+      const  pdfSubida2  = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-pdf/`+id, "POST", pdfFormData, true);
+      setLoadingProgress(100); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
       setResultado(true);
       setSaved("saved");
     } else {
@@ -305,6 +323,10 @@ export const EditarHemerografia = () => {
                 <label htmlFor='file0'>Imagen</label>
                 <input type='file' name='file0' id="file" multiple />
               </div>
+              <div className='form-group' id='pdf2'>
+                                <label htmlFor='pdfs'>Pdf</label>
+                                <input type='file' name='pdfs'id='pdf' multiple/>
+                            </div>
               <div className="form-group" id="resumen">
                 <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
                 <textarea
@@ -474,20 +496,34 @@ export const EditarHemerografia = () => {
             </div>
 
           </form>
+  
           <button className="button" onClick={guardar_foto}>Enviar</button>
           <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
           <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+          <div className="progress-bar">
+  <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
+  <p className="progress-text">{loadingProgress}%</p>
+</div>
+                    <div>
+            <strong id='saved_text'>{statuses.peticion1 === 'success' ? 'Información editada correctamente' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
+
+            <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al editar foto en el servidor node' : ''}</strong>
+
+            <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al editar foto en Drive' : ''}</strong>
+
+            <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
+            <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
+     
+              <p>Estatus Registro de datos: {statuses.peticion1}</p>
+              <p>Estatus Registro de foto: {statuses.peticion2}</p>
+              <p>Estatus Guardado de foto en drive: {statuses.peticion3}</p>
+            </div>
           <div className='marco'>
 
-            <div className='datos anteriores'>
-              <p>Encabezado: {fotografia.titulo}</p>
-              <p>Numero edición: {fotografia.num_edicion}</p>
-              <p>Paginas: {fotografia.num_paginas}</p>
-              <p>Encabezado: {fotografia.titulo}</p>
-              <p>Lugar de publicación: {fotografia.encabezado}</p>
-              <p>Fecha de publicación: {fotografia.dia2} - {fotografia.mes2} - {fotografia.anio2}</p>
-              <p>Periodicidad: {fotografia.tipo_publicacion}</p>
-            </div>
+            
             {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
             {fotografia.images && fotografia.images.map((image, index) => (
               <img
