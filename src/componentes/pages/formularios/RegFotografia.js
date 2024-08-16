@@ -112,7 +112,7 @@ export const RegFotografia = () => {
       formData.append('file', fileInput.files[0]);
 
       try {
-        const response = await axios.post('http://localhost:3900/api/fotografia/gpt/gpt/transcripcion', formData, {
+        const response = await axios.post('https://backend-prueba-apel.onrender.com/api/fotografia/gpt/gpt/transcripcion', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
