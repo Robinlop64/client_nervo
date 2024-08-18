@@ -15,30 +15,39 @@ export const RegPeriodicos = () => {
     const [selectedCiudad, setSelectedCiudad] = useState('');
     const [saved, setSaved] = useState('not sended');
     const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
+    const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
     const [loadingProgress, setLoadingProgress] = useState(0);
-
     const [data, setData] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [customPromptText, setCustomPromptText] = useState('');
+    const [currentField, setCurrentField] = useState('');
+    const [originalPrompt, setOriginalPrompt] = useState('');
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [pdfUrls, setPdfUrls] = useState([]);
+    const [value, setValue] = useState('');
+    const [sugerencias, setSugerencias] = useState([]);
+    const [fieldName, setFieldName] = useState('');
 
     useEffect(() => {
-      const fetchData = async () => {
-        const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
-        try {
-          const response = await fetch(url, {
-            method: "GET"
-          });
-          const result = await response.json();
-          if (result.status === "success") {
-            setData(result.data);
-            setPaises(Object.keys(result.data));
-          } else {
-            // Manejo de error
-            console.error("Error al obtener los datos", result.message);
-          }
-        } catch (error) {
-          console.error("Error al realizar la petición", error);
-        }
-      };
-      fetchData();
+        const fetchData = async () => {
+            const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
+            try {
+                const response = await fetch(url, {
+                    method: "GET"
+                });
+                const result = await response.json();
+                if (result.status === "success") {
+                    setData(result.data);
+                    setPaises(Object.keys(result.data));
+                } else {
+                    // Manejo de error
+                    console.error("Error al obtener los datos", result.mesage);
+                }
+            } catch (error) {
+                console.error("Error al realizar la petición", error);
+            }
+        };
+        fetchData();
     }, []);
     useEffect(() => {
         setSaved("")
@@ -46,10 +55,16 @@ export const RegPeriodicos = () => {
         setStatuses({
             peticion1: '',
             peticion2: '',
-            peticion3: ''
-          });
+            peticion3: '',
+            peticion4: ""
+        });
+        setMensajes({
+            mensaje1: '',
+            mensaje2: '',
+            mensaje3: '',
+            mensaje4: ''
+        });
     }, [formulario])
-
     useEffect(() => {
 
         if (formulario.pais) {
@@ -64,51 +79,101 @@ export const RegPeriodicos = () => {
             }
         }
     }, [formulario.pais]);
-
     useEffect(() => {
         if (formulario.ciudad && formulario.pais) {
             const instituciones = data[formulario.pais][formulario.ciudad];
             setInstituciones(instituciones);
         }
     }, [formulario.ciudad]);
+    useEffect(() => {
+        return () => {
+            // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
+            pdfUrls.forEach(url => URL.revokeObjectURL(url));
+        };
+    }, [pdfUrls]);
+    useEffect(() => {
+        if (value.length > 1 && fieldName) {
+            const fetchSugerencias = async () => {
+                try {
+                    const response = await fetch(`https://backend-prueba-apel.onrender.com/api/hemerografia/search?query=${value}&campo=${fieldName}`);
+                    if (!response.ok) {
+                        throw new Error('Error fetching suggestions');
+                    }
+                    const data = await response.json();
+                    setSugerencias(data);
+                } catch (err) {
+                    console.error('Error fetching suggestions:', err);
+                }
+            };
 
+            fetchSugerencias();
+        } else {
+            setSugerencias([]);
+        }
+    }, [value, fieldName]);
 
+    const handleSelect = (sugerencia) => {
+        const e = { target:{name:fieldName, value:sugerencia}}
+        if (fieldName) {
+            cambiado(e);
+            setSugerencias([]);
+            console.log(formulario.seccion)
+            //setValue(sugerencia); // Actualizar el valor del input con la sugerencia seleccionada
+        }
+    };
+
+    const handleChange = (e) => {
+        
+        if (!e || !e.target) {
+            console.error("El evento o el target están indefinidos:", e);
+            return;
+        }
+    
+        const  name = e.target.name;
+        const value = e.target.value
+        setValue(value); // Actualizar el valor del input
+        setFieldName(name); // Guardar el nombre del campo para el autocompletado
+        cambiado(e); // Actualizar el estado del formulario
+    };
+    
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
         const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
         setLoadingProgress(25); // Incrementa el progreso
         setStatuses(prev => ({ ...prev, peticion1: datos.status }));
+        setMensajes(prev => ({ ...prev, mensaje1: datos.mensaje }));
 
-        
         if (datos.status === "successs") {
-         //   console.log("status success")
+            //   console.log("status success")
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
             Array.from(fileInput.files).forEach((file, index) => {
                 formData.append(`files`, file);
             });
-           // console.log("formdata",formData)
-            const  subida2  = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            // console.log("formdata",formData)
+            const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             setLoadingProgress(50); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
-        
+            setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-            const  subida  = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const subida = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             setLoadingProgress(75); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-             // Nueva sección para subir los archivos PDF
-             const pdfInput = document.querySelector("#pdf");
-             const pdfFormData = new FormData();
-             Array.from(pdfInput.files).forEach((file) => {
-                 pdfFormData.append('pdfs', file);
-             });
-     
-             //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-             const  pdfSubida2  = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-             setLoadingProgress(100); // Incrementa el progreso
-             setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
-             setResultado(true);
+            setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+            // Nueva sección para subir los archivos PDF
+            const pdfInput = document.querySelector("#pdf");
+            const pdfFormData = new FormData();
+            Array.from(pdfInput.files).forEach((file) => {
+                pdfFormData.append('pdfs', file);
+            });
+
+            //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            setLoadingProgress(100); // Incrementa el progreso
+            setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
+            setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
+            setResultado(true);
             setSaved("saved");
         } else {
             console.log("status error")
@@ -128,36 +193,90 @@ export const RegPeriodicos = () => {
         } else {
             alert("Por favor selecciona una imagen primero.");
         }
-    };  
+    };
+    const handleAutoCompleteSelect = async (field, promptId) => {
+        const fileInput = document.querySelector("#file");
+        if (fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+            if (datos && datos.message) {
+                // Validar que el mensaje sea una opción válida del select
+                const opcionesValidas = ['notas', 'articulos', 'cronicas', 'frases', 'poesia', 'pendiente', 'noticias', 'cuento'];
+                const generoSugerido = datos.message.toLowerCase();
+
+                if (opcionesValidas.includes(generoSugerido)) {
+                    cambiado({ target: { name: field, value: datos.message } });
+                } else {
+                    alert("El género sugerido no es válido para este campo.");
+                }
+            }
+        } else {
+            alert("Por favor selecciona una imagen primero.");
+        }
+    };
+    const handleEditPromptAndAutoComplete = async (field, prompt) => {
+        setCurrentField(field);
+        setOriginalPrompt(prompt);
+        setCustomPromptText(prompt);
+        setShowModal(true);
+    };
+    const handleModalSubmit = () => {
+        handleAutoComplete(currentField, customPromptText);
+        setShowModal(false);
+    };
+    const handleImageChange = (e) => {
+        if (e.target.files) {
+            const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+            setSelectedImages((prevImages) => prevImages.concat(filesArray));
+            Array.from(e.target.files).map(
+                (file) => URL.revokeObjectURL(file) // Avoid memory leaks
+            );
+        }
+    };
+    const handlePDFChange = (e) => {
+        const files = e.target.files;
+        const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
+        setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
+    };
+
     return (
         <div>
-            <main className='main_registro'>
-                <div className='contenedor_formulario_foto'>
+            <main className='main_registro_hemerografia'>
+                <div className="contenedor_registro_hemerografia">
+                    <h1>Formulario de registro de Hemerografía</h1>
+                    <form className='form_hemerografia' onSubmit={guardar_foto}>
 
-                    <h1>Formulario de registro de bienes</h1>
+                        <div className='divisor_form_hemerografia_1'>
+
+                            <div className="form-group" id="periodico_hemerografia">
+                                <label htmlFor="nombrePeriodico">Periódico:</label>
+                                <div className='botonesIA'>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
+
+                                </div>
 
 
-                    <div className='frame_botones_registro' id="regresar_boton">
-                        <NavLink to="/registro">
-                            <button className="button">Regresar</button>
-                        </NavLink>
-                    </div>
-                    <form onSubmit={guardar_foto}>
-                        <h2>Campos generales</h2>
-
-                        <div className='divisor_form'>
-                        
-                        <div className="form-group" id="nombrePeriodico">
-                                <label htmlFor="nombrePeriodico">Periódico</label>
                                 <input
-                                    type='text'
-                                    id="nombrePeriodicoSelect"
-                                    name="nombre_periodico"
-                                    value={formulario.nombre_periodico || ''}
-                                    onChange={cambiado}
-                                />
-                                <button type="button" onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}>Auto</button>
+                type="text"
+                name="nombre_periodico"
+                value={formulario.nombre_periodico} // Solo manejar el valor desde `value`
+                onChange={handleChange}
+                autoComplete="off"
+            />
+                {(sugerencias.length > 0 && fieldName === "nombre_periodico") && (
+            <ul className="sugerencias-list">
+                {sugerencias.map((sugerencia, index) => (
+                    <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                    </li>
+                ))}
+            </ul>
+            )}
                             </div>
+
                             <div className="form-group" id="numeroEdicion">
                                 <label htmlFor="numeroEdicion">Número de edición</label>
                                 <input
@@ -172,21 +291,20 @@ export const RegPeriodicos = () => {
                                 <label htmlFor="numeroEdicion">Número de carpeta</label>
                                 <input
                                     type="number"
-                                    id="numeroEdicionInput"
                                     name="numero_carpeta"
                                     value={formulario.numero_carpeta}
                                     onChange={cambiado}
                                 />
                             </div>
-                        
+
                             <div className="form-group" id="FechaPublicacion">
-                            <label id='fecha_publicacionLabel'>Fecha de publicación</label>
-                            <input
-                                type="date"
-                                name="fecha_publicacion"
-                                value={formulario.fecha_publicacion}
-                                onChange={cambiado}
-                            />
+                                <label id='fecha_publicacionLabel'>Fecha de publicación</label>
+                                <input
+                                    type="date"
+                                    name="fecha_publicacion"
+                                    value={formulario.fecha_publicacion}
+                                    onChange={cambiado}
+                                />
                             </div>
 
                             <div className="form-group" id="numeroEdicion">
@@ -199,18 +317,25 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Encabezado</label>
-                                <input id='encabezado' type="textarea" name="encabezado" placeholder="Encabezado" value={formulario.encabezado|| ''} onChange={cambiado} />
-                                <button type="button" onClick={() => handleAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}>Auto</button>
+
+                            <div className="form-group" id='encabezado_hemerografia'>
+                                <label>Encabezado:</label>
+                                <div className='botonesIA'>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}></img>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png   ' onClick={() => handleEditPromptAndAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}></img>
+
+
+                                </div>
+                                <input type="text" name="encabezado" placeholder="Encabezado" value={formulario.encabezado || ''} onChange={cambiado} />
+
                             </div>
 
-                            <div className="form-group" id='autor'>
+                            <div className="form-group" id='autor_hemerografia'>
                                 <label>Autor:</label>
                                 <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="nombreSeudonimos">Seudónimo</label>
+                            <div className="form-group" id='seudonimo_hemerografia'>
+                                <label htmlFor="nombreSeudonimos">Seudónimo:</label>
                                 <select
                                     id="nombreSeudonimos"
                                     name="seudonimos"
@@ -228,16 +353,35 @@ export const RegPeriodicos = () => {
                                     <option value="Quirino Ordaz">Quirino Ordaz</option>
                                     <option value="Triplex">Triplex</option>
                                 </select>
+                                <div className='botonesIA'>
+
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+
+
+
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Sección</label>
-                                <select
+                            <div className="form-group" id='seccion_hemerografia'>
+                                <label>Sección:</label>
+                                <div className='botonesIA'>
+
+                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seccion', 'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
+                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seccion',  'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
+
+
+
+                                </div>
+                                <input
+                                    type='text'
                                     id="generoPeriodistico"
                                     name="seccion"
                                     value={formulario.seccion || ''}
-                                    onChange={cambiado}
+                                    onChange={handleChange}
                                 >
-                                    <option value="">Seleccionar sección</option>
+                                    
+                                    {/*
+                                         <option value="">Seleccionar sección</option>
                                     <option value="Fuegos Fatuos">Fuegos Fatuos</option>
                                     <option value="Pimientos dulces">Pimietos dulces</option>
                                     <option value="Página literaria">Página literaria</option>
@@ -248,7 +392,7 @@ export const RegPeriodicos = () => {
                                     <option value="Actualidades madrileñas">Actualidades madrileñas</option>
                                     <option value="La varita de la virtud">La varita de la virtud</option>
                                     <option value="Desde parís">Desde parís</option>
-                                    <option value="Desde Madrid">Desde Madrid</option>                      
+                                    <option value="Desde Madrid">Desde Madrid</option>
 
                                     <option value="Actualidades">Actualidades</option>
                                     <option value="Actualidades españolas">Actualidades españolas</option>
@@ -264,61 +408,93 @@ export const RegPeriodicos = () => {
 
 
                                     <option value="NA">NA</option>
+                                    */}
+                               
 
-                                </select>
-                            </div>
-                            </div>
-                            <div className='divisor_form2'>
-                           
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "seccion") && (
+            <ul className="sugerencias-list">
+                {sugerencias.map((sugerencia, index) => (
+                    <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                    </li>
+                ))}
+            </ul>
+        )}
                             
-                            <div className="form-group" id='pagina'>
-                                <label htmlFor="pagina">Página (s)</label>
+                            </div>
+                        </div>
+
+                        <div className='divisor_form_hemerografia_2'>
+
+                            <div className="form-group" id='paginas_hemerografia'>
+                                <label htmlFor="pagina">Página(s):</label>
                                 <input
                                     type="text"
-                                    id="paginaInput"
+
                                     name="numero_paginas"
-                                    placeholder="Página"
-                                    value={formulario.numero_paginas }
+                                    placeholder="Página(s)"
+                                    value={formulario.numero_paginas}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group" id='columnas' >
-                                <label htmlFor="columnas">Columnas</label>
+                            <div className="form-group" id='columnas_hemerografia' >
+                                <label htmlFor="columnas">Columnas:</label>
                                 <input
                                     type="text"
-                                    id="columnasInput"
+
                                     name="columnas"
                                     placeholder="Columnas"
                                     value={formulario.columnas || ''}
                                     onChange={cambiado}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Género periodístico</label>
-                                <select
+                            <div className="form-group" id='genero_hemerografia'>
+                                <label>Género periodístico:</label>
+                                <div className='botonesIA'>
+
+<img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('genero_periodistico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
+<img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
+
+
+
+</div>
+                                <input
+                                    type='text'
                                     id="generoPeriodistico"
                                     name="genero_periodistico"
-                                    Value={formulario.genero_periodistico || ''}
-                                    onChange={cambiado}
+                                    value={formulario.genero_periodistico || ''}
+                                    onChange={handleChange}
                                 >
-                                    <option value="">Seleccionar género</option>
+                                    {/*
+                                        <option value="">Seleccionar género</option>
                                     <option value="notas">Notas</option>
                                     <option value="articulos">Artículos</option>
                                     <option value="cronicas">Crónicas</option>
                                     <option value="frases">Frases</option>
-                                    <option value="Poesía">Poesía</option>
+                                    <option value="poesia">Poesía</option>
                                     <option value="pendiente">Pendiente</option>
-                                    <option value="Noticias">Noticias</option>
-                                    <option value="Cuento">Cuento</option>
-                                </select>
-                                <button type="button" onClick={() => handleAutoComplete('genero_periodistico', 'De los siguientes generos dime cual es mas probable que sea el de el periodico: Notas, Artículos, Crónicas,Frases, Poesía,Noticias solo contesta con el género')}>Auto</button>
+                                    <option value="noticias">Noticias</option>
+                                    <option value="cuento">Cuento</option>
+                                    */}
+                                
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "genero_periodistico") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
+                               
                             </div>
-                            
-                            <div className="form-group" id="lugarPublicacion">
-                                <label htmlFor="encabezado">Lugar de publicación</label>
+                            <div className="form-group" id="lugar_publicacion_hemerografia">
+                                <label htmlFor="encabezado">Lugar de publicación:</label>
                                 <input
                                     type="text"
-                                    id="lugarPublicacionInput"
+
                                     name="lugar_publicacion"
                                     placeholder="Lugar de publicación"
                                     value={formulario.lugar_publicacion || ''}
@@ -335,36 +511,53 @@ export const RegPeriodicos = () => {
                                     value={formulario.periodicidad || ''}
                                     onChange={cambiado}
                                 >
-                                <option value="">Seleccionar periodicidad</option>
-                                <option value="Diaria">Diaria</option>
-                                <option value="Semanal">Semanal</option>
-                                <option value="Mensual">Mensual</option>
+                                    <option value="">Seleccionar periodicidad</option>
+                                    <option value="Diaria">Diaria</option>
+                                    <option value="Semanal">Semanal</option>
+                                    <option value="Mensual">Mensual</option>
                                 </select>
                             </div>
-                           
-<div className='divisor_form'>
-                            <div className='form-group'>
-                                <label htmlFor='file0'>Imagen</label>
-                                <input type='file' name='file0' id="file" multiple/>
+                            <div className='form-group' id='imagenes_hemerografia'>
+                                <label htmlFor='file0'>Imágenes: </label>
+                                <input type='file' onChange={handleImageChange} name='file0' id="file" multiple />
+                            </div>
+                            <div className="form-group" id='edicion_hemerografia'>
+                                <label>Edición:</label>
+                                <select id='hallazgo' name="edicion" value={formulario.edicion || ''} onChange={cambiado}>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
                             </div>
                             <div className='form-group' id='pdf2'>
-                                <label htmlFor='pdfs'>Pdf</label>
-                                <input type='file' name='pdfs'id='pdf' multiple/>
+                                <label htmlFor='pdfs'>Pdfs: </label>
+                                <input type='file' onChange={handlePDFChange} name='pdfs' id='pdf' multiple />
                             </div>
-                            <div className="form-group"id="resumen">
-                                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+                        </div>
+
+                        <div className='divisor_form_hemerografia_3'>
+
+
+                            <div className="form-group" id="resumen_hemerografia">
+                                <p id='resumen_hemerografia_p'>Resumen:</p>
+
+                                <div className='botonesIA_resumen_hemerografia'>
+
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
+                                </div>
+
                                 <textarea
                                     type="text"
-                                    id="resumenInput"
+
                                     name="resumen"
                                     placeholder="Resumen"
                                     value={formulario.resumen || ''}
                                     onChange={cambiado}
                                 />
-                            </div>
 
-                            <div className="form-group"id="transcripcion">
-                                <label htmlFor="transcripcion" id="transcripcionLabel">Pendiente</label>
+                            </div>
+                            <div className="form-group" id="pendientes_hemerografia">
+                                <p id='pendientes_hemerografia_p'>Pendientes:</p>
                                 <textarea
                                     type="text"
                                     id="transcripcionInput"
@@ -373,8 +566,26 @@ export const RegPeriodicos = () => {
                                     onChange={cambiado}
                                 />
                             </div>
-                        
+                            <div className='divisor_form'>
+                                <div className="form-group" id="transcripcion_hemerografia">
+                                    <p>Transcripciòn</p>
+                                    <div className='botonesIA_resumen_hemerografia'>
 
+                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
+                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
+
+
+
+                                    </div>
+                                    <textarea
+                                        type="text"
+                                        id="transcripcionInput2"
+                                        name="transcripcion"
+                                        value={formulario.transcripcion || ''}
+                                        onChange={cambiado}
+                                    />
+                                </div>
+                            </div>
                             <div className="form-group">
                                 <label>País:</label>
                                 <select
@@ -420,8 +631,7 @@ export const RegPeriodicos = () => {
                                     ))}
                                 </select>
                             </div>
-                            
-
+                    
                             <div className="form-group">
                                 <label>Ubicación física:</label>
                                 <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
@@ -432,19 +642,26 @@ export const RegPeriodicos = () => {
                                     <option value="Fondo reservado">Fondo reservado</option>
                                 </select>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" id='coleccion_hemerografia'>
                                 <label>Colección:</label>
-                                <select name="coleccion" value={formulario.coleccion || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar la colección</option>
+                                {(sugerencias.length > 0 && fieldName === "coleccion") && (
+            <ul className="sugerencias-list">
+                {sugerencias.map((sugerencia, index) => (
+                    <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                    </li>
+                ))}
+            </ul>
+            )}
+                                <input type='text' name="coleccion" value={formulario.coleccion || ''} onChange={handleChange}>
+                                {/*
+                                             <option value="">Seleccionar la colección</option>
                                     <option value="Privada">Privada</option>
                                     <option value="Pública">Pública</option>
-                                </select>
+                                */}
+                       
+                                </input>
                             </div>
-
-
-
-
-
                             <div className="form-group">
                                 <label>Año de adquisición:</label>
                                 <select id='adq' name="fecha_adquisicion" value={formulario.fecha_adquisicion || ''} onChange={cambiado} >
@@ -471,11 +688,6 @@ export const RegPeriodicos = () => {
 
                                 </select>
                             </div>
-
-
-
-
-
                             <div className="form-group">
                                 <label>Hallazgo:</label>
                                 <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
@@ -495,9 +707,20 @@ export const RegPeriodicos = () => {
                                 </select>
                             </div>
 
-                            <div className="form-group">
+                            <div className="form-group" id='tema_hemerografia'>
                                 <label>Tema:</label>
-                                <select name="tema" value={formulario.tema || ''} onChange={cambiado}>
+                                {(sugerencias.length > 0 && fieldName === "tema") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
+                                     <input type='text' name="tema" value={formulario.tema || ''} onChange={handleChange}>
+                                    {/*
+                                       
                                     <option value="">Seleccionar el tema</option>
                                     <option value="El Nacional">El Nacional</option>
                                     <option value="El Imparcial">El Imparcial</option>
@@ -516,41 +739,125 @@ export const RegPeriodicos = () => {
                                     <option value="La Prensa">La Prensa</option>
                                     <option value="México Libre">México Libre</option>
                                     <option value="Recortes de prensa">Recortes de prensa</option>
+                                    */}
+                            
+                                </input>
+                            </div>
+                            <div className="form-group" id='edicion_hemerografia'>
+                                <label>Mostrar:</label>
+                                <select id='hallazgo' name="mostrar" value={formulario.mostrar || ''} onChange={cambiado}>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
                                 </select>
                             </div>
-                            
+                            <div className="form-group" id='edicion_hemerografia'>
+                                <label>Revisado:</label>
+                                <select id='hallazgo' name="revisado" value={formulario.revisado || ''} onChange={cambiado}>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
                             </div>
-                            </div>
-                          
+                        </div>
+
                         <button className="button" onClick={guardar_foto}>Enviar</button>
-              <strong id='saved_text'>{saved === 'saved' ? 'Fotografia registrada correctamente' : ''}</strong>
-              <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+                        
+                        <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
+                        <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+
+                        <div className="progress-bar">
+                            <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
+                            <p className="progress-text">{loadingProgress}%</p>
+
+                        </div>
+
+                        <div className='mensajes_peticiones'>
+                            {mensajes.mensaje1 ?
+                                <div className='mensajes'>
+                                    <strong id='saved_text'>{statuses.peticion1 === 'successs' ? 'Información registrada correctamente' : ''}</strong>
+                                    <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
+                                    <h4>Mensaje:</h4>
+                                    <p>{mensajes.mensaje1}</p>
+                                </div>
+                                : ""}
+                            {mensajes.mensaje2 ?
+                                <div className='mensajes'>
+                                    <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
+                                    <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
+                                    <h4>Mensaje:</h4>
+                                    <p> {mensajes.mensaje2}</p>
+                                </div>
+                                : ""}
+                            {mensajes.mensaje3 ?
+                                <div className='mensajes'>
+                                    <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
+                                    <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al subir foto a Drive' : ''}</strong>
+                                    <h4>Mensaje:</h4>
+                                    <p>{mensajes.mensaje3}</p>
+                                </div>
+                                : ""}
+                            {mensajes.mensaje4 ?
+                                <div className='mensajes'>
+                                    <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
+                                    <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
+                                    <h4>Mensaje:</h4>
+                                    <p> {mensajes.mensaje4}</p>
+                                </div>
+                                : ""}
+                        </div>
+                        <div className="images-preview">
+                            {selectedImages[0]? <h1>Fotografias subidas</h1> : ""}
+                            
+                            {selectedImages.map((image, index) => (
+                                <div key={index} className="image-preview">
+                                    <div className='marco2'>
+                                        <img src={image} alt={`Imagen ${index + 1}`} />
+                                    </div>
+                                </div>
+                            ))}
+                           
+                        </div>
+                        {pdfUrls.length > 0 && (
+                                <div className="pdf-preview">
+                        {pdfUrls[0]? <h1>PDFs subidos</h1> : ""}
+                                    {pdfUrls.map((url, index) => (
+                                        <div key={index} className="pdf-container">
+                                            <embed
+                                                src={url}
+                                                width="100%"
+                                                height="500px"
+                                                type="application/pdf"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                     </form>
-                    <div className="progress-bar">
-  <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
-  <p className="progress-text">{loadingProgress}%</p>
-</div>
-                    <div>
-            <strong id='saved_text'>{statuses.peticion1 === 'successs' ? 'Información registrada correctamente' : ''}</strong>
-            <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
-
-            <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
-            <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
-
-            <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
-            <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al subir foto a Drive' : ''}</strong>
-
-            <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
-            <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
-     
-              <p>Estatus Registro de datos: {statuses.peticion1}</p>
-              <p>Estatus Registro de foto: {statuses.peticion2}</p>
-              <p>Estatus Guardado de foto en drive: {statuses.peticion3}</p>
-            </div>
-            
-        
                 </div>
             </main>
+            <div className={`modal ${showModal ? 'show' : ''}`}>
+                <div className="modal-content">
+                    <h2>Edita el prompt</h2>
+                   <div className='contenido_editar_prompt'>
+                                <div className="image-preview_editar_prompt">
+                                    <div className='marco2'>
+                                        <img src={selectedImages[0]} />
+                                    </div>
+                                </div>
+                    <div className='textarea_editar_prompt'>
+                    <textarea 
+                        value={customPromptText}
+                        onChange={(e) => setCustomPromptText(e.target.value)}
+                    />
+                    </div>
+                    <div className="modal-buttons">
+                        <button onClick={handleModalSubmit}>Aceptar</button>
+                        <button onClick={() => setShowModal(false)}>Cancelar</button>
+                    </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     )
 }

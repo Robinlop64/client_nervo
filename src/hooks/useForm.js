@@ -19,11 +19,14 @@ export const useForm = (objetoinicial = {}) => {
   };
 
   const cambiado = ({ target }) => {
+  
     const { name, value } = target;
+
     setFormulario({
       ...formulario,
       [name]: value,
     });
+
   };
 
   const resetFormulario = () => {

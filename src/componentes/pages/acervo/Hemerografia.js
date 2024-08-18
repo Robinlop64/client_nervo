@@ -68,8 +68,26 @@ export const Hemerografia = () => {
                   <p id='p_temas'>Número de bienes registrados  </p>
                 </div>
               </article>
-              </div>
+          </div>
+          <div
+              
+              className='temas_contenedor'
+              onClick={() => handleTemaClick("pendientes")}
+            >
+          <article>
+                <img
+                  id='img_temas'
+                  src={`https://backend-prueba-apel.onrender.com/imagenes/general/Temas/hemerografia/.jpg`}
+                  alt={` foto`}
+                />
+                <div className="contenido_temas">
+                  <h3>Pendientes</h3>
+                  <p id='p_temas'>Número de bienes registrados  </p>
+                </div>
+              </article>
+          </div>
         </div>
+        
       </div>
     </main>
   );
