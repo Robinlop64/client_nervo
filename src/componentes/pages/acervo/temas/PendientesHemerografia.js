@@ -14,7 +14,7 @@ export const PendientesHemerografia = () => {
   }, [id]);
 
   const getFotos = async () => {
-    const url = `http://localhost:3900/api/hemerografia/listar-pendientes`;
+    const url = `https://backend-prueba-apel.onrender.com/api/hemerografia/listar-pendientes`;
     const peticion = await fetch(url, {
       method: "GET"
     });
