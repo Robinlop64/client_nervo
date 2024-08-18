@@ -162,12 +162,13 @@ export const Rutas = () => {
             <Route path="/admin/hemerografia" element={<Hemerografia />} />
             <Route path="/admin/hemerografia/tema/Recortes de prensa" element={<CarpetasRecortes />} />
             <Route path="/admin/hemerografia/tema/Secciones" element={<Secciones />} />
+            <Route path="/admin/hemerografia/tema/pendientes" element={<PendientesHemerografia/>} />
             <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
             <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
             <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
             <Route path="/admin/hemerografia/carpeta/:id" element={<CarpetaRecortes/>} />
             <Route path="/admin/hemerografia/seccion/:id" element={<Seccion/>} />
-            <Route path="/admin/hemerografia/tema/pendientes" element={<PendientesHemerografia/>} />
+           
 
             <Route path="/admin/iconografia" element={<Iconografia />} />
             <Route path="/admin/iconografia/tema/:id" element={<IconografiaTema />} />
