@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 export const HemerografiaDetalle = () => {
@@ -56,9 +56,9 @@ export const HemerografiaDetalle = () => {
 
   const formatFechaPublicacion = (fecha) => {
     if (!fecha) return '';
-    return format(new Date(fecha), "EEEE, dd MMMM yyyy", { locale: es });
+    const fechaModificada = addDays(new Date(fecha), 1); // Suma un día a la fecha
+    return format(fechaModificada, "EEEE, dd MMMM yyyy", { locale: es });
   };
-
   const handleImagenClick = (nombreImagen) => {
     setImagenPrincipal(nombreImagen);
   };
@@ -103,7 +103,7 @@ export const HemerografiaDetalle = () => {
             {renderField("Autor", fotografia.autor)}
             {renderField("Seudónimo", fotografia.seudonimo)}
             {renderField("Páginas", fotografia.numero_paginas)}
-            {renderField("Columnas", fotografia.numero_columnas)}
+            {renderField("Columnas", fotografia.columnas)}
             {renderField("Género periodístico", fotografia.genero_periodistico)}
             {renderField("Lugar de publicación", fotografia.lugar_publicacion)}
             {renderField("Periodicidad", fotografia.periodicidad)}

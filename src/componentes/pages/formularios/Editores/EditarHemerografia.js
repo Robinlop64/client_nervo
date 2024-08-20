@@ -259,6 +259,7 @@ export const EditarHemerografia = () => {
       const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
       setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
   };
+
   return (
     <div>
       <main className='main_registro'>
@@ -316,7 +317,7 @@ export const EditarHemerografia = () => {
               <input
                   type="date"
                   name="fecha_publicacion"
-                  defaultValue={fotografia.fecha_publicacion}
+                  defaultValue={fotografia.fecha_publicacion ? fotografia.fecha_publicacion.split('T')[0]:""}
                   onChange={cambiado}
               />
               </div>
