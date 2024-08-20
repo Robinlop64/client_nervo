@@ -64,11 +64,11 @@ export const HemerografiaTema = () => {
             const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
             const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${firstImage}` : '';
             const pendiente = fotografia.pendiente; // Verifica si el campo pendiente tiene contenido
-
+            const revisado = fotografia.revisado
             return (
               <div
                 key={fotografia._id}
-                className={`hemerografia-item ${pendiente ? 'pendiente' : ''}`}
+                className={`hemerografia-item ${pendiente && revisado !== 'Sí' ? 'pendiente' : ''}`}
                 onClick={() => handleFotoClick(fotografia)}
               >
                 {firstImage ? (
@@ -77,13 +77,14 @@ export const HemerografiaTema = () => {
                   <p>No hay imagen disponible</p>
                 )}
                 <p className='numero_foto'>{fotografia.numero_registro}</p>
-
+            
                 {pendiente && <p className='pendiente-text'>Pendiente: {pendiente}</p>}
-
+            
                 <button onClick={(event) => handleEditClick(event, fotografia._id)}>Editar</button>
                 <button onClick={(event) => handleDeleteClick(event, fotografia._id)}>Borrar</button>
               </div>
             );
+            
           })}
         </div>
       </div>

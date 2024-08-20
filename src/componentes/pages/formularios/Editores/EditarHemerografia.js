@@ -760,6 +760,7 @@ export const EditarHemerografia = () => {
               <div className="form-group" id='edicion_hemerografia'>
                                 <label>Mostrar:</label>
                                 <select id='hallazgo' name="mostrar" defaultValue={fotografia.mostrar || ''} onChange={cambiado}>
+                                <option value={fotografia.mostrar}>{fotografia.mostrar}</option>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
@@ -767,6 +768,7 @@ export const EditarHemerografia = () => {
               <div className="form-group" id='edicion_hemerografia'>
                   <label>Revisado:</label>
                   <select id='hallazgo' name="revisado" defaultValue={fotografia.revisado || ''} onChange={cambiado}>
+                  <option value={fotografia.revisado}>{fotografia.revisado}</option>
                       <option value="No">No</option>
                       <option value="Sí">Sí</option>
                   </select>
@@ -816,19 +818,25 @@ export const EditarHemerografia = () => {
                                 </div>
                                 : ""}
                         </div>
-          <div className='marco'>
+                        <div className="images-preview">
+          
 
             
              {/* Verifica la estructura de fotografia.images */}
             {fotografia.images && fotografia.images.map((image, index) => (
+              <div className="image-preview">
+                <div className='marco2'>
               <img
                 key={index}
                 src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
                 alt={`${image.nombre}`}
                 className='fotografia-img-large'
               />
+                </div>
+              </div>
             ))}
           </div>
+        
           {pdfUrls.length > 0 && (
                                 <div className="pdf-preview">
                         {pdfUrls[0]? <h1>PDFs subidos</h1> : ""}
