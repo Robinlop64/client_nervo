@@ -335,32 +335,36 @@ export const RegPeriodicos = () => {
                                 <input type="text" className='autor' name="autor" placeholder="Autor" value={formulario.autor || ''} onChange={cambiado} />
                             </div>
                             <div className="form-group" id='seudonimo_hemerografia'>
-                                <label htmlFor="nombreSeudonimos">Seudónimo:</label>
-                                <select
+                                <label htmlFor="nombreSeudonimos">Seudónimo:</label>      
+                                <div className='botonesIA'>
+                            
+                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+
+
+
+                        </div>                         
+                                <input
+                                    type='text'
                                     id="nombreSeudonimos"
                                     name="seudonimos"
                                     value={formulario.seudonimos || ''}
-                                    onChange={cambiado}
+                                    onChange={handleChange}
                                 >
-                                    <option value="Amado Nervo">Amado Nervo</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                    <option value="Quirino Ordaz">Quirino Ordaz</option>
-                                    <option value="Triplex">Triplex</option>
-                                </select>
-                                <div className='botonesIA'>
-
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-
-
-
-                                </div>
+                                
+                              
+                                </input>
+                               
+                                {(sugerencias.length > 0 && fieldName === "seudonimos") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                               
                             </div>
                             <div className="form-group" id='seccion_hemerografia'>
                                 <label>Sección:</label>
@@ -379,48 +383,18 @@ export const RegPeriodicos = () => {
                                     value={formulario.seccion || ''}
                                     onChange={handleChange}
                                 >
-                                    
-                                    {/*
-                                         <option value="">Seleccionar sección</option>
-                                    <option value="Fuegos Fatuos">Fuegos Fatuos</option>
-                                    <option value="Pimientos dulces">Pimietos dulces</option>
-                                    <option value="Página literaria">Página literaria</option>
-                                    <option value="Literatura">Literatura</option>
-                                    <option value="Actualidades europeas">Actualidades europeas</option>
-                                    <option value="Asuntos femeninos">Asuntos femeninos</option>
-                                    <option value="Actualidades literarias">Actualidades literarias</option>
-                                    <option value="Actualidades madrileñas">Actualidades madrileñas</option>
-                                    <option value="La varita de la virtud">La varita de la virtud</option>
-                                    <option value="Desde parís">Desde parís</option>
-                                    <option value="Desde Madrid">Desde Madrid</option>
-
-                                    <option value="Actualidades">Actualidades</option>
-                                    <option value="Actualidades españolas">Actualidades españolas</option>
-                                    <option value="Plaso ibañes">Plaso ibañes</option>
-                                    <option value="El Imparcial">"El Imparcial"</option>
-                                    <option value="De Amado Nervo">De Amado Nervo</option>
-                                    <option value="La literatura maravillosa">La literatura maravillosa</option>
-                                    <option value="Crónicas frívolas">Crónicas frívolas</option>
-                                    <option value="Literatura nacional">Literatura nacional</option>
-                                    <option value="Sociales">Sociales</option>
-                                    <option value="Poesía">Poesía</option>
-                                    <option value="Literaria">Literaria</option>
-
-
-                                    <option value="NA">NA</option>
-                                    */}
-                               
+                                  
 
                                 </input>
                                 {(sugerencias.length > 0 && fieldName === "seccion") && (
-            <ul className="sugerencias-list">
-                {sugerencias.map((sugerencia, index) => (
-                    <li key={index} onClick={() => handleSelect(sugerencia)}>
-                        {sugerencia}
-                    </li>
-                ))}
-            </ul>
-        )}
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             
                             </div>
                         </div>
@@ -453,12 +427,9 @@ export const RegPeriodicos = () => {
                                 <label>Género periodístico:</label>
                                 <div className='botonesIA'>
 
-<img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('genero_periodistico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
-<img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
-
-
-
-</div>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('genero_periodistico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
+                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
+                                    </div>
                                 <input
                                     type='text'
                                     id="generoPeriodistico"
@@ -586,7 +557,8 @@ export const RegPeriodicos = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="form-group">
+
+                                   <div className="form-group">
                                 <label>País:</label>
                                 <select
                                     id="pais"
@@ -632,15 +604,20 @@ export const RegPeriodicos = () => {
                                 </select>
                             </div>
                     
-                            <div className="form-group">
+                            <div className="form-group" id='ubicacion_fisica_documentacion'>
                                 <label>Ubicación física:</label>
-                                <select name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar ubicación</option>
-                                    <option value="Biblioteca">Biblioteca</option>
-                                    <option value="Archivo">Archivo</option>
-                                    <option value="Museo">Museo</option>
-                                    <option value="Fondo reservado">Fondo reservado</option>
-                                </select>
+                                <input type='text' name="ubicacion_fisica" value={formulario.ubicacion_fisica || ''} onChange={handleChange}>
+                        
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "ubicacion_fisica") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
                             </div>
                             <div className="form-group" id='coleccion_hemerografia'>
                                 <label>Colección:</label>
@@ -688,25 +665,6 @@ export const RegPeriodicos = () => {
 
                                 </select>
                             </div>
-                            <div className="form-group">
-                                <label>Hallazgo:</label>
-                                <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
-                                    <option value="No">No</option>
-                                    <option value="Sí">Sí</option>
-                                </select>
-                            </div>
-
-                            <div className="form-group">
-                                <label>Persona que registra:</label>
-                                <select name="persona_registra" value={formulario.persona_registra || ''} onChange={cambiado}>
-                                    <option value="">Seleccionar persona que registra</option>
-                                    <option value="Mayra Fonseca">Mayra</option>
-                                    <option value="Robin">Robin</option>
-                                    <option value="Xoely">Xoely</option>
-                                    <option value="Perla">Perla</option>
-                                </select>
-                            </div>
-
                             <div className="form-group" id='tema_hemerografia'>
                                 <label>Tema:</label>
                                 {(sugerencias.length > 0 && fieldName === "tema") && (
@@ -743,6 +701,16 @@ export const RegPeriodicos = () => {
                             
                                 </input>
                             </div>
+                           
+                           
+                            <div className="form-group" id='hallazgo_deocumentacion'>
+                                <label>Hallazgo:</label>
+                                <select id='hallazgo' name="hallazgo" value={formulario.hallazgo || ''} onChange={cambiado}>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
+                            </div>
+
                             <div className="form-group" id='edicion_hemerografia'>
                                 <label>Mostrar:</label>
                                 <select id='hallazgo' name="mostrar" value={formulario.mostrar || ''} onChange={cambiado}>
@@ -750,12 +718,27 @@ export const RegPeriodicos = () => {
                                     <option value="Sí">Sí</option>
                                 </select>
                             </div>
-                            <div className="form-group" id='edicion_hemerografia'>
+                            <div className="form-group" id='edicion_hemerografia' >
                                 <label>Revisado:</label>
                                 <select id='hallazgo' name="revisado" value={formulario.revisado || ''} onChange={cambiado}>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
+                            </div>
+
+                            <div className="form-group" id='persona_registra_documentacion'>
+                                <label>Persona que registra:</label>
+                                <input type='text' name="persona_registra" value={formulario.persona_registra || ''} onChange={handleChange}>
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "persona_registra") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
                             </div>
                         </div>
 

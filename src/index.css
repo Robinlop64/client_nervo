@@ -1289,7 +1289,7 @@ h1 {
 .divisor_form{
   clear: both;
   color: #0672A8;
-  width: 1170px;
+  width: 100%;
   height: 200px;
 }
 .divisor_form2{
@@ -1317,6 +1317,7 @@ h1 {
   min-width: 200px;
 }
 #hallazgo{
+  padding-top: 15px;
   max-width: 100px;
   min-width: 100px;
 }

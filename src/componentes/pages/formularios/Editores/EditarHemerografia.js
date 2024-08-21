@@ -317,8 +317,8 @@ export const EditarHemerografia = () => {
               <input
                   type="date"
                   name="fecha_publicacion"
-                  defaultValue={fotografia.fecha_publicacion ? fotografia.fecha_publicacion.split('T')[0]:""}
-                  onChange={cambiado}
+                    defaultValue={fotografia.fecha_publicacion ? fotografia.fecha_publicacion.split('T')[0]:""}
+                    onChange={cambiado}
               />
               </div>
               <div className="form-group" id="numeroEdicion">
@@ -347,42 +347,42 @@ export const EditarHemerografia = () => {
                                 <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor || ''} onChange={cambiado} />
               </div>
               <div className="form-group" id='seudonimo_hemerografia'>
-                                <label htmlFor="nombreSeudonimos">Seudónimo:</label>
-                                <select
+                                <label htmlFor="nombreSeudonimos">Seudónimo:</label>      
+                                <div className='botonesIA'>
+                            
+                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
+
+
+
+                        </div>                         
+                                <input
+                                    type='text'
                                     id="nombreSeudonimos"
                                     name="seudonimos"
-                                    defaultValue={fotografia.seudonimos || ''}
-                                    onChange={cambiado}
+                                    value={formulario.seudonimos || fotografia.seudonimos}
+                                    onChange={handleChange}
                                 >
-                                    <option value="Amado Nervo">Amado Nervo</option>
-                                    <option value="Román">Román</option>
-                                    <option value="Rip-Rip">Rip-Rip</option>
-                                    <option value="Tricio">Tricio</option>
-                                    <option value="Benedictus">Benedictus</option>
-                                    <option value="Joie">Joie</option>
-                                    <option value="Versión española de Amado Nervo">Version española de Amado Nervo</option>
-                                    <option value="X.Y.Z">X.Y.Z</option>
-                                    <option value="Quirino Ordaz">Quirino Ordaz</option>
-                                    <option value="Triplex">Triplex</option>
-                                </select>
-                                <div className='botonesIA'>
-
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-
-
-
-                                </div>
-              </div>
+                                
+                              
+                                </input>
+                               
+                                {(sugerencias.length > 0 && fieldName === "seudonimos") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                               
+                            </div>
               <div className="form-group" id='seccion_hemerografia'>
                                 <label>Sección:</label>
                                 <div className='botonesIA'>
-
                                 <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seccion', 'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
                                 <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seccion',  'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
-
-
-
                                 </div>
                                 <input
                                     type='text'
@@ -642,83 +642,71 @@ export const EditarHemerografia = () => {
                   ))}
                 </select>
               </div>
-              <div className="form-group">
-                <label>Ubicación física:</label>
-                <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                  <option value={fotografia.ubicacion_fisica}>{fotografia.ubicacion_fisica}</option>
-                  <option value="Biblioteca">Biblioteca</option>
-                  <option value="Archivo">Archivo</option>
-                  <option value="Museo">Museo</option>
-                  <option value="Fondo reservado">Fondo reservado</option>
-                </select>
-              </div>
-              <div className="form-group" id='coleccion_hemerografia'>
+              <div className="form-group" id='ubicacion_fisica_documentacion'>
+                                <label>Ubicación física:</label>
+                                <input type='text' 
+                                name="ubicacion_fisica"    
+                                value={formulario.ubicacion_fisica || fotografia.ubicacion_fisica} 
+                                onChange={handleChange}>
+                        
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "ubicacion_fisica") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
+                            </div>
+                            <div className="form-group" id='coleccion_hemerografia'>
                                 <label>Colección:</label>
                                 {(sugerencias.length > 0 && fieldName === "coleccion") && (
-            <ul className="sugerencias-list">
-                {sugerencias.map((sugerencia, index) => (
-                    <li key={index} onClick={() => handleSelect(sugerencia)}>
-                        {sugerencia}
-                    </li>
-                ))}
-            </ul>
-            )}
+                                <ul className="sugerencias-list">
+                                    {sugerencias.map((sugerencia, index) => (
+                                        <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                            {sugerencia}
+                                        </li>
+                                    ))}
+                                </ul>
+                                )}
                                 <input 
                                 type='text' 
                                 name="coleccion" 
-                                value={formulario.coleccion || fotografia.coleccion} onChange={handleChange}>
-                                {/*
-                                             <option value="">Seleccionar la colección</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Pública">Pública</option>
-                                */}
-                       
+                                 value={formulario.coleccion || fotografia.coleccion} 
+                                 onChange={handleChange}>
+                              
                                 </input>
                             </div>
-              <div className="form-group">
-                <label>Año de adquisición:</label>
-                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
-                  <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
-                  <option value="2020">2020</option>
-                  <option value="2019">2019</option>
-                  <option value="2018">2018</option>
-                  <option value="2017">2017</option>
-                  <option value="2016">2016</option>
-                  <option value="2015">2015</option>
-                  <option value="2014">2014</option>
-                  <option value="2013">2013</option>
-                  <option value="2012">2012</option>
-                  <option value="2011">2011</option>
-                  <option value="2010">2010</option>
-                  <option value="2009">2009</option>
-                  <option value="2008">2008</option>
-                  <option value="2007">2007</option>
-                  <option value="2006">2006</option>
-                  <option value="2005">2005</option>
 
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Hallazgo:</label>
-                <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
-                  <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
-                  <option value="No">No</option>
-                  <option value="Sí">Sí</option>
-                </select>
-              </div>
+                            <div className="form-group">
+                                <label>Año de adquisición:</label>
+                                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion} onChange={cambiado} >
+                                    <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2008">2008</option>
+                                    <option value="2007">2007</option>
+                                    <option value="2006">2006</option>
+                                    <option value="2005">2005</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2002">2002</option>
 
-              <div className="form-group">
-                <label>Persona que registra:</label>
-                <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
-                  <option value={fotografia.persona_registra}>{fotografia.persona_registra}</option>
-                  <option value="Mayra Fonseca">Mayra</option>
-                  <option value="Robin">Robin</option>
-                  <option value="Xoely">Xoely</option>
-                  <option value="Perla">Perla</option>
-                </select>
-              </div>
-
-              <div className="form-group" id='tema_hemerografia'>
+                                </select>
+                            </div>
+                            <div className="form-group" id='tema_hemerografia'>
                                 <label>Tema:</label>
                                 {(sugerencias.length > 0 && fieldName === "tema") && (
                                     <ul className="sugerencias-list">
@@ -729,51 +717,57 @@ export const EditarHemerografia = () => {
                                         ))}
                                     </ul>
                                     )}
-                                     <input 
-                                     type='text' 
-                                     name="tema" 
-                                     value={formulario.tema || fotografia.tema}
+                                     <input type='text' 
+                                     name="tema"    
+                                     value={formulario.tema || fotografia.tema} 
                                      onChange={handleChange}>
-                                    {/*
-                                       
-                                    <option value="">Seleccionar el tema</option>
-                                    <option value="El Nacional">El Nacional</option>
-                                    <option value="El Imparcial">El Imparcial</option>
-                                    <option value="El Mundo">El Mundo</option>
-                                    <option value="El Mundo Ilustrado">El Mundo Ilustrado</option>
-                                    <option value="El País">El País</option>
-                                    <option value="El Paladín">El Paladín</option>
-                                    <option value="El Plata">El Plata</option>
-                                    <option value="El Siglo">El Siglo</option>
-                                    <option value="El Telégrafo">El Telégrafo</option>
-                                    <option value="La Defensa">La Defensa</option>
-                                    <option value="La Gaceta de Guadalajara">La Gaceta de Guadalajara</option>
-                                    <option value="La Mañana">La Mañana</option>
-                                    <option value="La Nación">La Nación</option>
-                                    <option value="La Razón">La Razón </option>
-                                    <option value="La Prensa">La Prensa</option>
-                                    <option value="México Libre">México Libre</option>
-                                    <option value="Recortes de prensa">Recortes de prensa</option>
-                                    */}
-                            
+                                  
                                 </input>
                             </div>
-              <div className="form-group" id='edicion_hemerografia'>
+                           
+                           
+                            <div className="form-group" id='hallazgo_deocumentacion'>
+                                <label>Hallazgo:</label>
+                                <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo} onChange={cambiado}>
+                                  <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group" id='edicion_hemerografia'>
                                 <label>Mostrar:</label>
-                                <select id='hallazgo' name="mostrar" defaultValue={fotografia.mostrar || ''} onChange={cambiado}>
+                                <select id='hallazgo' name="mostrar" defaultValue={fotografia.mostrar} onChange={cambiado}>
                                 <option value={fotografia.mostrar}>{fotografia.mostrar}</option>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
-              </div>
-              <div className="form-group" id='edicion_hemerografia'>
-                  <label>Revisado:</label>
-                  <select id='hallazgo' name="revisado" defaultValue={fotografia.revisado || ''} onChange={cambiado}>
-                  <option value={fotografia.revisado}>{fotografia.revisado}</option>
-                      <option value="No">No</option>
-                      <option value="Sí">Sí</option>
-                  </select>
-              </div>
+                            </div>
+                            <div className="form-group" id='edicion_hemerografia' >
+                                <label>Revisado:</label>
+                                <select id='hallazgo' name="revisado" defaultValue={fotografia.revisado || ''} onChange={cambiado}>
+                                  <option value={fotografia.revisado}>{fotografia.revisado}</option>
+                                    <option value="No">No</option>
+                                    <option value="Sí">Sí</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group" id='persona_registra_documentacion'>
+                                <label>Persona que registra:</label>
+                                <input type='text' name="persona_registra" 
+                                   value={formulario.persona_registra || fotografia.persona_registra}
+                                onChange={handleChange}>
+                                </input>
+                                {(sugerencias.length > 0 && fieldName === "persona_registra") && (
+                                    <ul className="sugerencias-list">
+                                        {sugerencias.map((sugerencia, index) => (
+                                            <li key={index} onClick={() => handleSelect(sugerencia)}>
+                                                {sugerencia}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    )}
+                            </div>
             </div>
 
               <button className="button" onClick={guardar_foto}>Enviar</button>

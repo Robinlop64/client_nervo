@@ -35,14 +35,14 @@
 .divisor_form_hemerografia_1{
   clear: both;
   color: #0672A8;
-  width: 1170px;
+  width: 100%;
   height: 200px;
 }
 
 #periodico_hemerografia{
   margin-top: 40px;
-  max-width: 350px;
-  min-width: 350px;
+  max-width:  40%;
+  min-width:  40%;
   height: 50px;
 }
 #periodico_hemerografia label{
@@ -50,8 +50,8 @@
   margin-right: 3px;
 }
 #periodico_hemerografia input{
-  max-width: 230px ;
-  min-width: 230px;
+  max-width:  78%;
+  min-width:  78%;
 }
 #encabezado_hemerografia{
   max-width: 100%;
@@ -59,8 +59,8 @@
   margin-left: 5px;
 }
 #encabezado_hemerografia input{
-  max-width: 88%;
-  min-width: 88%;
+  max-width: 90%;
+  min-width: 90%;
 }
 #autor_hemerografia {
   max-width: 30%;
@@ -80,23 +80,25 @@
   min-width: 34%;
   margin-right: 7px;
 }
-#seudonimo_hemerografia select{
+#seudonimo_hemerografia input{
+  max-width: 70%;
+  min-width: 70%;
   margin-right: 0px;
 }
 #seccion_hemerografia{
-  max-width: 30%;
-  min-width: 30%;
+  max-width: 33%;
+  min-width: 33%;
   margin-right: 7px;
 }
 #seccion_hemerografia input{
-  max-width: 70%;
-  min-width: 70%;
+  max-width: 75%;
+  min-width: 75%;
 }
 /*---------------------------------------Div 2-----------------------------*/
 .divisor_form_hemerografia_2{
   clear: both;
   color: #0672A8;
-  width: 1170px;
+  width: 100%;
   height: 170px;
   display: block;
   float: left;
@@ -135,8 +137,8 @@
   margin-right: 5px;
 }
 #genero_hemerografia input{
-  max-width: 50%;
-  min-width: 50%;
+  max-width: 60%;
+  min-width: 60%;
 }
 #lugar_publicacion_hemerografia{
   width: 60%;
@@ -166,8 +168,8 @@ min-width: 73%;
 .divisor_form_hemerografia_3{
   clear: both;
   color: #0672A8;
-  width: 1170px;
-  height: 610px;
+  width: 100%;
+  height: 570px;
 }
 #resumen_hemerografia{
   width: 50%;
@@ -294,6 +296,7 @@ min-width: 73%;
 }
 
 #tema_hemerografia{
+  margin-top: 0px;
   max-width: 25%;
   min-width: 25%;
   margin-right: 0px;
