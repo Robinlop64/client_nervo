@@ -31,7 +31,7 @@
 /*---------------------------------------Div 1-----------------------------*/
 .form_hemerografia{
   height: 100%;
-}
+} 
 .divisor_form_hemerografia_1{
   clear: both;
   color: #0672A8;
@@ -53,6 +53,27 @@
   max-width:  78%;
   min-width:  78%;
 }
+#numero_edicion_hemerografia{
+  max-width: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0px;
+  text-align: center;
+}
+
+
+#numero_edicion_hemerografia Input{
+  display: block;
+  float: left;
+  max-width: 40%;
+  min-width: 40%;
+  padding-left: 10px;
+  margin-top: 5px; /* Add some margin to separate the input from the label */
+}
+
 #encabezado_hemerografia{
   max-width: 100%;
   min-width: 100%;
@@ -94,7 +115,41 @@
   max-width: 75%;
   min-width: 75%;
 }
+@media (max-width: 1442px) {
+  #numero_edicion_hemerografia{
+    max-width: 100px;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0px;
+    text-align: center;
+  }
+  
+  
+  #numero_edicion_hemerografia Input{
+    display: block;
+    float: left;
+    max-width: 70%;
+    min-width: 70%;
+    padding-left: 10px;
+    margin-top: 5px; /* Add some margin to separate the input from the label */
+  }
+  #encabezado_hemerografia input{
+    max-width: 87%;
+    min-width: 87%;
+  }
+}
+@media (max-width: 1384px) {
+
+  #periodico_hemerografia input{
+    max-width: 70%;
+    min-width: 70%;
+  }
+}
 /*---------------------------------------Div 2-----------------------------*/
+
 .divisor_form_hemerografia_2{
   clear: both;
   color: #0672A8;
@@ -103,7 +158,14 @@
   display: block;
   float: left;
 }
-
+@media (max-width: 1442px) {
+  .divisor_form_hemerografia_2{
+    clear: both;
+    color: #0672A8;
+    width: 100%;
+    height: 250px;
+  }
+}
 #paginas_hemerografia{
   float: left;
   clear: both;

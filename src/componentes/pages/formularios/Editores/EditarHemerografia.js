@@ -321,7 +321,7 @@ export const EditarHemerografia = () => {
                     onChange={cambiado}
               />
               </div>
-              <div className="form-group" id="numeroEdicion">
+              <div className="form-group" id="numero_edicion_hemerografia">
                   <label htmlFor="numeroEdicion">Número de registro</label>
                   <input
                       type="number"
