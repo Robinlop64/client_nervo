@@ -277,7 +277,7 @@ export const EditarFotografia = () => {
             <h1>Formulario de edición de Fotografía </h1>
             
             <form onSubmit={guardar_foto}>
-              <h2>Campos generales</h2>
+       
 
               <div className='divisor_form_fotografia_1'>
 
