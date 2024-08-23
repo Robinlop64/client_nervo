@@ -494,7 +494,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='edicion_hemerografia'>
                                 <label>Edición:</label>
-                                <select id='hallazgo' name="edicion" value={formulario.edicion || ''} onChange={cambiado}>
+                                <select id='hallazgo' name="editar" value={formulario.editar || ''} onChange={cambiado}>
                                     <option value="No">No</option>
                                     <option value="Sí">Sí</option>
                                 </select>
