@@ -16,7 +16,18 @@ export const EditarObjetos = () => {
   const { id } = useParams();
   const [fotografia, setFotografia] = useState({});
   const [data, setData] = useState(null);
-
+  const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
+  const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [customPromptText, setCustomPromptText] = useState('');
+  const [currentField, setCurrentField] = useState('');
+  const [originalPrompt, setOriginalPrompt] = useState('');
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [pdfUrls, setPdfUrls] = useState([]);
+  const [value, setValue] = useState('');
+  const [sugerencias, setSugerencias] = useState([]);
+  const [fieldName, setFieldName] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
@@ -39,15 +50,31 @@ export const EditarObjetos = () => {
     fetchData();
   }, []);
   useEffect(() => {
+    setSaved("")
+    setLoadingProgress(0);
+    setStatuses({
+      peticion1: '',
+      peticion2: '',
+      peticion3: '',
+      peticion4: ""
+    });
+    setMensajes({
+      mensaje1: '',
+      mensaje2: '',
+      mensaje3: '',
+      mensaje4: ''
+    });
+  }, [formulario])
+  useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/objetos/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/objetos/hemero/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.obj);
+        setFotografia(datos.hemero);
       } else {
         // Manejo de error
       }
@@ -72,12 +99,70 @@ export const EditarObjetos = () => {
       setInstituciones(instituciones);
     }
   }, [formulario.ciudad]);
+  useEffect(() => {
+    return () => {
+      // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
+      pdfUrls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [pdfUrls]);
+  useEffect(() => {
+    if (value.length > 1 && fieldName) {
+      const fetchSugerencias = async () => {
+        try {
+          const response = await fetch(`https://backend-prueba-apel.onrender.com/api/objetos/search?query=${value}&campo=${fieldName}`);
+          if (!response.ok) {
+            throw new Error('Error fetching suggestions');
+          }
+          const data = await response.json();
+          setSugerencias(data);
+        } catch (err) {
+          console.error('Error fetching suggestions:', err);
+        }
+      };
 
+      fetchSugerencias();
+    } else {
+      setSugerencias([]);
+    }
+  }, [value, fieldName]);
+
+  const handleSelect = (sugerencia) => {
+
+    const e = { target: { name: fieldName, value: sugerencia } };
+    if (fieldName) {
+      setFotografia({
+        ...fotografia,
+        [fieldName]: sugerencia
+      })
+
+      setSugerencias([]);
+      cambiado(e);
+
+
+    }
+  };
+  const handleChange = (e) => {
+
+    if (!e || !e.target) {
+      console.error("El evento o el target están indefinidos:", e);
+      return;
+    }
+
+    const name = e.target.name;
+    const value = e.target.value
+    setValue(value); // Actualizar el valor del input
+    setFieldName(name); // Guardar el nombre del campo para el autocompletado
+    cambiado(e); // Actualizar el estado del formulario
+
+  };
   const guardar_foto = async (e) => {
     e.preventDefault();
     let nueva_foto = formulario;
 
     const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/objetos/editar/" + id, "PUT", nueva_foto);
+    setLoadingProgress(25); // Incrementa el progreso
+    setStatuses(prev => ({ ...prev, peticion1: datos.status }))
+    setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
     if (datos.status == "success") {
       const fileInput = document.querySelector("#file");
       const formData = new FormData();
@@ -86,8 +171,27 @@ export const EditarObjetos = () => {
       });
       setSaved("saved");
 
-      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/objetos/registrar-imagen/" + id, "POST", formData, true);
-      const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/objetos/editar-imagen/" + id, "POST", formData, true);
+      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/objetos/registrar-imagen/" + id, "POST", formData, true);
+
+      setLoadingProgress(50); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
+      setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
+
+      const subida = await Api("https://backend-google-fnsu.onrender.com/api/objetos/editar-imagen/" + id, "POST", formData, true);
+      setLoadingProgress(75); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
+      setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+      const pdfInput = document.querySelector("#pdf");
+      const pdfFormData = new FormData();
+      Array.from(pdfInput.files).forEach((file) => {
+        pdfFormData.append('pdfs', file);
+      });
+
+      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/objetos/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+      const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/objetos/registrar-pdf/` + id, "POST", pdfFormData, true);
+      setLoadingProgress(100); // Incrementa el progreso
+      setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
+      setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
 
       setResultado(true);
       setSaved("saved");
@@ -95,219 +199,213 @@ export const EditarObjetos = () => {
       setSaved("error");
     }
   }
+  const handleAutoComplete = async (field, promptId) => {
+    const fileInput = document.querySelector("#file");
+    if (fileInput.files.length > 0) {
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+      if (datos && datos.message) {
+        cambiado({ target: { name: field, value: datos.message } });
+      }
+    } else {
+      alert("Por favor selecciona una imagen primero.");
+    }
+  };
+  const handleAutoCompleteSelect = async (field, promptId) => {
+    const fileInput = document.querySelector("#file");
+    if (fileInput.files.length > 0) {
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+      if (datos && datos.message) {
+        // Validar que el mensaje sea una opción válida del select
+        const opcionesValidas = ['notas', 'articulos', 'cronicas', 'frases', 'poesia', 'pendiente', 'noticias', 'cuento'];
+        const generoSugerido = datos.message.toLowerCase();
+
+        if (opcionesValidas.includes(generoSugerido)) {
+          cambiado({ target: { name: field, value: datos.message } });
+        } else {
+          alert("El género sugerido no es válido para este campo.");
+        }
+      }
+    } else {
+      alert("Por favor selecciona una imagen primero.");
+    }
+  };
+  const handleEditPromptAndAutoComplete = async (field, prompt) => {
+    setCurrentField(field);
+    setOriginalPrompt(prompt);
+    setCustomPromptText(prompt);
+    setShowModal(true);
+  };
+  const handleModalSubmit = () => {
+    handleAutoComplete(currentField, customPromptText);
+    setShowModal(false);
+  };
+  const handleImageChange = (e) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      setSelectedImages((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map(
+        (file) => URL.revokeObjectURL(file) // Avoid memory leaks
+      );
+    }
+  };
+  const handlePDFChange = (e) => {
+    const files = e.target.files;
+    const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
+    setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
+  };
 
   return (
     <div>
-      <main className='main_registro'>
-        <div className='contenedor_formulario_foto'>
-          <h1>Formulario de registro de bienes</h1>
-          <div className='frame_botones_registro' id="regresar_boton">
-            <NavLink to="/registro">
-              <button className="button">Regresar</button>
-            </NavLink>
-          </div>
-          <form onSubmit={guardar_foto}>
-            <h2>Campos generales</h2>
-            <div className='divisor_form'>
-              <div className="form-group" id="nombrePeriodico">
-                <label htmlFor="nombrePeriodico">Periódico</label>
-                <select
-                  id="nombrePeriodicoSelect"
-                  name="nombre_periodico"
-                  defaultValue={fotografia.nombre_periodico}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.nombre_periodico}>{fotografia.nombre_periodico}</option>
-                  <option value="El Nacional">El Nacional</option>
-                </select>
-              </div>
-              <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de edición</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_edicion"
-                  defaultValue={fotografia.numero_edicion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="FechaPublicacion">
-                <label id='fecha_publicacionLabel'>Fecha de publicación</label>
-                <input
-                  type="date"
-                  name="fecha_publicacion"
-                  defaultValue={fotografia.fecha_publicacion}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id="numeroEdicion">
-                <label htmlFor="numeroEdicion">Número de registro</label>
-                <input
-                  type="number"
-                  id="numeroEdicionInput"
-                  name="numero_registro"
-                  defaultValue={fotografia.numero_registro || ''}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group">
-                <label>Encabezado</label>
-                <input id='encabezado' type="textarea" name="encabezado" placeholder="Título" defaultValue={fotografia.encabezado || ''} onChange={cambiado} />
-              </div>
-              <div className="form-group" id='autor'>
-                <label>Autor:</label>
-                <input type="text" className='autor' name="autor" placeholder="Autor" defaultValue={fotografia.autor || ''} onChange={cambiado} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="nombreSeudonimos">Seudónimo</label>
-                <select
-                  id="nombreSeudonimos"
-                  name="seudonimos"
-                  defaultValue={fotografia.seudonimos || ''}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.seudonimos}>{fotografia.seudonimos}</option>
-                  <option value="Amado Nervo">Amado Nervo</option>
-                  <option value="Román">Román</option>
-                  <option value="Rip-Rip">Rip-Rip</option>
-                  <option value="Tricio">Tricio</option>
-                  <option value="Benedictus">Benedictus</option>
-                  <option value="Joie">Joie</option>
-                  <option value="Versión española de Amado Nervo">Versión española de Amado Nervo</option>
-                  <option value="X.Y.Z">X.Y.Z</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Sección</label>
-                <select
-                  id="generoPeriodistico"
-                  name="seccion"
-                  value={formulario.seccion || ''}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.seccion}>{fotografia.seccion}</option>
-                  <option value="">Seleccionar sección</option>
-                  <option value="Fuegos Fatuos">Fuegos Fatuos</option>
-                  <option value="Pimientos dulces">Pimietos dulces</option>
-                  <option value="Página literaria">Página literaria</option>
-                  <option value="Literatura">Literatura</option>
-                  <option value="Actualidades europeas">Actualidades europeas</option>
-                  <option value="Asuntos femeninos">Asuntos femeninos</option>
-                  <option value="Actualidades literarias">Actualidades literarias</option>
-                  <option value="Actualidades madrileñas">Actualidades madrileñas</option>
-                  <option value="La varita de la virtud">La varita de la virtud</option>
-                  <option value="Desde parís">Desde parís</option>
-                  <option value="Desde Madrid">Desde Madrid</option>                      
+        <main className='main_registro_hemerografia'>
+            <div className='contenedor_registro_hemerografia'>
 
-                  <option value="Actualidades">Actualidades</option>
-                  <option value="Actualidades españolas">Actualidades españolas</option>
-                  <option value="Plaso ibañes">Plaso ibañes</option>
-                  <option value="El Imparcial">"El Imparcial"</option>
-                  <option value="De Amado Nervo">De Amado Nervo</option>
-                  <option value="La literatura maravillosa">La literatura maravillosa</option>
-                  <option value="Crónicas frívolas">Crónicas frívolas</option>
-                  <option value="Literatura nacional">Literatura nacional</option>
-                  <option value="NA">NA</option>
+                <h1>Formulario de registro de Objetos</h1>
 
-                </select>
-              </div>
-            </div>
-            <div className='divisor_form2'>
-              <div className="form-group" id='pagina'>
-                <label htmlFor="pagina">Página(s)</label>
-                <input
-                  type="text"
-                  id="paginaInput"
-                  name="numero_paginas"
-                  placeholder="Página"
-                  defaultValue={fotografia.numero_paginas}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group" id='columnas' >
-                <label htmlFor="columnas">Columnas</label>
-                <input
-                  type="text"
-                  id="columnasInput"
-                  name="columnas"
-                  placeholder="Columnas"
-                  defaultValue={fotografia.columnas || ''}
-                  onChange={cambiado}
-                />
-              </div>
-              <div className="form-group">
-                <label>Género periodístico</label>
-                <select
-                  id="generoPeriodistico"
-                  name="genero_periodistico"
-                  defaultValue={fotografia.genero_periodistico || ''}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.genero_periodistico}>{fotografia.genero_periodistico}</option>
-                  <option value="">Seleccionar género</option>
-                  <option value="notas">Notas</option>
-                  <option value="articulos">Artículos</option>
-                  <option value="cronicas">Crónicas</option>
-                  <option value="frases">Frases</option>
-                  <option value="pendiente">Pendiente</option>
-                </select>
-              </div>
 
-              <div className="form-group" id="lugarPublicacion">
-                <label htmlFor="encabezado">Lugar de publicación</label>
-                <input
-                  type="text"
-                  id="lugarPublicacionInput"
-                  name="lugar_publicacion"
-                  placeholder="Lugar de publicación"
-                  defaultValue={fotografia.lugar_publicacion || ''}
-                  onChange={cambiado}
-                />
+        
+                <form onSubmit={guardar_foto}>
+               
+
+                    <div className='divisor_form'>
+                    <div className="form-group" id='titulo_objetos'>
+                            <label>Título</label>
+                            <div className='botonesIA'>
+                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
+                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
+
+                            </div>
+                            <input id='encabezado' type="textarea" name="titulo" placeholder="Título" 
+                            defaultValue={fotografia.titulo|| ''} onChange={cambiado} />
+                        </div>
+                        <div className="form-group" id="numeroEdicion">
+                            <label htmlFor="numeroEdicion">Número de registro</label>
+                            <input
+                                type="number"
+                                id="numeroEdicionInput"
+                                name="numero_registro"
+                                defaultValue={fotografia.numero_registro || ''}
+                                onChange={cambiado}
+                            />
+                        </div>
+                        <div className="form-group" id="default_objetos">
+                            <label htmlFor="nombrePeriodico">Tipo de objetos</label>
+                            <input
+                                id="nombrePeriodicoSelect"
+                                type='text'
+                                name="tipo_objetos"
+                                value={formulario.tipo_objetos || fotografia.tipo_objetos}
+                                onChange={handleChange}
+                            >
+            
+                            </input>
+                            {(sugerencias.length > 0 && fieldName === "tipo_objetos") && (
+            <ul className="sugerencias-list">
+                {sugerencias.map((sugerencia, index) => (
+                    <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                    </li>
+                ))}
+            </ul>
+            )}
+                        </div>
+
+                        <div className="form-group" id='default_objetos'>
+                            <label>Descripción física :</label>
+                            <input type="text" className='autor' name="descripcion_fisica" placeholder="descripcion física" value={formulario.descripcion_fisica || ''} onChange={cambiado} />
+                        </div>
+                        
+                        <div className="form-group" id="default_objetos">
+                        <label id='fecha_publicacionLabel'>procedencia</label>
+                        <input
+                            type="text"
+                            name="procedencia"
+                            value={formulario.procedencia}
+                            onChange={cambiado}
+                        />
+                        </div>   
+
+                     
+
+                        
+
+                        
+                        
+                    </div>
+                       
+                    <div className='form-group' id='imagenes_hemerografia'>
+                <label htmlFor='file0'>Imágenes: </label>
+                <input type='file' onChange={handleImageChange} name='file0' id="file" multiple />
               </div>
-              <div className="form-group" id="periodicidad">
-                <label htmlFor="tipoPublicacion">Periodicidad</label>
-                <select
-                  type="text"
-                  id="periodicidadInput"
-                  name="periodicidad"
-                  placeholder="Tipo de publicación"
-                  defaultValue={fotografia.periodicidad || ''}
-                  onChange={cambiado}
-                >
-                  <option value={fotografia.periodicidad}>{fotografia.periodicidad}</option>
-                  <option value="Diaria">Diaria</option>
-                  <option value="Semanal">Semanal</option>
-                  <option value="Mensual">Mensual</option>
+              <div className="form-group" id='edicion_hemerografia'>
+                <label>Edición:</label>
+                <select id='hallazgo' name="edicion" defaultValue={fotografia.edicion || ''} onChange={cambiado}>
+                  <option value={fotografia.edicion}>{fotografia.edicion}</option>¨
+                  <option value="No">No</option>
+                  <option value="Sí">Sí</option>
                 </select>
               </div>
-              <div className='form-group'>
-                <label htmlFor='file0'>Imagen</label>
-                <input type='file' name='file0' id="file" multiple />
+              <div className='form-group' id='pdf2'>
+                <label htmlFor='pdfs'>Pdfs: </label>
+                <input type='file' onChange={handlePDFChange} name='pdfs' id='pdf' multiple />
               </div>
-              <div className="form-group" id="resumen">
-                <label htmlFor="resumen" id='resumenLabel'>Resumen</label>
+       
+            <div className='divisor_form_hemerografia_3'>
+
+              <div className="form-group" id="resumen_hemerografia">
+                <p id='resumen_hemerografia_p'>Resumen:</p>
+
+                <div className='botonesIA_resumen_hemerografia'>
+
+                  <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
+                  <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
+                </div>
+
                 <textarea
                   type="text"
-                  id="resumenInput"
+
                   name="resumen"
                   placeholder="Resumen"
                   defaultValue={fotografia.resumen || ''}
                   onChange={cambiado}
                 />
-              </div>
 
-              <div className="form-group" id="transcripcion">
-                <label htmlFor="transcripcion" id="transcripcionLabel">Pendientes</label>
+              </div>
+              <div className="form-group" id="pendientes_hemerografia">
+                <p id='pendientes_hemerografia_p'>Pendientes:</p>
                 <textarea
                   type="text"
                   id="transcripcionInput"
                   name="pendiente"
-                  placeholder=""
                   defaultValue={fotografia.pendiente || ''}
                   onChange={cambiado}
                 />
               </div>
+              <div className='divisor_form'>
+                <div className="form-group" id="transcripcion_hemerografia">
+                  <p>Transcripciòn</p>
+                  <div className='botonesIA_resumen_hemerografia'>
 
+                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
+                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
+
+
+
+                  </div>
+                  <textarea
+                    type="text"
+                    id="transcripcionInput2"
+                    name="transcripcion"
+                    defaultValue={fotografia.transcripcion || ''}
+                    onChange={cambiado}
+                  />
+                </div>
+              </div>
 
               <div className="form-group">
                 <label>País:</label>
@@ -354,34 +452,47 @@ export const EditarObjetos = () => {
                   ))}
                 </select>
               </div>
-
-
-              <div className="form-group">
+              <div className="form-group" id='ubicacion_fisica_documentacion'>
                 <label>Ubicación física:</label>
-                <select name="ubicacion_fisica" defaultValue={fotografia.ubicacion_fisica || ''} onChange={cambiado}>
-                  <option value={fotografia.ubicacion_fisica}>{fotografia.ubicacion_fisica}</option>
-                  <option value="Biblioteca">Biblioteca</option>
-                  <option value="Archivo">Archivo</option>
-                  <option value="Museo">Museo</option>
-                  <option value="Fondo reservado">Fondo reservado</option>
-                </select>
+                <input type='text'
+                  name="ubicacion_fisica"
+                  value={formulario.ubicacion_fisica || fotografia.ubicacion_fisica}
+                  onChange={handleChange}>
+
+                </input>
+                {(sugerencias.length > 0 && fieldName === "ubicacion_fisica") && (
+                  <ul className="sugerencias-list">
+                    {sugerencias.map((sugerencia, index) => (
+                      <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <div className="form-group">
+              <div className="form-group" id='coleccion_hemerografia'>
                 <label>Colección:</label>
-                <select name="coleccion" defaultValue={fotografia.coleccion || ''} onChange={cambiado}>
-                  <option value={fotografia.coleccion}>{fotografia.coleccion}</option>
-                  <option value="Privada">Privada</option>
-                  <option value="Pública">Pública</option>
-                </select>
+                {(sugerencias.length > 0 && fieldName === "coleccion") && (
+                  <ul className="sugerencias-list">
+                    {sugerencias.map((sugerencia, index) => (
+                      <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <input
+                  type='text'
+                  name="coleccion"
+                  value={formulario.coleccion || fotografia.coleccion}
+                  onChange={handleChange}>
+
+                </input>
               </div>
-
-
-
-
 
               <div className="form-group">
                 <label>Año de adquisición:</label>
-                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion || ''} onChange={cambiado} >
+                <select id='adq' name="fecha_adquisicion" defaultValue={fotografia.fecha_adquisicion} onChange={cambiado} >
                   <option value={fotografia.fecha_adquisicion}>{fotografia.fecha_adquisicion}</option>
                   <option value="2020">2020</option>
                   <option value="2019">2019</option>
@@ -399,75 +510,159 @@ export const EditarObjetos = () => {
                   <option value="2007">2007</option>
                   <option value="2006">2006</option>
                   <option value="2005">2005</option>
+                  <option value="2004">2004</option>
+                  <option value="2003">2003</option>
+                  <option value="2002">2002</option>
 
                 </select>
               </div>
+              <div className="form-group" id='tema_hemerografia'>
+                <label>Tema:</label>
+                {(sugerencias.length > 0 && fieldName === "tema") && (
+                  <ul className="sugerencias-list">
+                    {sugerencias.map((sugerencia, index) => (
+                      <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <input type='text'
+                  name="tema"
+                  value={formulario.tema || fotografia.tema}
+                  onChange={handleChange}>
+
+                </input>
+              </div>
 
 
-
-
-
-              <div className="form-group">
+              <div className="form-group" id='hallazgo_deocumentacion'>
                 <label>Hallazgo:</label>
-                <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo || ''} onChange={cambiado}>
+                <select id='hallazgo' name="hallazgo" defaultValue={fotografia.hallazgo} onChange={cambiado}>
                   <option value={fotografia.hallazgo}>{fotografia.hallazgo}</option>
                   <option value="No">No</option>
                   <option value="Sí">Sí</option>
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group" id='edicion_hemerografia'>
+                <label>Mostrar:</label>
+                <select id='hallazgo' name="mostrar" defaultValue={fotografia.mostrar} onChange={cambiado}>
+                  <option value={fotografia.mostrar}>{fotografia.mostrar}</option>
+                  <option value="No">No</option>
+                  <option value="Sí">Sí</option>
+                </select>
+              </div>
+              <div className="form-group" id='edicion_hemerografia' >
+                <label>Revisado:</label>
+                <select id='hallazgo' name="revisado" defaultValue={fotografia.revisado || ''} onChange={cambiado}>
+                  <option value={fotografia.revisado}>{fotografia.revisado}</option>
+                  <option value="No">No</option>
+                  <option value="Sí">Sí</option>
+                </select>
+              </div>
+
+              <div className="form-group" id='persona_registra_documentacion'>
                 <label>Persona que registra:</label>
-                <select name="persona_registra" defaultValue={fotografia.persona_registra || ''} onChange={cambiado}>
-                  <option value={fotografia.persona_registra}>{fotografia.persona_registra}</option>
-                  <option value="Mayra Fonseca">Mayra</option>
-                  <option value="Robin">Robin</option>
-                  <option value="Xoely">Xoely</option>
-                  <option value="Perla">Perla</option>
-                </select>
+                <input type='text' name="persona_registra"
+                  value={formulario.persona_registra || fotografia.persona_registra}
+                  onChange={handleChange}>
+                </input>
+                {(sugerencias.length > 0 && fieldName === "persona_registra") && (
+                  <ul className="sugerencias-list">
+                    {sugerencias.map((sugerencia, index) => (
+                      <li key={index} onClick={() => handleSelect(sugerencia)}>
+                        {sugerencia}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-
-              <div className="form-group">
-                <label>Tema:</label>
-                <select name="tema" defaultValue={fotografia.tema || ''} onChange={cambiado}>
-                  <option value={fotografia.tema}>{fotografia.tema}</option>
-                  <option value="1"> tema 1</option>
-                  <option value="2"> tema 2 </option>
-                  <option value="El Nacional"> El Nacional </option>
-                  <option value="Repatriación de los restos de Amado Nervo">Repatriación de los restos de Amado Nervo</option>
-                </select>
-              </div>
-
             </div>
 
-          </form>
-          <button className="button" onClick={guardar_foto}>Enviar</button>
-          <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
-          <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
-          <div className='marco'>
+            <button className="button" onClick={guardar_foto}>Enviar</button>
 
-            <div className='datos anteriores'>
-              <p>Encabezado: {fotografia.titulo}</p>
-              <p>Numero edición: {fotografia.num_edicion}</p>
-              <p>Paginas: {fotografia.num_paginas}</p>
-              <p>Encabezado: {fotografia.titulo}</p>
-              <p>Lugar de publicación: {fotografia.encabezado}</p>
-              <p>Fecha de publicación: {fotografia.dia2} - {fotografia.mes2} - {fotografia.anio2}</p>
-              <p>Periodicidad: {fotografia.tipo_publicacion}</p>
+            <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
+            <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+
+            <div className="progress-bar">
+              <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
+              <p className="progress-text">{loadingProgress}%</p>
             </div>
-            {console.log(fotografia)} {/* Verifica la estructura de fotografia.images */}
-            {fotografia.images && fotografia.images.map((image, index) => (
-              <img
-                key={index}
-                src={`https://backend-prueba-apel.onrender.com/imagenes/objetos/${image.nombre}`}
-                alt={`${image.nombre}`}
-                className='fotografia-img-large'
-              />
-            ))}
-          </div>
-        </div>
-      </main>
+            <div className='mensajes_peticiones'>
+              {mensajes.mensaje1 ?
+                <div className='mensajes'>
+                  <strong id='saved_text'>{statuses.peticion1 === 'success' ? 'Información registrada correctamente' : ''}</strong>
+                  <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
+                  <h4>Mensaje:</h4>
+                  <p>{mensajes.mensaje1}</p>
+                </div>
+                : ""}
+              {mensajes.mensaje2 ?
+                <div className='mensajes'>
+                  <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
+                  <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
+                  <h4>Mensaje:</h4>
+                  <p> {mensajes.mensaje2}</p>
+                </div>
+                : ""}
+              {mensajes.mensaje3 ?
+                <div className='mensajes'>
+                  <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
+                  <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al subir foto a Drive' : ''}</strong>
+                  <h4>Mensaje:</h4>
+                  <p>{mensajes.mensaje3}</p>
+                </div>
+                : ""}
+              {mensajes.mensaje4 ?
+                <div className='mensajes'>
+                  <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
+                  <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
+                  <h4>Mensaje:</h4>
+                  <p> {mensajes.mensaje4}</p>
+                </div>
+                : ""}
+            </div>
+            
+            <div className="images-preview">
 
+
+
+              {/* Verifica la estructura de fotografia.images */}
+              {fotografia.images && fotografia.images.map((image, index) => (
+                <div className="image-preview">
+                  <div className='marco2'>
+                    <img
+                      key={index}
+                      src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                      alt={`${image.nombre}`}
+                      className='fotografia-img-large'
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {pdfUrls.length > 0 && (
+              <div className="pdf-preview">
+                {pdfUrls[0] ? <h1>PDFs subidos</h1> : ""}
+                {pdfUrls.map((url, index) => (
+                  <div key={index} className="pdf-container">
+                    <embed
+                      src={url}
+                      width="100%"
+                      height="500px"
+                      type="application/pdf"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+             
+          
+                </form>
+            </div>
+        </main>
     </div>
-  );
+)
 };
