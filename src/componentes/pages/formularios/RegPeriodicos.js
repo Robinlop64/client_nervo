@@ -144,7 +144,7 @@ export const RegPeriodicos = () => {
         setStatuses(prev => ({ ...prev, peticion1: datos.status }));
         setMensajes(prev => ({ ...prev, mensaje1: datos.mensaje }));
 
-        if (datos.status === "successs") {
+        if (datos.status === "success") {
             //   console.log("status success")
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
