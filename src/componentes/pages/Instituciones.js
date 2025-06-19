@@ -10,7 +10,7 @@ export const Instituciones = () => {
       const response = await fetch(`https://backend-prueba-apel.onrender.com/api/instituciones/pais/${pais}`);
       const data = await response.json();
       const instituciones = data.insti;
-      console.log('Instituciones:', instituciones);
+      //console.log('Instituciones:', instituciones);
 
       const ciudadesAgrupadas = instituciones.reduce((acc, institucion) => {
         const { ciudad } = institucion;
@@ -60,10 +60,10 @@ export const Instituciones = () => {
                 {ciudades[ciudad].map(institucion => (
                   <div key={institucion.id} className='institucion_contenedor' onClick={() => handleImageClick(institucion.nombre)} style={{ cursor: 'pointer' }}>
                     
-                    {institucion.images && institucion.images.length > 0 && (
+                    {institucion.imagenes_fb && institucion.imagenes_fb.length > 0 && (
                       
                       <img
-                        src={`https://backend-prueba-apel.onrender.com/imagenes/instituciones/${institucion.images[0].nombre}`}
+                        src={`${institucion.imagenes_fb[0].url}`}
                         alt={institucion.nombre}
                         
                         

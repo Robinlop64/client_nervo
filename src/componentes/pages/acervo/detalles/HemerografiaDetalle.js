@@ -20,7 +20,7 @@ export const HemerografiaDetalle = () => {
       if (datos.status === "success") {
         setFotografia(datos.hemero);
         if (datos.hemero.images && datos.hemero.images.length > 0) {
-          setImagenPrincipal(datos.hemero.images[0].nombre); // Establecer la primera imagen como principal
+          setImagenPrincipal(datos.hemero.imagenes_fb[0].url); // Establecer la primera imagen como principal
         }
       } else {
         // Manejo de error
@@ -77,18 +77,18 @@ export const HemerografiaDetalle = () => {
         <div className='ficha_fotografia'>
           <div className='marco_hemerografia'>
             <img
-              src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${imagenPrincipal}`}
+              src={`${imagenPrincipal}`}
               alt={`${fotografia.titulo} principal`}
               className='fotografia-img-large'
             />
             <div className='thumbnails'>
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <img
                   key={index}
-                  src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                  src={`${image.url}`}
                   alt={`${fotografia.titulo} ${index + 1}`}
                   className='fotografia-img-thumbnail'
-                  onClick={() => handleImagenClick(image.nombre)}
+                  onClick={() => handleImagenClick(image.url)}
                 />
               ))}
             </div>
@@ -109,6 +109,20 @@ export const HemerografiaDetalle = () => {
             {renderField("Periodicidad", fotografia.periodicidad)}
           </div>
         </div>
+        {fotografia.pdfs && fotografia.pdfs.length > 0 && (
+    <div className='pdfs-section'>
+      <h4>Archivos PDF disponibles:</h4>
+      <ul>
+        {fotografia.pdfs.map((pdf, index) => (
+          <li key={index}>
+            <a href={pdf.ruta} target="_blank" rel="noopener noreferrer">
+              {pdf.nombre || `PDF ${index + 1}`}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
       </div>
     </main>
   );

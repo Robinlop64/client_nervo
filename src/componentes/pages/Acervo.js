@@ -6,7 +6,7 @@ export const Acervo = () => {
     fotografia: null,
     iconografia: null,
     libros: null,
-    hemerografia: null,
+    hemerografia: { total: 0, revisados: 0, pendientes: 0 },
     correspondencia: null,
     documentacion: null,
     partituras: null,
@@ -16,11 +16,17 @@ export const Acervo = () => {
   });
 
   const fetchNumeroBienes = (tipo) => {
-    fetch(`https://backend-prueba-apel.onrender.com/api/${tipo}/numero-bienes`)
+    fetch(`http://localhost:3900/api/${tipo}/numero-bienes`)
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
-          setNumeroBienes(prevState => ({ ...prevState, [tipo]: data.count }));
+          const info = data.total !== undefined ? {
+            total: data.total || 0,
+            revisados: data.revisados || 0,
+            pendientes: data.pendientes || 0
+          } : data.count;
+
+          setNumeroBienes(prevState => ({ ...prevState, [tipo]: info }));
         }
       })
       .catch(error => console.error(`Error fetching data for ${tipo}:`, error));
@@ -36,8 +42,15 @@ export const Acervo = () => {
   }, []);
 
   const handleNavLinkClick = (event) => {
-    event.stopPropagation(); // Evita que el evento de clic se propague
+    event.stopPropagation();
   };
+
+  const totalBienes = Object.values(numeroBienes).reduce((total, val) => {
+    if (val === null) return total;
+    if (typeof val === 'object') return total + (val.total || 0);
+    return total + val;
+  }, 0);
+
 
   return (
     <div>
@@ -98,7 +111,7 @@ export const Acervo = () => {
               </article>
             </NavLink>
 
-            <NavLink to="/admin/hemerografia" className="clasificacion" onClick={handleNavLinkClick}>
+             <NavLink to="/admin/hemerografia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
                   <img 
@@ -108,9 +121,12 @@ export const Acervo = () => {
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Hemerografía</h4>
-                  
-                  {numeroBienes.hemerografia !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.hemerografia}</p>
+                  {numeroBienes.hemerografia && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.hemerografia.total}/ 1500 </p>
+                      <p className='description'>Revisados: {numeroBienes.hemerografia.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.hemerografia.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>

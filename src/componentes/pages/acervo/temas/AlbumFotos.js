@@ -59,8 +59,8 @@ export const AlbumFotos = () => {
         <div className='fotografias-container'>
         {fotos.map((fotografia) => {
   // Verifica que el campo 'images' exista y tenga al menos una imagen
-  const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
-  const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${firstImage}` : '';
+  const firstImage = fotografia.imagenes_fb && fotografia.imagenes_fb.length > 0 ? fotografia.imagenes_fb[0].url : null;
+  const imageUrl = firstImage ? `${firstImage}` : '';
 
   return (
     <div

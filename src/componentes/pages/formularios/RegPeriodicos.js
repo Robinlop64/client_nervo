@@ -6,28 +6,35 @@ import { useState, useEffect } from 'react';
 
 export const RegPeriodicos = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
-    const [resultado, setResultado] = useState(false)
-    const [fileName, setFileName] = useState('');
+    //----------------------------------Paises, ciudades e instituciones ----------------------------------//
+    const [data, setData] = useState(null);
     const [paises, setPaises] = useState([]);
     const [ciudades, setCiudades] = useState([]);
     const [instituciones, setInstituciones] = useState([]);
     const [selectedPais, setSelectedPais] = useState('');
     const [selectedCiudad, setSelectedCiudad] = useState('');
-    const [saved, setSaved] = useState('not sended');
-    const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
-    const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
-    const [loadingProgress, setLoadingProgress] = useState(0);
-    const [data, setData] = useState(null);
-    const [showModal, setShowModal] = useState(false);
-    const [customPromptText, setCustomPromptText] = useState('');
-    const [currentField, setCurrentField] = useState('');
-    const [originalPrompt, setOriginalPrompt] = useState('');
+    //----------------------------------Formulario y sugerencias ----------------------------------//
     const [selectedImages, setSelectedImages] = useState([]);
     const [pdfUrls, setPdfUrls] = useState([]);
     const [value, setValue] = useState('');
     const [sugerencias, setSugerencias] = useState([]);
     const [fieldName, setFieldName] = useState('');
+    //----------------------------------ChatGPT ----------------------------------//
+    const [showModal, setShowModal] = useState(false);
+    const [customPromptText, setCustomPromptText] = useState('');
+    const [currentField, setCurrentField] = useState('');
+    const [originalPrompt, setOriginalPrompt] = useState('');
+    //----------------------------------Guardar y enviar ----------------------------------//
+    const [resultado, setResultado] = useState(false)
+    const [fileName, setFileName] = useState('');
+    const [saved, setSaved] = useState('not sended');
+    const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
+    const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
+    const [loadingProgress, setLoadingProgress] = useState(0);
 
+    
+    // Este useEffect se encarga de obtener los datos de las instituciones para la parte final del formulario
+    // Se hace la peticion la la API y se guardan los datos en data y el primer cammpo en los paises para su seleccion ene l formulario
     useEffect(() => {
         const fetchData = async () => {
             const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
@@ -49,22 +56,7 @@ export const RegPeriodicos = () => {
         };
         fetchData();
     }, []);
-    useEffect(() => {
-        setSaved("")
-        setLoadingProgress(0);
-        setStatuses({
-            peticion1: '',
-            peticion2: '',
-            peticion3: '',
-            peticion4: ""
-        });
-        setMensajes({
-            mensaje1: '',
-            mensaje2: '',
-            mensaje3: '',
-            mensaje4: ''
-        });
-    }, [formulario])
+    // Al modificar el campo pais, se actualizan las ciudades y se selecciona la primera si solo hay una
     useEffect(() => {
 
         if (formulario.pais) {
@@ -78,19 +70,15 @@ export const RegPeriodicos = () => {
                 setInstituciones([]);
             }
         }
-    }, [formulario.pais]);
+    }, [formulario.pais]);   
+    // Una vez seleccionado el pais y la ciudad, se cargan las instituciones correspondientes a la ciudad
     useEffect(() => {
         if (formulario.ciudad && formulario.pais) {
             const instituciones = data[formulario.pais][formulario.ciudad];
             setInstituciones(instituciones);
         }
-    }, [formulario.ciudad]);
-    useEffect(() => {
-        return () => {
-            // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
-            pdfUrls.forEach(url => URL.revokeObjectURL(url));
-        };
-    }, [pdfUrls]);
+    }, [formulario.ciudad]);    
+    // Obtiene las sugerencias de autocompletado desde la API cuando el valor del input cambia y tiene mas de 1 caracter
     useEffect(() => {
         if (value.length > 1 && fieldName) {
             const fetchSugerencias = async () => {
@@ -111,17 +99,38 @@ export const RegPeriodicos = () => {
             setSugerencias([]);
         }
     }, [value, fieldName]);
+    // NO se que hace
+    useEffect(() => {
+        return () => {
+            // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
+            pdfUrls.forEach(url => URL.revokeObjectURL(url));
+        };
+    }, [pdfUrls]);
+    // Aqui manejamos el estado del formlario, reiniciamos la barra de progreso y los mensajes de error dependiendo de cada peticion
+    useEffect(() => {
+        setSaved("")
+        setLoadingProgress(0);
+        setStatuses({
+            peticion1: '',
+            peticion2: '',
+            peticion3: '',
+            peticion4: ""
+        });
+        setMensajes({
+            mensaje1: '',
+            mensaje2: '',
+            mensaje3: '',
+            mensaje4: ''
+        });
+    }, [formulario])
 
-    const handleSelect = (sugerencia) => {
-        const e = { target:{name:fieldName, value:sugerencia}}
-        if (fieldName) {
-            cambiado(e);
-            setSugerencias([]);
-            console.log(formulario.seccion)
-            //setValue(sugerencia); // Actualizar el valor del input con la sugerencia seleccionada
-        }
-    };
 
+//#########################################################################################################//
+//-----------------------------------------Campos del formulario--------------------------------------------------//
+//##########################################################################################################//
+
+
+    // Cuando se cambia el valor del input, se obtienen las sugerencias
     const handleChange = (e) => {
         
         if (!e || !e.target) {
@@ -135,11 +144,40 @@ export const RegPeriodicos = () => {
         setFieldName(name); // Guardar el nombre del campo para el autocompletado
         cambiado(e); // Actualizar el estado del formulario
     };
+    // Cuando se despliegan las sugerencias, se actualiza el valor del input con la sugerencia seleccionada
+    const handleSelect = (sugerencia) => {
+        const e = { target:{name:fieldName, value:sugerencia}}
+        if (fieldName) {
+            cambiado(e);
+            setSugerencias([]);
+            console.log(formulario.seccion)
+            //setValue(sugerencia); // Actualizar el valor del input con la sugerencia seleccionada
+        }
+    };
+    const handleImageChange = (e) => {
+        if (e.target.files) {
+            const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+            setSelectedImages((prevImages) => prevImages.concat(filesArray));
+            Array.from(e.target.files).map(
+                (file) => URL.revokeObjectURL(file) // Avoid memory leaks
+            );
+        }
+    };
+    const handlePDFChange = (e) => {
+        const files = e.target.files;
+        const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
+        setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
+    };
+
     
+
+//#########################################################################################################//
+//-----------------------------------------Guardar los datos--------------------------------------------------//
+//##########################################################################################################//
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
+        const { datos } = await Api("http://localhost:3900/api/hemerografia/registrar", "POST", nueva_foto);
         setLoadingProgress(25); // Incrementa el progreso
         setStatuses(prev => ({ ...prev, peticion1: datos.status }));
         setMensajes(prev => ({ ...prev, mensaje1: datos.mensaje }));
@@ -152,15 +190,15 @@ export const RegPeriodicos = () => {
                 formData.append(`files`, file);
             });
             // console.log("formdata",formData)
-            const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            const subida2 = await Api(`http://localhost:3900/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             setLoadingProgress(50); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-            const subida = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            //const subida = await Api(`http://localhost:3900/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
             setLoadingProgress(75); // Incrementa el progreso
-            setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-            setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+            //setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
+            //setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
             // Nueva sección para subir los archivos PDF
             const pdfInput = document.querySelector("#pdf");
             const pdfFormData = new FormData();
@@ -169,7 +207,7 @@ export const RegPeriodicos = () => {
             });
 
             //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-            const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const pdfSubida2 = await Api(`http://localhost:3900/api/hemerografia/registrar-pdfs/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setLoadingProgress(100); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
@@ -180,6 +218,15 @@ export const RegPeriodicos = () => {
             setSaved("error");
         }
     };
+
+
+
+//#########################################################################################################//
+//-----------------------------------------ChatGPT--------------------------------------------------//
+//##########################################################################################################//
+
+
+    // Funcion de transcripcion de imagen a texto utilizando la API de OpenAI
     const handleAutoComplete = async (field, promptId) => {
         const fileInput = document.querySelector("#file");
         if (fileInput.files.length > 0) {
@@ -194,6 +241,7 @@ export const RegPeriodicos = () => {
             alert("Por favor selecciona una imagen primero.");
         }
     };
+    // Funcion para autocompletar otros campos, no esta completamente implementada
     const handleAutoCompleteSelect = async (field, promptId) => {
         const fileInput = document.querySelector("#file");
         if (fileInput.files.length > 0) {
@@ -216,30 +264,19 @@ export const RegPeriodicos = () => {
             alert("Por favor selecciona una imagen primero.");
         }
     };
+    // Misaca funcion que la anterior pero permite editar el prompt antes de enviarlo
     const handleEditPromptAndAutoComplete = async (field, prompt) => {
         setCurrentField(field);
         setOriginalPrompt(prompt);
         setCustomPromptText(prompt);
         setShowModal(true);
     };
+    // Maneja el texto del prompt editado
     const handleModalSubmit = () => {
         handleAutoComplete(currentField, customPromptText);
         setShowModal(false);
     };
-    const handleImageChange = (e) => {
-        if (e.target.files) {
-            const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-            setSelectedImages((prevImages) => prevImages.concat(filesArray));
-            Array.from(e.target.files).map(
-                (file) => URL.revokeObjectURL(file) // Avoid memory leaks
-            );
-        }
-    };
-    const handlePDFChange = (e) => {
-        const files = e.target.files;
-        const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
-        setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
-    };
+
 
     return (
         <div>

@@ -28,6 +28,12 @@ export const EditarHemerografia = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
+  const [mostrarObservacion, setMostrarObservacion] = useState(false);
+  const [nuevaObservacion, setNuevaObservacion] = useState({
+  persona: "",
+  tipo_revision: "",
+  observacion: ""
+});
   useEffect(() => {
     const fetchData = async () => {
       const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
@@ -156,49 +162,70 @@ export const EditarHemerografia = () => {
 
   };
   const guardar_foto = async (e) => {
-    e.preventDefault();
-    let nueva_foto = formulario;
+  e.preventDefault();
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/editar/" + id, "PUT", nueva_foto);
-    setLoadingProgress(25); // Incrementa el progreso
-    setStatuses(prev => ({ ...prev, peticion1: datos.status }))
-    setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
-    if (datos.status == "success") {
-      const fileInput = document.querySelector("#file");
-      const formData = new FormData();
-      Array.from(fileInput.files).forEach((file, index) => {
-        formData.append(`files`, file);
-      });
-      setSaved("saved");
+  let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
+  const revisionesAnteriores = fotografia.revisiones || [];
 
-      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/" + id, "POST", formData, true);
+  // Si se agregó una nueva observación (revisión)
+  if (formulario.nueva_revision &&
+      formulario.nueva_revision.persona &&
+      formulario.nueva_revision.tipo_revision &&
+      formulario.nueva_revision.observacion
+  ) {
+    const nuevaRevision = {
+      persona: formulario.nueva_revision.persona,
+      fecha: new Date().toISOString(),
+      tipo_revision: formulario.nueva_revision.tipo_revision,
+      observacion: formulario.nueva_revision.observacion,
+      revision_resuelta: formulario.nueva_revision.revision_resuelta || false
+    };
 
-      setLoadingProgress(50); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
-
-      const subida = await Api("https://backend-google-fnsu.onrender.com/api/hemerografia/editar-imagen/" + id, "POST", formData, true);
-      setLoadingProgress(75); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
-      const pdfInput = document.querySelector("#pdf");
-      const pdfFormData = new FormData();
-      Array.from(pdfInput.files).forEach((file) => {
-        pdfFormData.append('pdfs', file);
-      });
-
-      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-      const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/hemerografia/registrar-pdf/` + id, "POST", pdfFormData, true);
-      setLoadingProgress(100); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
-
-      setResultado(true);
-      setSaved("saved");
-    } else {
-      setSaved("error");
-    }
+    // Combinar revisiones
+    nueva_foto.revisiones = [...revisionesAnteriores, nuevaRevision];
+  } else {
+    // Si no hay nueva revisión, conservar las anteriores
+    nueva_foto.revisiones = revisionesAnteriores;
   }
+
+  const { datos, cargando } = await Api(`http://localhost:3900/api/hemerografia/editar/${id}`, "PUT", nueva_foto);
+  setLoadingProgress(25);
+  setStatuses(prev => ({ ...prev, peticion1: datos.status }));
+  setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
+
+  if (datos.status === "success") {
+    setSaved("saved");
+
+    // Subida de imágenes
+    const fileInput = document.querySelector("#file");
+    const formData = new FormData();
+    Array.from(fileInput.files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    const subida2 = await Api(`http://localhost:3900/api/hemerografia/editar-imagen/${id}`, "POST", formData, true);
+    setLoadingProgress(50);
+    setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
+    setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
+
+    // Subida de PDFs
+    const pdfInput = document.querySelector("#pdf");
+    const pdfFormData = new FormData();
+    Array.from(pdfInput.files).forEach((file) => {
+      pdfFormData.append("pdfs", file);
+    });
+
+    const pdfSubida2 = await Api(`http://localhost:3900/api/hemerografia/editar-pdfs/${id}`, "POST", pdfFormData, true);
+    setLoadingProgress(100);
+    setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
+    setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
+
+    setResultado(true);
+    setSaved("saved");
+  } else {
+    setSaved("error");
+  }
+  };
   const handleAutoComplete = async (field, promptId) => {
     const fileInput = document.querySelector("#file");
     if (fileInput.files.length > 0) {
@@ -259,6 +286,49 @@ export const EditarHemerografia = () => {
     const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
     setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
   };
+  const toggleRevisionResuelta = (index) => {
+  const nuevasRevisiones = [...(fotografia.revisiones || [])];
+  nuevasRevisiones[index].revision_resuelta = !nuevasRevisiones[index].revision_resuelta;
+
+  setFotografia(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+
+  setFormulario(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+};
+// Función para editar el texto de observación
+const actualizarObservacion = (index, nuevoTexto) => {
+  const nuevasRevisiones = [...(fotografia.revisiones || [])];
+  nuevasRevisiones[index].observacion = nuevoTexto;
+
+  setFotografia(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+
+  setFormulario(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+};
+const eliminarRevision = (index) => {
+  const nuevasRevisiones = [...(fotografia.revisiones || [])];
+  nuevasRevisiones.splice(index, 1); // Elimina la revisión en ese índice
+
+  setFotografia(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+
+  setFormulario(prev => ({
+    ...prev,
+    revisiones: nuevasRevisiones
+  }));
+};
 
   return (
     <div>
@@ -770,7 +840,118 @@ export const EditarHemerografia = () => {
               </div>
             </div>
 
+
             <button className="button" onClick={guardar_foto}>Enviar</button>
+
+        
+  <h3>Historial de Revisiones</h3>
+{(fotografia.revisiones || []).map((rev, index) => (
+  <div key={index} className="revision-item">
+    <p><strong>Persona:</strong> {rev.persona}</p>
+    <p><strong>Fecha:</strong> {new Date(rev.fecha).toLocaleString()}</p>
+    <p><strong>Tipo:</strong> {rev.tipo_revision}</p>
+
+    <label>
+      <strong>Observación:</strong>
+      <textarea
+        value={rev.observacion}
+        onChange={(e) => actualizarObservacion(index, e.target.value)}
+      />
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        checked={rev.revision_resuelta}
+        onChange={() => toggleRevisionResuelta(index)}
+      />
+      Resuelta
+    </label>
+
+    {/* 🗑️ Botón para eliminar revisión */}
+    <button type="button" onClick={() => eliminarRevision(index)} className="btn btn-danger">
+      Eliminar
+    </button>
+
+    <hr />
+  </div>
+))}
+<button type="button" onClick={() => setFormulario({
+  ...formulario,
+  nueva_revision: {
+    persona: '',
+    tipo_revision: '',
+    observacion: '',
+    revision_resuelta: false
+  }
+})}>
+  ➕ Agregar Observación
+</button>
+
+{formulario.nueva_revision && (
+  <div className="bloque-observacion">
+    <label>Persona que registra:</label>
+    <input
+      type="text"
+      value={formulario.nueva_revision.persona}
+      onChange={(e) =>
+        setFormulario({
+          ...formulario,
+          nueva_revision: {
+            ...formulario.nueva_revision,
+            persona: e.target.value
+          }
+        })
+      }
+    />
+
+    <label>Tipo de observación:</label>
+    <input
+      type="text"
+      value={formulario.nueva_revision.tipo_revision}
+      onChange={(e) =>
+        setFormulario({
+          ...formulario,
+          nueva_revision: {
+            ...formulario.nueva_revision,
+            tipo_revision: e.target.value
+          }
+        })
+      }
+    />
+
+    <label>Observación:</label>
+    <textarea
+      value={formulario.nueva_revision.observacion}
+      onChange={(e) =>
+        setFormulario({
+          ...formulario,
+          nueva_revision: {
+            ...formulario.nueva_revision,
+            observacion: e.target.value
+          }
+        })
+      }
+    />
+
+    <label>
+      <input
+        type="checkbox"
+        checked={formulario.nueva_revision.revision_resuelta}
+        onChange={(e) =>
+          setFormulario({
+            ...formulario,
+            nueva_revision: {
+              ...formulario.nueva_revision,
+              revision_resuelta: e.target.checked
+            }
+          })
+        }
+      />
+      ¿Revisión resuelta?
+    </label>
+  </div>
+)}
 
             <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
             <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
@@ -869,6 +1050,8 @@ export const EditarHemerografia = () => {
               <button onClick={handleModalSubmit}>Aceptar</button>
               <button onClick={() => setShowModal(false)}>Cancelar</button>
             </div>
+            
+
           </div>
         </div>
 

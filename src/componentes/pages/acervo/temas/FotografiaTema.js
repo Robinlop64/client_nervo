@@ -60,8 +60,8 @@ export const FotografiaTema = () => {
   
         <div className='fotografias-container'>
           {fotos.map((fotografia) => {
-            const firstImage = fotografia.images && fotografia.images.length > 0 ? fotografia.images[0].nombre : null;
-            const imageUrl = firstImage ? `https://backend-prueba-apel.onrender.com/imagenes/fotografias/${firstImage}` : '';
+            const firstImage = fotografia.imagenes_fb && fotografia.imagenes_fb.length > 0 ? fotografia.imagenes_fb[0].url : null;
+            const imageUrl = firstImage ? `${firstImage}` : '';
             const pendiente = fotografia.pendientes; // Verifica si el campo pendiente tiene contenido
 
             return (

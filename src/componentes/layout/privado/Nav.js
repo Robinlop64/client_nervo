@@ -14,11 +14,15 @@ export const Nav = () => {
         <li>
           <NavLink to="/admin/acervo">Acervo</NavLink>
         </li>
-        <li>
-          <NavLink to="/admin/cronologia">Cronología</NavLink>
-        </li>
+       
         <li>
           <NavLink to="/admin/instituciones">Instituciones</NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/Tienda">Videos</NavLink>
+        </li>
+         <li>
+          <NavLink to="/admin/Tienda">Tienda</NavLink>
         </li>
         <li>
           <NavLink to="/admin/registro">Yo te bendigo vida</NavLink>
