@@ -92,12 +92,20 @@ import { EditarPeriodicos } from '../componentes/pages/formularios/Editores/Edit
 import { Secciones } from '../componentes/pages/acervo/temas/Secciones';
 import { Seccion } from '../componentes/pages/acervo/temas/Seccion';
 import { PendientesHemerografia } from '../componentes/pages/acervo/temas/PendientesHemerografia';
+import RequireRole from '../context/RequireRole';
+import { Tienda } from '../componentes/pages/Tienda';
+import { PagoSuccess } from '../componentes/pages/PagoSuccess';
+import { Bien } from '../componentes/pages/acervo/Bien';
+import { Tema } from '../componentes/pages/acervo/temas/Tema';
+import { PeriodicoDetalle } from '../componentes/pages/acervo/detalles/PeriodicoDetalle';
+import { Detalle } from '../componentes/pages/acervo/detalles/Detalle';
 
 export const Rutas = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+
           <Route path="/" element={<PublicLayout2 />}>
             <Route index element={<Login />} />
             <Route path="login" element={<Login />} />
@@ -105,7 +113,7 @@ export const Rutas = () => {
             <Route path="inicio" element={<Inicio />} />
             <Route path="registro" element={<Registro />} />
             <Route path="acervo" element={<Acervo />} />
-            <Route path="croonologia" element={<Croonologia />} />
+            <Route path="cronologia" element={<Croonologia />} />
             <Route path="instituciones" element={<Instituciones />} />
             <Route path="registro/menu-iconografia" element={<Menuiconografia />} />
             <Route path="registro/fotografia" element={<RegFotografia />} />
@@ -128,13 +136,24 @@ export const Rutas = () => {
 
           <Route path="/admin" element={<PrivateLayout />}>
             <Route index element={<Inicio />} />
-            <Route path="/admin/login" element={<Inicio />} />
+            <Route path="/admin/login" element={<RequireRole allowedRoles={["admin", "premium"]}><Login /> </RequireRole>} />
             <Route path="/admin/registrar" element={<Register />} />
-            <Route path="/admin/inicio" element={<Inicio />} />
+<Route path="/admin/inicio" element={
+  <RequireRole allowedRoles={["admin", "premium"]}>
+    <Inicio />
+  </RequireRole>
+} />
             <Route path="/admin/registro" element={<Registro />} />
             <Route path="/admin/acervo" element={<Acervo />} />
-            <Route path="/admin/croonologia" element={<Croonologia />} /> 
-            <Route path="/admin/instituciones" element={<Instituciones />} />
+            <Route path="/admin/Tienda" element={<Tienda />} /> 
+            <Route path="/admin/success" element={<PagoSuccess />} /> 
+            <Route path="/admin/Tienda" element={<Tienda />} /> 
+
+            <Route path="/admin/instituciones" element={
+  <RequireRole allowedRoles={["admin", "premium"]}>
+    <Instituciones />
+  </RequireRole>
+} />
             <Route path="/admin/registro/menu-iconografia" element={<Menuiconografia />} />
             <Route path="/admin/registro/fotografia" element={<RegFotografia />} />
             <Route path="/admin/editar/fotografia/:id" element={<EditarFotografia />} />
@@ -151,7 +170,15 @@ export const Rutas = () => {
             <Route path="/admin/registro/audiovisuales" element={<RegAudiovisuales />} />
             <Route path="/admin/registro/instituciones" element={<RegInstituciones />} />
 
-            <Route path="/admin/fotografias" element={<Fotografias2 />} />
+            <Route path="/admin/fotografias" element={ <Bien
+      titulo="Temas de Fotografías"
+      apiTemasUrl="https://backend-prueba-apel.onrender.com/api/fotografia/listar-temas"
+      apiItemsUrl="https://backend-prueba-apel.onrender.com/api/fotografia/listar"
+      apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/fotografia/buscar"
+      rutaItem="/admin"
+      camposBusqueda={[]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
+      campoComparacion="tema" // No se compara con otro dataset, así que este campo será irrelevante
+    />} />
             <Route path="/admin/fotografias/:id" element={<FotoDetalle />} />
             <Route path="/admin/fotografias2" element={<Fotografias2 />} />
             <Route path="/admin/tema/Repatriación de los restos de Amado Nervo" element={<Cortejo />} />
@@ -159,12 +186,43 @@ export const Rutas = () => {
             <Route path="/admin/album/:id" element={<AlbumFotos />} />
             
 
-            <Route path="/admin/hemerografia" element={<Hemerografia />} />
+            <Route path="/admin/hemerografia" element={<Bien
+  titulo="Periódicos y Revistas"
+  apiTemasUrl="http://localhost:3900/api/hemerografia/listar-temas"
+  apiItemsUrl="http://localhost:3900/api/periodicos/listar"
+  apiBuscarUrl="http://localhost:3900/api/hemerografia/buscar"
+  rutaItem="/admin/hemerografia"
+  camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+/>} />
             <Route path="/admin/hemerografia/tema/Recortes de prensa" element={<CarpetasRecortes />} />
             <Route path="/admin/hemerografia/tema/Secciones" element={<Secciones />} />
             <Route path="/admin/hemerografia/tema/pendientes" element={<PendientesHemerografia/>} />
-            <Route path="/admin/hemerografia/tema/:id" element={<HemerografiaTema />} />
-            <Route path="/admin/hemerografia/:id" element={<HemerografiaDetalle />} />
+            <Route path="/admin/hemerografia/tema/:id" element={<Tema
+                             apiBaseUrl="https://backend-prueba-apel.onrender.com/api/hemerografia"
+                             campoNombre="nombre_periodico"
+                             rutaItem="/admin/hemerografia"
+                             componenteDetalle={PeriodicoDetalle}
+                           />} />
+            <Route path="/admin/hemerografia/:id" element={<Detalle
+    apiBaseUrl="https://backend-prueba-apel.onrender.com/api/hemerografia"
+    campoImagenes="imagenes_fb"
+    campoPDFs="pdfs"
+    tituloCampo="tema"
+    camposNavegacion={["pais", "institucion", "tema"]}
+    camposFicha={[
+      { etiqueta: "Título", valor: "encabezado" },
+      { etiqueta: "Periódico", valor: "nombre_periodico" },
+      { etiqueta: "Número de edición", valor: "numero_edicion" },
+      { etiqueta: "Fecha de publicación", valor: "fecha_publicacion" },
+      { etiqueta: "Autor", valor: "autor" },
+      { etiqueta: "Seudónimo", valor: "seudonimo" },
+      { etiqueta: "Páginas", valor: "numero_paginas" },
+      { etiqueta: "Columnas", valor: "columnas" },
+      { etiqueta: "Género periodístico", valor: "genero_periodistico" },
+      { etiqueta: "Lugar de publicación", valor: "lugar_publicacion" },
+      { etiqueta: "Periodicidad", valor: "periodicidad" },
+    ]}
+  />} />
             <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
             <Route path="/admin/hemerografia/carpeta/:id" element={<CarpetaRecortes/>} />
             <Route path="/admin/hemerografia/seccion/:id" element={<Seccion/>} />

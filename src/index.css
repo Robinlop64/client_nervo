@@ -770,6 +770,26 @@ h1 {
   color: inherit;
   height: 350px;
 }
+.hemerografia-item.pendiente {
+  border: 2px solid orange;
+  background-color: #fff3e0;
+}
+
+.hemerografia-item.revision-no-resuelta {
+  border: 2px solid red;
+  background-color: #ffeaea;
+}
+
+.hemerografia-item.no-revisado {
+  border: 2px solid gray;
+  background-color: #f0f0f0;
+}
+
+.hemerografia-item.revisado {
+  border: 2px solid green;
+  background-color: #e6ffed;
+}
+
 
 .libros-item img{
   width: 100%;

@@ -1,3 +1,4 @@
+// src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -21,9 +22,9 @@ export const AuthProvider = ({ children }) => {
 
     const userObj = JSON.parse(user);
     const userID = userObj._id;
-    console.log("USERID",userID)
+
     try {
-      const request = await fetch(`https://backend-prueba-apel.onrender.com/api/user/profile/`+userID, {
+      const request = await fetch(`https://backend-prueba-apel.onrender.com/api/user/profile/${userID}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -32,8 +33,9 @@ export const AuthProvider = ({ children }) => {
       });
 
       const data = await request.json();
+
       if (data && data.user) {
-        setAuth(data.user);
+        setAuth(data.user); // Debe incluir el campo `role`
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -42,12 +44,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isAdmin = auth?.role === 'admin';
+  const isPremium = auth?.role === 'premium';
+  const isGratis = auth?.role === 'gratis';
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Cargando...</div>;
   }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, loading }}>
+    <AuthContext.Provider
+      value={{
+        auth,
+        setAuth,
+        loading,
+        isAdmin,
+        isPremium,
+        isGratis,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
