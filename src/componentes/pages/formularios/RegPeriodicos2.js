@@ -67,18 +67,18 @@ export const RegPeriodicos2 = () => {
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("http://localhost:3900/api/periodicos/registrar", "POST", nueva_foto);
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/periodicos/registrar", "POST", nueva_foto);
         console.log(nueva_foto)
         if (datos.status === "successs") {
-            console.log("status success")
+
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
             Array.from(fileInput.files).forEach((file, index) => {
                 formData.append(`files`, file);
             });
-            console.log("formdata",formData)
-            const { subida2 } = await Api(`http://localhost:3900/api/periodicos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            //const { subida } = await Api(`https://backend-google-fnsu.onrender.com/api/periodicos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+         
+            const { subida2 } = await Api(`https://backend-prueba-apel.onrender.com/api/periodicos/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+        
 
             setResultado(true);
             setSaved("saved");

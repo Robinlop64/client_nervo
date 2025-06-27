@@ -177,37 +177,34 @@ export const RegPeriodicos = () => {
     const guardar_foto = async (e) => {
         e.preventDefault();
         let nueva_foto = formulario;
-        const { datos } = await Api("http://localhost:3900/api/hemerografia/registrar", "POST", nueva_foto);
-        setLoadingProgress(25); // Incrementa el progreso
+        const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/hemerografia/registrar", "POST", nueva_foto);
+        setLoadingProgress(33); // Incrementa el progreso
         setStatuses(prev => ({ ...prev, peticion1: datos.status }));
         setMensajes(prev => ({ ...prev, mensaje1: datos.mensaje }));
 
         if (datos.status === "success") {
-            //   console.log("status success")
+
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
             Array.from(fileInput.files).forEach((file, index) => {
                 formData.append(`files`, file);
             });
-            // console.log("formdata",formData)
-            const subida2 = await Api(`http://localhost:3900/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            setLoadingProgress(50); // Incrementa el progreso
+
+            const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
+            setLoadingProgress(66); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-            //const subida = await Api(`http://localhost:3900/api/hemerografia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            setLoadingProgress(75); // Incrementa el progreso
-            //setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-            //setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
-            // Nueva sección para subir los archivos PDF
+    
+ 
+
             const pdfInput = document.querySelector("#pdf");
             const pdfFormData = new FormData();
             Array.from(pdfInput.files).forEach((file) => {
                 pdfFormData.append('pdfs', file);
             });
 
-            //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-            const pdfSubida2 = await Api(`http://localhost:3900/api/hemerografia/registrar-pdfs/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/registrar-pdfs/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setLoadingProgress(100); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
@@ -233,7 +230,7 @@ export const RegPeriodicos = () => {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
 
-            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+            const { datos } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
             if (datos && datos.message) {
                 cambiado({ target: { name: field, value: datos.message } });
             }
@@ -248,7 +245,7 @@ export const RegPeriodicos = () => {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
 
-            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+            const { datos } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
             if (datos && datos.message) {
                 // Validar que el mensaje sea una opción válida del select
                 const opcionesValidas = ['notas', 'articulos', 'cronicas', 'frases', 'poesia', 'pendiente', 'noticias', 'cuento'];

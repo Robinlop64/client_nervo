@@ -13,7 +13,7 @@ export const PagoSuccess = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:3900/api/user/actualizar-rol', {
+        const response = await fetch('https://backend-prueba-apel.onrender.com/api/user/actualizar-rol', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

@@ -124,7 +124,7 @@ export const EditarInstitucion = () => {
       setSaved("saved");
 
       //const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/instituciones/registrar-imagen/" + fotografia._id, "POST", formData, true);
-      const { subida, cargando } = await Api("http://localhost:3900/api/instituciones/editar-imagen/" + fotografia._id, "POST", formData, true);
+      const { subida, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/instituciones/editar-imagen/" + fotografia._id, "POST", formData, true);
 
       setResultado(true);
       setSaved("saved");

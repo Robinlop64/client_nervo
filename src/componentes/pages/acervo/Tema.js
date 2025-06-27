@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AuthContext from '../../../../context/AuthProvider';
+import AuthContext from '../../../context/AuthProvider';
 
 export const Tema = ({
   apiBaseUrl,             // Ej: "https://.../api/hemerografia"
   campoNombre,            // Ej: "nombre_periodico" o "titulo_libro"
-  rutaItem,               // Ej: "/admin/hemerografia"
+  rutaDetalle,
+  rutaEditar,               // Ej: "/admin/hemerografia"
   componenteDetalle: ComponenteDetalle, // Componente React opcional
   campoImagen = "imagenes_fb",          // Por defecto "imagenes_fb"
 }) => {
@@ -51,13 +52,13 @@ export const Tema = ({
   };
 
   const handleClick = (item) => {
-    navigate(`${rutaItem}/${item._id}`);
+    navigate(`${rutaDetalle}/${item._id}`);
   };
 
   const handleDelete = async (event, idItem) => {
     event.stopPropagation();
     try {
-      const res = await fetch(`${apiBaseUrl}/${idItem}`, { method: "DELETE" });
+      const res = await fetch(`${apiBaseUrl}/borrar/${idItem}`, { method: "DELETE" });
       const datos = await res.json();
       if (datos.status === "success") {
         obtenerRegistros();
@@ -71,7 +72,7 @@ export const Tema = ({
 
   const handleEdit = (event, idItem) => {
     event.stopPropagation();
-    navigate(`${rutaItem}/editar/${idItem}`);
+    navigate(`${rutaEditar}/${idItem}`);
   };
 
   return (

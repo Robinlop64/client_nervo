@@ -1,12 +1,12 @@
 import React from 'react'
-import { Formugeneral } from './Formugeneral'
+
 
 export const RegAudiovisuales = () => {
   return (
     <div>
         <main id='main2'>
             <div id="container2">
-            <Formugeneral/>
+           
 
             <h3>Campos específicos audiovisuales</h3>
                 <div id="esp1">

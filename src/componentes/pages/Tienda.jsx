@@ -22,7 +22,7 @@ export const Tienda = () => {
   const iniciarCompra = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch('http://localhost:3900/api/user/stripe/suscripcion-prueba', {
+      const response = await fetch('https://backend-prueba-apel.onrender.com/api/user/stripe/suscripcion-prueba', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

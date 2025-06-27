@@ -77,7 +77,7 @@ export const EditarPeriodicos = () => {
     e.preventDefault();
     let nueva_foto = formulario;
 
-    const { datos, cargando } = await Api("http://localhost:3900/api/periodicos/editar/" + id, "PUT", nueva_foto);
+    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/periodicos/editar/" + id, "PUT", nueva_foto);
     if (datos.status == "success") {
       const fileInput = document.querySelector("#file");
       const formData = new FormData();
@@ -86,7 +86,7 @@ export const EditarPeriodicos = () => {
       });
       setSaved("saved");
 
-      const { subida2, cargando2 } = await Api("http://localhost:3900/api/periodicos/editar-imagen/" + id, "POST", formData, true);
+      const { subida2, cargando2 } = await Api("https://backend-prueba-apel.onrender.com/api/periodicos/editar-imagen/" + id, "POST", formData, true);
       //const { subida, cargando } = await Api("https://backend-google-fnsu.onrender.com/api/periodicos/editar-imagen/" + id, "POST", formData, true);
 
       setResultado(true);

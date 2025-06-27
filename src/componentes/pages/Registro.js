@@ -7,9 +7,15 @@ export const Registro = () => {
       <div className="contenedor_main_registro">
         <h1>Fromulario de registro de bienes</h1>
         <div className='frame_botones_registro'>
-          <NavLink to="/admin/registro/menu-iconografia">
+        
+          <NavLink to="/admin/registro/fotografia">
             <button>
-              Iconografía
+              Fotografia
+            </button>
+          </NavLink>
+          <NavLink to="/admin/registro/iconografia">
+            <button>
+              Iconografia
             </button>
           </NavLink>
           <NavLink to="/admin/registro/libros">

@@ -5,29 +5,31 @@ import { Api } from '../../../hooks/Api';
 import { useState, useEffect } from 'react';
 
 export const RegCorrespondencia = () => {
-    const { formulario, enviado, cambiado, resetFormulario } = useForm({})
-    const [resultado, setResultado] = useState(false)
-    const [fileName, setFileName] = useState('');
-    const [paises, setPaises] = useState([]);
-    const [ciudades, setCiudades] = useState([]);
-    const [instituciones, setInstituciones] = useState([]);
-    const [selectedPais, setSelectedPais] = useState('');
-    const [selectedCiudad, setSelectedCiudad] = useState('');
-    const [saved, setSaved] = useState('not sended');
-    const [data, setData] = useState(null);
-    const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
-    const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
-    const [loadingProgress, setLoadingProgress] = useState(0);
-    const [showModal, setShowModal] = useState(false);
-    const [customPromptText, setCustomPromptText] = useState('');
-    const [currentField, setCurrentField] = useState('');
-    const [originalPrompt, setOriginalPrompt] = useState('');
-    const [selectedImages, setSelectedImages] = useState([]);
-    const [pdfUrls, setPdfUrls] = useState([]);
-    const [value, setValue] = useState('');
-    const [sugerencias, setSugerencias] = useState([]);
-    const [fieldName, setFieldName] = useState('');
+        // eslint-disable-next-line
+        const { formulario, enviado, cambiado, resetFormulario } = useForm({})
+        //----------------------------------Paises, ciudades e instituciones ----------------------------------//
+        const [data, setData] = useState(null);
+        const [paises, setPaises] = useState([]);
+        const [ciudades, setCiudades] = useState([]);
+        const [instituciones, setInstituciones] = useState([]);
+        const [selectedPais, setSelectedPais] = useState('');
+        const [selectedCiudad, setSelectedCiudad] = useState('');
+        //----------------------------------Formulario y sugerencias ----------------------------------//
+        const [selectedImages, setSelectedImages] = useState([]);
+        const [pdfUrls, setPdfUrls] = useState([]);
+        const [value, setValue] = useState('');
+        const [sugerencias, setSugerencias] = useState([]);
+        const [fieldName, setFieldName] = useState('');
+        //----------------------------------Guardar y enviar ----------------------------------//
+        const [resultado, setResultado] = useState(false)
+        const [fileName, setFileName] = useState('');
+        const [saved, setSaved] = useState('not sended');
+        const [statuses, setStatuses] = useState({ peticion1: '', peticion2: '', peticion3: '', peticion4: '' });
+        const [mensajes, setMensajes] = useState({ mensaje1: '', mensaje2: '', mensaje3: '', mensaje4: '' });
+        const [loadingProgress, setLoadingProgress] = useState(0);
 
+    // Este useEffect se encarga de obtener los datos de las instituciones para la parte final del formulario
+    // Se hace la peticion la la API y se guardan los datos en data y el primer cammpo en los paises para su seleccion ene l formulario
     useEffect(() => {
         const fetchData = async () => {
             const url = `https://backend-prueba-apel.onrender.com/api/instituciones/listar/todo`;
@@ -49,22 +51,7 @@ export const RegCorrespondencia = () => {
         };
         fetchData();
     }, []);
-    useEffect(() => {
-        setSaved("")
-        setLoadingProgress(0);
-        setStatuses({
-            peticion1: '',
-            peticion2: '',
-            peticion3: '',
-            peticion4: ""
-        });
-        setMensajes({
-            mensaje1: '',
-            mensaje2: '',
-            mensaje3: '',
-            mensaje4: ''
-        });
-    }, [formulario])
+    // Al modificar el campo pais, se actualizan las ciudades y se selecciona la primera si solo hay una
     useEffect(() => {
 
         if (formulario.pais) {
@@ -78,19 +65,17 @@ export const RegCorrespondencia = () => {
                 setInstituciones([]);
             }
         }
-    }, [formulario.pais]);
+    }, [formulario.pais]);   
+    // Una vez seleccionado el pais y la ciudad, se cargan las instituciones correspondientes a la ciudad
     useEffect(() => {
         if (formulario.ciudad && formulario.pais) {
             const instituciones = data[formulario.pais][formulario.ciudad];
             setInstituciones(instituciones);
         }
-    }, [formulario.ciudad]);
-    useEffect(() => {
-        return () => {
-            // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
-            pdfUrls.forEach(url => URL.revokeObjectURL(url));
-        };
-    }, [pdfUrls]);
+    }, [formulario.ciudad]);    
+    
+    
+    // Obtiene las sugerencias de autocompletado desde la API cuando el valor del input cambia y tiene mas de 1 caracter
     useEffect(() => {
         if (value.length > 1 && fieldName) {
             const fetchSugerencias = async () => {
@@ -111,6 +96,32 @@ export const RegCorrespondencia = () => {
             setSugerencias([]);
         }
     }, [value, fieldName]);
+    // NO se que hace
+    useEffect(() => {
+        return () => {
+            // Liberar URLs cuando el componente se desmonte o se cambien los PDFs
+            pdfUrls.forEach(url => URL.revokeObjectURL(url));
+        };
+    }, [pdfUrls]);
+    // Aqui manejamos el estado del formlario, reiniciamos la barra de progreso y los mensajes de error dependiendo de cada peticion
+    useEffect(() => {
+        setSaved("")
+        setLoadingProgress(0);
+        setStatuses({
+            peticion1: '',
+            peticion2: '',
+            peticion3: '',
+            peticion4: ""
+        });
+        setMensajes({
+            mensaje1: '',
+            mensaje2: '',
+            mensaje3: '',
+            mensaje4: ''
+        });
+    }, [formulario])
+
+
 
     const handleSelect = (sugerencia) => {
         const e = { target:{name:fieldName, value:sugerencia}}
@@ -140,36 +151,33 @@ export const RegCorrespondencia = () => {
         e.preventDefault();
         let nueva_foto = formulario;
         const { datos } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/registrar", "POST", nueva_foto);
-        setLoadingProgress(25); // Incrementa el progreso
+        setLoadingProgress(33); // Incrementa el progreso
         setStatuses(prev => ({ ...prev, peticion1: datos.status }));
         setMensajes(prev => ({ ...prev, mensaje1: datos.mensaje }));
 
-        if (datos.status === "successs") {
-            //   console.log("status success")
+        if (datos.status === "success") {
+
             const fileInput = document.querySelector("#file");
             const formData = new FormData();
             Array.from(fileInput.files).forEach((file, index) => {
                 formData.append(`files`, file);
             });
-            // console.log("formdata",formData)
+
             const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            setLoadingProgress(50); // Incrementa el progreso
+            setLoadingProgress(66); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-            const subida = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-imagen/${datos.publicacionGuardada._id}`, "POST", formData, true);
-            setLoadingProgress(75); // Incrementa el progreso
-            setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-            setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
-            // Nueva sección para subir los archivos PDF
+    
+ 
+
             const pdfInput = document.querySelector("#pdf");
             const pdfFormData = new FormData();
             Array.from(pdfInput.files).forEach((file) => {
                 pdfFormData.append('pdfs', file);
             });
 
-            //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-            const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/correspondencia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
+            const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/registrar-pdfs/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
             setLoadingProgress(100); // Incrementa el progreso
             setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
             setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
@@ -180,13 +188,14 @@ export const RegCorrespondencia = () => {
             setSaved("error");
         }
     };
+
     const handleAutoComplete = async (field, promptId) => {
         const fileInput = document.querySelector("#file");
         if (fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
 
-            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
+            const { datos } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
             if (datos && datos.message) {
                 cambiado({ target: { name: field, value: datos.message } });
             }
@@ -194,38 +203,9 @@ export const RegCorrespondencia = () => {
             alert("Por favor selecciona una imagen primero.");
         }
     };
-    const handleAutoCompleteSelect = async (field, promptId) => {
-        const fileInput = document.querySelector("#file");
-        if (fileInput.files.length > 0) {
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
 
-            const { datos } = await Api(`http://localhost:3900/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
-            if (datos && datos.message) {
-                // Validar que el mensaje sea una opción válida del select
-                const opcionesValidas = ['notas', 'articulos', 'cronicas', 'frases', 'poesia', 'pendiente', 'noticias', 'cuento'];
-                const generoSugerido = datos.message.toLowerCase();
 
-                if (opcionesValidas.includes(generoSugerido)) {
-                    cambiado({ target: { name: field, value: datos.message } });
-                } else {
-                    alert("El género sugerido no es válido para este campo.");
-                }
-            }
-        } else {
-            alert("Por favor selecciona una imagen primero.");
-        }
-    };
-    const handleEditPromptAndAutoComplete = async (field, prompt) => {
-        setCurrentField(field);
-        setOriginalPrompt(prompt);
-        setCustomPromptText(prompt);
-        setShowModal(true);
-    };
-    const handleModalSubmit = () => {
-        handleAutoComplete(currentField, customPromptText);
-        setShowModal(false);
-    };
+
     const handleImageChange = (e) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
@@ -257,19 +237,12 @@ export const RegCorrespondencia = () => {
                         <div className='divisor_form_correspondencia_1'>
                         <div className="form-group" id='titulo_correspondencia'>
                                 <label>Título</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-
-                                </div>
+                            
                                 <input id='encabezado' type="textarea" name="titulo" placeholder="Título" value={formulario.titulo|| ''} onChange={cambiado} />
                             </div>
                             <div className="form-group" id="tipo_correspondencia">
                                 <label htmlFor="nombrePeriodico">Tipo de correspondencia</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                </div>
+                              
                                 <input
                                     type='text'
                                     id="nombrePeriodicoSelect"
@@ -321,10 +294,7 @@ export const RegCorrespondencia = () => {
                             <div className="form-group" id='remitente_correspondencia'>
 
                                 <label>Remitente:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                </div>
+                               
                                 <input type="text" 
                                 className='autor' 
                                 name="remitente" 
@@ -345,10 +315,7 @@ export const RegCorrespondencia = () => {
 
                             <div className="form-group" id='destinatario_correspondencia'>
                                 <label>Destinatario:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                </div>
+                                
                                 <input type="text" 
                                 className='autor' 
                                 name="destinatario" 
@@ -370,10 +337,7 @@ export const RegCorrespondencia = () => {
 
                             <div className="form-group" id='origen_correspondencia' >
                                 <label htmlFor="columnas">Origen:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                </div>
+                                
                                 <input
                                     type="text"
                                     id="columnasInput"
@@ -394,10 +358,7 @@ export const RegCorrespondencia = () => {
                             </div>
                             <div className="form-group" id='destino_correspondencia' >
                                 <label htmlFor="columnas">Destino:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                </div>
+                                
                                 <input
                                     type="text"
                                     id="columnasInput"
@@ -489,11 +450,7 @@ export const RegCorrespondencia = () => {
                                <div className="form-group" id="resumen_hemerografia">
                                 <p id='resumen_hemerografia_p'>Resumen:</p>
 
-                                <div className='botonesIA_resumen_hemerografia'>
-
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
-                                </div>
+                            
 
                                 <textarea
                                     type="text"
@@ -518,14 +475,7 @@ export const RegCorrespondencia = () => {
                             <div className='divisor_form'>
                                 <div className="form-group" id="transcripcion_hemerografia">
                                     <p>Transcripciòn</p>
-                                    <div className='botonesIA_resumen_hemerografia'>
-
-                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
-                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
-
-
-
-                                    </div>
+                                   
                                     <textarea
                                         type="text"
                                         id="transcripcionInput2"
@@ -795,30 +745,7 @@ export const RegCorrespondencia = () => {
                     </form>
                 </div>
             </main>
-            <div className={`modal ${showModal ? 'show' : ''}`}>
-                <div className="modal-content">
-                    <h2>Edita el prompt</h2>
-                   <div className='contenido_editar_prompt'>
-                                <div className="image-preview_editar_prompt">
-                                    <div className='marco2'>
-                                        <img src={selectedImages[0]} />
-                                    </div>
-                                </div>
-                    <div className='textarea_editar_prompt'>
-                    <textarea 
-                        value={customPromptText}
-                        onChange={(e) => setCustomPromptText(e.target.value)}
-                    />
-                    </div>
-                    <div className="modal-buttons">
-                        <button onClick={handleModalSubmit}>Aceptar</button>
-                        <button onClick={() => setShowModal(false)}>Cancelar</button>
-                    </div>
-                    </div>
-                </div>
-
-
-            </div>
+        
         </div>
     )
 }

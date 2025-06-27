@@ -9,7 +9,8 @@ export const Detalle = ({
   campoPDFs = "pdfs",            // Campo que contiene los PDFs (si existen)
   camposFicha = [],              // Campos que se mostrarán como ficha catalográfica
   camposNavegacion = [],         // Ej: ["pais", "institucion", "tema"]
-  tituloCampo = "tema"           // Campo a mostrar como título principal
+  tituloCampo = "tema",          // Campo a mostrar como título principal
+  campoInfo = "hemero" // Campo adicional para información extra
 }) => {
   const { id } = useParams();
   const [registro, setRegistro] = useState(null);
@@ -18,13 +19,18 @@ export const Detalle = ({
 
   useEffect(() => {
     const fetchDetalle = async () => {
-      const url = `${apiBaseUrl}/hemero/${id}`;
+      const url = `${apiBaseUrl}/${id}`;
       const res = await fetch(url);
       const datos = await res.json();
 
       if (datos.status === "success") {
-        setRegistro(datos.hemero);
-        const imagenes = datos.hemero[campoImagenes];
+        const info = datos[campoInfo];
+        setRegistro(info);
+
+        const imagenes = info?.[campoImagenes];
+        if (imagenes && imagenes.length > 0) {
+          setImagenPrincipal(imagenes[0].url);
+        }
         if (imagenes && imagenes.length > 0) {
           setImagenPrincipal(imagenes[0].url);
         }

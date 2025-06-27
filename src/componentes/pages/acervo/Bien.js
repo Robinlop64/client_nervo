@@ -38,6 +38,7 @@ export const Bien = ({
 
       if (refDatos.status === 'success') {
         setItemsReferencia(refDatos.Periodicos || refDatos.items || []);
+       
       }
     } catch (error) {
       console.error("❌ Error al cargar datos:", error);
@@ -72,11 +73,12 @@ export const Bien = ({
       console.error('❌ Error en la búsqueda:', error);
     }
   };
-
+  
   const defaultImage = () =>
     'https://firebasestorage.googleapis.com/v0/b/acervodb.firebasestorage.app/o/Periodicos%2FPeriodico_Default.png?alt=media&token=77a0ea71-72f0-4b6b-bd2a-72333d6f7de1';
 
   const getImagenDelTema = (temaNombre) => {
+
     if (!Array.isArray(itemsReferencia)) return defaultImage();
     const match = itemsReferencia.find(p => p[campoComparacion] === temaNombre);
     if (match?.imagenes_fb?.length > 0) {

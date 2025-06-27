@@ -16,7 +16,7 @@ export const Acervo = () => {
   });
 
   const fetchNumeroBienes = (tipo) => {
-    fetch(`http://localhost:3900/api/${tipo}/numero-bienes`)
+    fetch(`https://backend-prueba-apel.onrender.com/api/${tipo}/numero-bienes`)
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
@@ -35,7 +35,7 @@ export const Acervo = () => {
   useEffect(() => {
     const tipos = [
       'fotografia', 'iconografia', 'libros', 'hemerografia',
-      'correspondencia', 'documentacion', 'partituras', 
+      'correspondencia', 'documentacion', 'partituras',
       'objetos', 'monumentos', 'audiovisuales'
     ];
     tipos.forEach(tipo => fetchNumeroBienes(tipo));
@@ -60,16 +60,20 @@ export const Acervo = () => {
             <NavLink to="/admin/fotografias" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/fotografias.jpg" 
-                    alt="Fotografía" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/fotografias.jpg"
+                    alt="Fotografía"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Fotografía</h4>
-                  
-                  {numeroBienes.fotografias !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.fotografia}</p>
+
+                  {numeroBienes.fotografia && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.fotografia.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.fotografia.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.fotografia.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -78,16 +82,20 @@ export const Acervo = () => {
             <NavLink to="/admin/iconografia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/iconografia.png" 
-                    alt="Iconografía" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/iconografia.png"
+                    alt="Iconografía"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Iconografía</h4>
-                  
-                  {numeroBienes.iconografia !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.iconografia}</p>
+
+                  {numeroBienes.iconografia && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.iconografia.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.iconografia.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.iconografia.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -96,27 +104,31 @@ export const Acervo = () => {
             <NavLink to="/admin/libros" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/libros.jpg" 
-                    alt="Libros" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/libros.jpg"
+                    alt="Libros"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Libros</h4>
-                  
-                  {numeroBienes.libros !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.libros}</p>
+
+                  {numeroBienes.libros && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.libros.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.libros.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.libros.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
             </NavLink>
 
-             <NavLink to="/admin/hemerografia" className="clasificacion" onClick={handleNavLinkClick}>
+            <NavLink to="/admin/hemerografia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/hemerografia.jpg" 
-                    alt="Publicaciones periódicas" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/hemerografia.jpg"
+                    alt="Publicaciones periódicas"
                   />
                 </div>
                 <div className='informacion-clas'>
@@ -135,16 +147,20 @@ export const Acervo = () => {
             <NavLink to="/admin/correspondencia" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/correspondencia.jpg" 
-                    alt="Correspondencia" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/correspondencia.jpg"
+                    alt="Correspondencia"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Correspondencia</h4>
-                  
-                  {numeroBienes.correspondencia !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.correspondencia}</p>
+
+                  {numeroBienes.correspondencia && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.correspondencia.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.correspondencia.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.correspondencia.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -153,16 +169,20 @@ export const Acervo = () => {
             <NavLink to="/admin/documentacion" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/documentacion.jpg" 
-                    alt="Documentación" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/documentacion.jpg"
+                    alt="Documentación"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Documentación</h4>
-                  
-                  {numeroBienes.documentacion !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.documentacion}</p>
+
+                  {numeroBienes.documentacion && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.documentacion.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.documentacion.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.documentacion.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -171,16 +191,20 @@ export const Acervo = () => {
             <NavLink to="/admin/partituras" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/partituras.png" 
-                    alt="Partituras" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/partituras.png"
+                    alt="Partituras"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Partituras</h4>
-                  
-                  {numeroBienes.partituras !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.partituras}</p>
+
+                  {numeroBienes.partituras && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.partituras.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.partituras.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.partituras.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -189,16 +213,20 @@ export const Acervo = () => {
             <NavLink to="/admin/objetos" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/objetos.jpg" 
-                    alt="Objetos personales" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/objetos.jpg"
+                    alt="Objetos personales"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Objetos personales</h4>
-                  
-                  {numeroBienes.objetos !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.objetos}</p>
+
+                  {numeroBienes.objetos && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.objetos.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.objetos.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.objetos.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -207,16 +235,20 @@ export const Acervo = () => {
             <NavLink to="/admin/monumentos" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/monumentos.jpg" 
-                    alt="Monumentos" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/monumentos.jpg"
+                    alt="Monumentos"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Monumentos</h4>
-                  
-                  {numeroBienes.monumentos !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.monumentos}</p>
+
+                  {numeroBienes.monumentos && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.monumentos.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.monumentos.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.monumentos.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
@@ -225,24 +257,34 @@ export const Acervo = () => {
             <NavLink to="/admin/audiovisuales" className="clasificacion" onClick={handleNavLinkClick}>
               <article>
                 <div className='mascara'>
-                  <img 
-                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/audiovisuales.jpg" 
-                    alt="Audiovisuales" 
+                  <img
+                    src="https://backend-prueba-apel.onrender.com/imagenes/general/Acervo/audiovisuales.jpg"
+                    alt="Audiovisuales"
                   />
                 </div>
                 <div className='informacion-clas'>
                   <h4 className='title'>Audiovisuales</h4>
-                  
-                  {numeroBienes.audiovisuales !== null && (
-                    <p className='description'>Número de bienes: {numeroBienes.audiovisuales}</p>
+
+                  {numeroBienes.iconografia && (
+                    <>
+                      <p className='description'>Total: {numeroBienes.iconografia.total} </p>
+                      <p className='description'>Revisados: {numeroBienes.iconografia.revisados}</p>
+                      <p className='description'>Pendientes: {numeroBienes.iconografia.pendientes}</p>
+                    </>
                   )}
                 </div>
               </article>
             </NavLink>
 
 
-            <p id='bienesTotales'><h2>Número de bienes totales:</h2> {Object.values(numeroBienes).reduce((total, num) => total + (num || 0), 0)}</p>
-
+            <p id='bienesTotales'>
+  <h2>Número de bienes totales:</h2>
+  {
+    Object.values(numeroBienes)
+      .filter(val => val && typeof val === 'object' && 'total' in val)
+      .reduce((total, val) => total + (val.total || 0), 0)
+  }
+</p>
           </section>
         </div>
       </main>
