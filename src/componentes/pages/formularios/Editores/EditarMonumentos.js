@@ -18,11 +18,6 @@ export const EditarMonumentos = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -133,14 +128,14 @@ export const EditarMonumentos = () => {
   // Aqui obtenemos los datos de la fotografia a editar
   useEffect(() => {
     const fetchFoto = async () => {
-      const url = `https://backend-prueba-apel.onrender.com/api/monumentos/monu/${id}`;
+      const url = `https://backend-prueba-apel.onrender.com/api/monumentos/icon/${id}`;
       const peticion = await fetch(url, {
         method: "GET"
       });
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.hemero);
+        setFotografia(datos.monu);
 
       } else {
         // Manejo de error
@@ -189,12 +184,34 @@ export const EditarMonumentos = () => {
     cambiado(e); // Actualizar el estado del formulario
 
   };
-  const guardar_foto = async (e) => {
+  const guardar_foto = async (e) => {   //!ojito aqui
     e.preventDefault();
-    let nueva_foto = formulario;
+    let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
+     const revisionesAnteriores = fotografia.revisiones || [];
+     
+    // Si se agregó una nueva observación (revisión)
+    if (formulario.nueva_revision &&
+      formulario.nueva_revision.persona &&
+      formulario.nueva_revision.tipo_revision &&
+      formulario.nueva_revision.observacion
+    ) {
+      const nuevaRevision = {
+        persona: formulario.nueva_revision.persona,
+        fecha: new Date().toISOString(),
+        tipo_revision: formulario.nueva_revision.tipo_revision,
+        observacion: formulario.nueva_revision.observacion,
+        revision_resuelta: formulario.nueva_revision.revision_resuelta || false
+      };
+
+      // Combinar revisiones
+      nueva_foto.revisiones = [...revisionesAnteriores, nuevaRevision];
+    } else {
+      // Si no hay nueva revisión, conservar las anteriores
+      nueva_foto.revisiones = revisionesAnteriores;
+    }
 
     const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/monumentos/editar/" + id, "PUT", nueva_foto);
-    setLoadingProgress(25); // Incrementa el progreso
+    setLoadingProgress(33); // Incrementa el progreso
     setStatuses(prev => ({ ...prev, peticion1: datos.status }))
     setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
     if (datos.status == "success") {
@@ -205,24 +222,20 @@ export const EditarMonumentos = () => {
       });
       setSaved("saved");
 
-      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/monumentos/registrar-imagen/" + id, "POST", formData, true);
+      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/monumentos/editar-imagen/" + id, "POST", formData, true);
 
-      setLoadingProgress(50); // Incrementa el progreso
+      setLoadingProgress(66); // Incrementa el progreso
       setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-      const subida = await Api("https://backend-google-fnsu.onrender.com/api/monumentos/editar-imagen/" + id, "POST", formData, true);
-      setLoadingProgress(75); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+
       const pdfInput = document.querySelector("#pdf");
       const pdfFormData = new FormData();
       Array.from(pdfInput.files).forEach((file) => {
         pdfFormData.append('pdfs', file);
       });
 
-      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/monumentos/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-      const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/monumentos/registrar-pdf/` + id, "POST", pdfFormData, true);
+      const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/monumentos/editar-pdfs/` + id, "POST", pdfFormData, true);
       setLoadingProgress(100); // Incrementa el progreso
       setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
@@ -314,7 +327,7 @@ export const EditarMonumentos = () => {
 
               <div className="form-group" id="tipo_monumentos">
                 <label htmlFor="nombrePeriodico">Tipo de monumento:</label>
-        
+
                 <input
                   type="text"
                   name="tipo_monumento"
@@ -438,7 +451,7 @@ export const EditarMonumentos = () => {
 
                   <div className="form-group" id="resumen_hemerografia">
                     <p id='resumen_hemerografia_p'>Resumen:</p>
-                    
+
                     <textarea
                       type="text"
 
@@ -465,7 +478,7 @@ export const EditarMonumentos = () => {
                   <div className='divisor_form'>
                     <div className="form-group" id="transcripcion_hemerografia">
                       <p>Descripción o contexto</p>
-                    
+
                       <textarea
                         type="text"
                         id="transcripcionInput2"
@@ -768,55 +781,15 @@ export const EditarMonumentos = () => {
                 <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
                 <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
 
-                <div className="progress-bar">
-                  <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
-                  <p className="progress-text">{loadingProgress}%</p>
-                </div>
-                <div className='mensajes_peticiones'>
-                  {mensajes.mensaje1 ?
-                    <div className='mensajes'>
-                      <strong id='saved_text'>{statuses.peticion1 === 'success' ? 'Información registrada correctamente' : ''}</strong>
-                      <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
-                      <h4>Mensaje:</h4>
-                      <p>{mensajes.mensaje1}</p>
-                    </div>
-                    : ""}
-                  {mensajes.mensaje2 ?
-                    <div className='mensajes'>
-                      <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
-                      <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
-                      <h4>Mensaje:</h4>
-                      <p> {mensajes.mensaje2}</p>
-                    </div>
-                    : ""}
-                  {mensajes.mensaje3 ?
-                    <div className='mensajes'>
-                      <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
-                      <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al subir foto a Drive' : ''}</strong>
-                      <h4>Mensaje:</h4>
-                      <p>{mensajes.mensaje3}</p>
-                    </div>
-                    : ""}
-                  {mensajes.mensaje4 ?
-                    <div className='mensajes'>
-                      <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
-                      <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
-                      <h4>Mensaje:</h4>
-                      <p> {mensajes.mensaje4}</p>
-                    </div>
-                    : ""}
-                </div>
+
                 <div className="images-preview">
-
-
-
                   {/* Verifica la estructura de fotografia.images */}
                   {fotografia.images && fotografia.images.map((image, index) => (
                     <div className="image-preview">
                       <div className='marco2'>
                         <img
                           key={index}
-                          src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                          src={`https://backend-prueba-apel.onrender.com/imagenes/monumentos/${image.nombre}`}
                           alt={`${image.nombre}`}
                           className='fotografia-img-large'
                         />
@@ -825,21 +798,7 @@ export const EditarMonumentos = () => {
                   ))}
                 </div>
 
-                {pdfUrls.length > 0 && (
-                  <div className="pdf-preview">
-                    {pdfUrls[0] ? <h1>PDFs subidos</h1> : ""}
-                    {pdfUrls.map((url, index) => (
-                      <div key={index} className="pdf-container">
-                        <embed
-                          src={url}
-                          width="100%"
-                          height="500px"
-                          type="application/pdf"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
+
 
                 <div className="progress-bar">
                   <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
@@ -880,16 +839,13 @@ export const EditarMonumentos = () => {
                     : ""}
                 </div>
                 <div className="images-preview">
-
-
-
-                  {/* Verifica la estructura de fotografia.images */}
-                  {fotografia.images && fotografia.images.map((image, index) => (
+                  {/* Verifica la estructura de fotografia.imagenes_fb */}
+                  {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                     <div className="image-preview">
                       <div className='marco2'>
                         <img
                           key={index}
-                          src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                          src={`${image.url}`}
                           alt={`${image.nombre}`}
                           className='fotografia-img-large'
                         />
@@ -918,9 +874,9 @@ export const EditarMonumentos = () => {
           </form>
         </div>
       </main>
-      <div className={`modal ${showModal ? 'show' : ''}`}>
-        
-      </div>
+    
+
+     
     </div>
   )
 };

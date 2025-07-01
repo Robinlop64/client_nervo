@@ -19,11 +19,7 @@ export const EditarLibros = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
+
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -255,7 +251,7 @@ export const EditarLibros = () => {
       setSaved("error");
     }
   };
-  
+
   const handleImageChange = (e) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
@@ -837,55 +833,18 @@ export const EditarLibros = () => {
             <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
             <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
 
-            <div className="progress-bar">
-              <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
-              <p className="progress-text">{loadingProgress}%</p>
-            </div>
-            <div className='mensajes_peticiones'>
-              {mensajes.mensaje1 ?
-                <div className='mensajes'>
-                  <strong id='saved_text'>{statuses.peticion1 === 'success' ? 'Información registrada correctamente' : ''}</strong>
-                  <strong id='error_text'>{statuses.peticion1 === 'error' ? 'Error al registrar en base de datos' : ''}</strong>
-                  <h4>Mensaje:</h4>
-                  <p>{mensajes.mensaje1}</p>
-                </div>
-                : ""}
-              {mensajes.mensaje2 ?
-                <div className='mensajes'>
-                  <strong id='saved_text'>{statuses.peticion2 === 'success' ? 'Foto subida al servidor Node' : ''}</strong>
-                  <strong id='error_text'>{statuses.peticion2 === 'error' ? 'Error al registrar en el servidor node' : ''}</strong>
-                  <h4>Mensaje:</h4>
-                  <p> {mensajes.mensaje2}</p>
-                </div>
-                : ""}
-              {mensajes.mensaje3 ?
-                <div className='mensajes'>
-                  <strong id='saved_text'>{statuses.peticion3 === 'success' ? 'Foto subida correctamente a Drive' : ''}</strong>
-                  <strong id='error_text'>{statuses.peticion3 === 'error' ? 'Error al subir foto a Drive' : ''}</strong>
-                  <h4>Mensaje:</h4>
-                  <p>{mensajes.mensaje3}</p>
-                </div>
-                : ""}
-              {mensajes.mensaje4 ?
-                <div className='mensajes'>
-                  <strong id='saved_text'>{statuses.peticion4 === 'success' ? 'PDFs subida correctamente a Drive' : ''}</strong>
-                  <strong id='error_text'>{statuses.peticion4 === 'error' ? 'Error al subir pdf a Drive' : ''}</strong>
-                  <h4>Mensaje:</h4>
-                  <p> {mensajes.mensaje4}</p>
-                </div>
-                : ""}
-            </div>
+
             <div className="images-preview">
 
 
 
-              {/* Verifica la estructura de fotografia.images */}
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {/* Verifica la estructura de fotografia.imagenes_fb */}
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <div className="image-preview">
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/libros/${image.nombre}`}
+                      src={`${image.url}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />
@@ -949,16 +908,13 @@ export const EditarLibros = () => {
                 : ""}
             </div>
             <div className="images-preview">
-
-
-
               {/* Verifica la estructura de fotografia.images */}
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <div className="image-preview">
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/libros/${image.nombre}`}
+                      src={`${image.url}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />
@@ -967,27 +923,13 @@ export const EditarLibros = () => {
               ))}
             </div>
 
-            {pdfUrls.length > 0 && (
-              <div className="pdf-preview">
-                {pdfUrls[0] ? <h1>PDFs subidos</h1> : ""}
-                {pdfUrls.map((url, index) => (
-                  <div key={index} className="pdf-container">
-                    <embed
-                      src={url}
-                      width="100%"
-                      height="500px"
-                      type="application/pdf"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+            
           </form>
 
 
         </div>
       </main>
-      
+
     </div>
   );
 };

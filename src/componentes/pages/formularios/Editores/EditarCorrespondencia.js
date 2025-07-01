@@ -18,11 +18,7 @@ export const EditarCorrespondencia = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
+
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -189,12 +185,11 @@ export const EditarCorrespondencia = () => {
     cambiado(e); // Actualizar el estado del formulario
 
   };
-  const guardar_foto = async (e) => {
-    e.preventDefault();
-
-    let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
-    const revisionesAnteriores = fotografia.revisiones || [];
-
+  const guardar_foto = async (e) => {   
+          e.preventDefault();
+          let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
+     const revisionesAnteriores = fotografia.revisiones || [];
+     
     // Si se agregó una nueva observación (revisión)
     if (formulario.nueva_revision &&
       formulario.nueva_revision.persona &&
@@ -215,45 +210,43 @@ export const EditarCorrespondencia = () => {
       // Si no hay nueva revisión, conservar las anteriores
       nueva_foto.revisiones = revisionesAnteriores;
     }
-
-    const { datos, cargando } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/editar/${id}`, "PUT", nueva_foto);
-    setLoadingProgress(25);
-    setStatuses(prev => ({ ...prev, peticion1: datos.status }));
-    setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
-
-    if (datos.status === "success") {
-      setSaved("saved");
-
-      // Subida de imágenes
-      const fileInput = document.querySelector("#file");
-      const formData = new FormData();
-      Array.from(fileInput.files).forEach((file) => {
-        formData.append("files", file);
-      });
-
-      const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/editar-imagen/${id}`, "POST", formData, true);
-      setLoadingProgress(50);
-      setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
-
-      // Subida de PDFs
-      const pdfInput = document.querySelector("#pdf");
-      const pdfFormData = new FormData();
-      Array.from(pdfInput.files).forEach((file) => {
-        pdfFormData.append("pdfs", file);
-      });
-
-      const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/editar-pdfs/${id}`, "POST", pdfFormData, true);
-      setLoadingProgress(100);
-      setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
-
-      setResultado(true);
-      setSaved("saved");
-    } else {
-      setSaved("error");
-    }
-  };
+  
+          const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/editar/" + id, "PUT", nueva_foto);
+          setLoadingProgress(33); // Incrementa el progreso
+          setStatuses(prev => ({ ...prev, peticion1: datos.status }))
+          setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
+          if (datos.status == "success") {
+              const fileInput = document.querySelector("#file");
+              const formData = new FormData();
+              Array.from(fileInput.files).forEach((file, index) => {
+                  formData.append(`files`, file);
+              });
+              setSaved("saved");
+  
+              const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/correspondencia/editar-imagen/" + id, "POST", formData, true);
+  
+              setLoadingProgress(66); // Incrementa el progreso
+              setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
+              setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
+  
+              
+              const pdfInput = document.querySelector("#pdf");
+              const pdfFormData = new FormData();
+              Array.from(pdfInput.files).forEach((file) => {
+                  pdfFormData.append('pdfs', file);
+              });
+  
+              const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/correspondencia/editar-pdfs/` + id, "POST", pdfFormData, true);
+              setLoadingProgress(100); // Incrementa el progreso
+              setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
+              setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
+  
+              setResultado(true);
+              setSaved("saved");
+          } else {
+              setSaved("error");
+          }
+      }
   const handleImageChange = (e) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
@@ -892,12 +885,12 @@ export const EditarCorrespondencia = () => {
 
 
               {/* Verifica la estructura de fotografia.images */}
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <div className="image-preview">
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/correspondencia/${image.nombre}`}
+                      src={`${image.url}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />

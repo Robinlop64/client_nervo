@@ -18,11 +18,6 @@ export const EditarHemerografia = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -947,13 +942,13 @@ export const EditarHemerografia = () => {
 
 
 
-              {/* Verifica la estructura de fotografia.images */}
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {/* Verifica la estructura de fotografia.imagenes_fb */}
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <div className="image-preview">
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                      src={`${image.url}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />

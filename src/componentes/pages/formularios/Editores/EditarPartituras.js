@@ -18,11 +18,6 @@ export const EditarPartituras = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -191,39 +186,60 @@ export const EditarPartituras = () => {
   };
   const guardar_foto = async (e) => {
     e.preventDefault();
-    let nueva_foto = formulario;
 
-    const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/partituras/editar/" + id, "PUT", nueva_foto);
-    setLoadingProgress(25); // Incrementa el progreso
-    setStatuses(prev => ({ ...prev, peticion1: datos.status }))
+    let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
+    const revisionesAnteriores = fotografia.revisiones || [];
+
+    // Si se agregó una nueva observación (revisión)
+    if (formulario.nueva_revision &&
+      formulario.nueva_revision.persona &&
+      formulario.nueva_revision.tipo_revision &&
+      formulario.nueva_revision.observacion
+    ) {
+      const nuevaRevision = {
+        persona: formulario.nueva_revision.persona,
+        fecha: new Date().toISOString(),
+        tipo_revision: formulario.nueva_revision.tipo_revision,
+        observacion: formulario.nueva_revision.observacion,
+        revision_resuelta: formulario.nueva_revision.revision_resuelta || false
+      };
+
+      // Combinar revisiones
+      nueva_foto.revisiones = [...revisionesAnteriores, nuevaRevision];
+    } else {
+      // Si no hay nueva revisión, conservar las anteriores
+      nueva_foto.revisiones = revisionesAnteriores;
+    }
+
+    const { datos, cargando } = await Api(`https://backend-prueba-apel.onrender.com/api/partituras/editar/${id}`, "PUT", nueva_foto);
+    setLoadingProgress(25);
+    setStatuses(prev => ({ ...prev, peticion1: datos.status }));
     setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
-    if (datos.status == "success") {
-      const fileInput = document.querySelector("#file");
-      const formData = new FormData();
-      Array.from(fileInput.files).forEach((file, index) => {
-        formData.append(`files`, file);
-      });
+
+    if (datos.status === "success") {
       setSaved("saved");
 
-      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/partituras/registrar-imagen/" + id, "POST", formData, true);
+      // Subida de imágenes
+      const fileInput = document.querySelector("#file");
+      const formData = new FormData();
+      Array.from(fileInput.files).forEach((file) => {
+        formData.append("files", file);
+      });
 
-      setLoadingProgress(50); // Incrementa el progreso
+      const subida2 = await Api(`https://backend-prueba-apel.onrender.com/api/partituras/editar-imagen/${id}`, "POST", formData, true);
+      setLoadingProgress(50);
       setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-      const subida = await Api("https://backend-google-fnsu.onrender.com/api/partituras/editar-imagen/" + id, "POST", formData, true);
-      setLoadingProgress(75); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+      // Subida de PDFs
       const pdfInput = document.querySelector("#pdf");
       const pdfFormData = new FormData();
       Array.from(pdfInput.files).forEach((file) => {
-        pdfFormData.append('pdfs', file);
+        pdfFormData.append("pdfs", file);
       });
 
-      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/partituras/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-      const pdfSubida2 = await Api(`https://backend-google-fnsu.onrender.com/api/partituras/registrar-pdf/` + id, "POST", pdfFormData, true);
-      setLoadingProgress(100); // Incrementa el progreso
+      const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/partituras/editar-pdfs/${id}`, "POST", pdfFormData, true);
+      setLoadingProgress(100);
       setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
 
@@ -232,7 +248,73 @@ export const EditarPartituras = () => {
     } else {
       setSaved("error");
     }
-  }
+  };
+
+  // Agrega esta función para manejar imágenes
+  const handleImageChange = (e) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
+      setSelectedImages((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map(
+        (file) => URL.revokeObjectURL(file) // Avoid memory leaks
+      );
+    }
+  };
+
+  // Add this function near your handleImageChange function
+  const handlePDFChange = (e) => {
+    const files = e.target.files;
+    const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
+    setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Add to existing URLs
+  };
+
+  // Function to toggle the "resolved" status of a revision
+  const toggleRevisionResuelta = (index) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones[index].revision_resuelta = !nuevasRevisiones[index].revision_resuelta;
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
+
+  // Function to update the observation text
+  const actualizarObservacion = (index, nuevoTexto) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones[index].observacion = nuevoTexto;
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
+
+  // Function to delete a revision
+  const eliminarRevision = (index) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones.splice(index, 1); // Elimina la revisión en ese índice
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
 
   return (
     <div>
@@ -617,6 +699,7 @@ export const EditarPartituras = () => {
                   name="images" 
                   multiple 
                   accept="image/*"
+                  onChange={handleImageChange}  // Añade esta línea
                 />
               </div>
 
@@ -628,6 +711,7 @@ export const EditarPartituras = () => {
                   name="pdfs" 
                   multiple 
                   accept=".pdf"
+                  onChange={handlePDFChange}  // Add this line
                 />
               </div>
             </div>
@@ -637,6 +721,118 @@ export const EditarPartituras = () => {
             <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
             <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
 
+            <h3>Historial de Revisiones</h3>
+            {(fotografia.revisiones || []).map((rev, index) => (
+              <div key={index} className="revision-item">
+                <p><strong>Persona:</strong> {rev.persona}</p>
+                <p><strong>Fecha:</strong> {new Date(rev.fecha).toLocaleString()}</p>
+                <p><strong>Tipo:</strong> {rev.tipo_revision}</p>
+
+                <label>
+                  <strong>Observación:</strong>
+                  <textarea
+                    value={rev.observacion}
+                    onChange={(e) => actualizarObservacion(index, e.target.value)}
+                  />
+                </label>
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={rev.revision_resuelta}
+                    onChange={() => toggleRevisionResuelta(index)}
+                  />
+                  Resuelta
+                </label>
+
+                <button type="button" onClick={() => eliminarRevision(index)} className="btn btn-danger">
+                  Eliminar
+                </button>
+
+                <hr />
+              </div>
+            ))}
+
+            {/* Button to add a new observation */}
+            <button type="button" onClick={() => setFormulario({
+              ...formulario,
+              nueva_revision: {
+                persona: '',
+                tipo_revision: '',
+                observacion: '',
+                revision_resuelta: false
+              }
+            })}>
+              ➕ Agregar Observación
+            </button>
+
+            {/* Form for adding a new observation */}
+            {formulario.nueva_revision && (
+              <div className="bloque-observacion">
+                <label>Persona que registra:</label>
+                <input
+                  type="text"
+                  value={formulario.nueva_revision.persona}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        persona: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>Tipo de observación:</label>
+                <input
+                  type="text"
+                  value={formulario.nueva_revision.tipo_revision}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        tipo_revision: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>Observación:</label>
+                <textarea
+                  value={formulario.nueva_revision.observacion}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        observacion: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={formulario.nueva_revision.revision_resuelta}
+                    onChange={(e) =>
+                      setFormulario({
+                        ...formulario,
+                        nueva_revision: {
+                          ...formulario.nueva_revision,
+                          revision_resuelta: e.target.checked
+                        }
+                      })
+                    }
+                  />
+                  ¿Revisión resuelta?
+                </label>
+              </div>
+            )}
+
+            {/* Continue with the existing progress bar */}
             <div className="progress-bar">
               <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
               <p className="progress-text">{loadingProgress}%</p>
@@ -685,7 +881,7 @@ export const EditarPartituras = () => {
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                      src={`https://backend-prueba-apel.onrender.com/imagenes/partituras/${image.nombre}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />
@@ -714,9 +910,6 @@ export const EditarPartituras = () => {
 
         </div>
       </main>
-      <div className={`modal ${showModal ? 'show' : ''}`}>
-
-      </div>
 
     </div>
   );

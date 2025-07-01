@@ -19,11 +19,6 @@ export const EditarIconografia = () => {
   const [value, setValue] = useState('');
   const [sugerencias, setSugerencias] = useState([]);
   const [fieldName, setFieldName] = useState('');
-  //----------------------------------ChatGPT ----------------------------------//
-  const [showModal, setShowModal] = useState(false);
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [currentField, setCurrentField] = useState('');
-  const [originalPrompt, setOriginalPrompt] = useState('');
   //----------------------------------Guardar y enviar ----------------------------------//
   const [resultado, setResultado] = useState(false)
   const [fileName, setFileName] = useState('');
@@ -34,6 +29,49 @@ export const EditarIconografia = () => {
   //----------------------------------Observaciones y obtener registro ----------------------------------//
   const { id } = useParams();
   const [fotografia, setFotografia] = useState({});
+  const toggleRevisionResuelta = (index) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones[index].revision_resuelta = !nuevasRevisiones[index].revision_resuelta;
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
+  // Función para editar el texto de observación
+  const actualizarObservacion = (index, nuevoTexto) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones[index].observacion = nuevoTexto;
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
+  const eliminarRevision = (index) => {
+    const nuevasRevisiones = [...(fotografia.revisiones || [])];
+    nuevasRevisiones.splice(index, 1); // Elimina la revisión en ese índice
+
+    setFotografia(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+
+    setFormulario(prev => ({
+      ...prev,
+      revisiones: nuevasRevisiones
+    }));
+  };
   const [mostrarObservacion, setMostrarObservacion] = useState(false);
   const [nuevaObservacion, setNuevaObservacion] = useState({
     persona: "",
@@ -141,7 +179,7 @@ export const EditarIconografia = () => {
 
       let datos = await peticion.json();
       if (datos.status === "success") {
-        setFotografia(datos.hemero);
+        setFotografia(datos.icon);
 
       } else {
         // Manejo de error
@@ -190,12 +228,33 @@ export const EditarIconografia = () => {
     cambiado(e); // Actualizar el estado del formulario
 
   };
-  const guardar_foto = async (e) => {
+  const guardar_foto = async (e) => {   //!ojito aqui
     e.preventDefault();
-    let nueva_foto = formulario;
+    let nueva_foto = { ...formulario }; // Clonamos el formulario para evitar modificar el estado directamente
+     const revisionesAnteriores = fotografia.revisiones || [];
+     
+    // Si se agregó una nueva observación (revisión)
+    if (formulario.nueva_revision &&
+      formulario.nueva_revision.persona &&
+      formulario.nueva_revision.tipo_revision &&
+      formulario.nueva_revision.observacion
+    ) {
+      const nuevaRevision = {
+        persona: formulario.nueva_revision.persona,
+        fecha: new Date().toISOString(),
+        tipo_revision: formulario.nueva_revision.tipo_revision,
+        observacion: formulario.nueva_revision.observacion,
+        revision_resuelta: formulario.nueva_revision.revision_resuelta || false
+      };
 
+      // Combinar revisiones
+      nueva_foto.revisiones = [...revisionesAnteriores, nuevaRevision];
+    } else {
+      // Si no hay nueva revisión, conservar las anteriores
+      nueva_foto.revisiones = revisionesAnteriores;
+    }
     const { datos, cargando } = await Api("https://backend-prueba-apel.onrender.com/api/iconografia/editar/" + id, "PUT", nueva_foto);
-    setLoadingProgress(25); // Incrementa el progreso
+    setLoadingProgress(33); // Incrementa el progreso
     setStatuses(prev => ({ ...prev, peticion1: datos.status }))
     setMensajes(prev => ({ ...prev, mensaje1: datos.message }));
     if (datos.status == "success") {
@@ -206,24 +265,20 @@ export const EditarIconografia = () => {
       });
       setSaved("saved");
 
-      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/iconografia/registrar-imagen/" + id, "POST", formData, true);
+      const subida2 = await Api("https://backend-prueba-apel.onrender.com/api/iconografia/editar-imagen/" + id, "POST", formData, true);
 
-      setLoadingProgress(50); // Incrementa el progreso
+      setLoadingProgress(66); // Incrementa el progreso
       setStatuses(prev => ({ ...prev, peticion2: subida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje2: subida2.datos.message }));
 
-      const subida = await Api("https://backend-prueba-apel.onrender.com/api/iconografia/editar-imagen/" + id, "POST", formData, true);
-      setLoadingProgress(75); // Incrementa el progreso
-      setStatuses(prev => ({ ...prev, peticion3: subida.datos.status }));
-      setMensajes(prev => ({ ...prev, mensaje3: subida.datos.message }));
+
       const pdfInput = document.querySelector("#pdf");
       const pdfFormData = new FormData();
       Array.from(pdfInput.files).forEach((file) => {
         pdfFormData.append('pdfs', file);
       });
 
-      //const { pdfSubida } = await Api(`https://backend-prueba-apel.onrender.com/api/iconografia/registrar-pdf/${datos.publicacionGuardada._id}`, "POST", pdfFormData, true);
-      const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/iconografia/registrar-pdfs/` + id, "POST", pdfFormData, true);
+      const pdfSubida2 = await Api(`https://backend-prueba-apel.onrender.com/api/iconografia/editar-pdfs/` + id, "POST", pdfFormData, true);
       setLoadingProgress(100); // Incrementa el progreso
       setStatuses(prev => ({ ...prev, peticion4: pdfSubida2.datos.status }));
       setMensajes(prev => ({ ...prev, mensaje4: pdfSubida2.datos.message }));
@@ -639,6 +694,114 @@ export const EditarIconografia = () => {
 
             <strong id='saved_text'>{saved === 'saved' ? 'Fotografia actualizada correctamente' : ''}</strong>
             <strong id="error_text">{saved === 'error' ? 'No se ha registrado la foto ' : ''}</strong>
+            <h3>Historial de Revisiones</h3>
+            {(fotografia.revisiones || []).map((rev, index) => (
+              <div key={index} className="revision-item">
+                <p><strong>Persona:</strong> {rev.persona}</p>
+                <p><strong>Fecha:</strong> {new Date(rev.fecha).toLocaleString()}</p>
+                <p><strong>Tipo:</strong> {rev.tipo_revision}</p>
+
+                <label>
+                  <strong>Observación:</strong>
+                  <textarea
+                    value={rev.observacion}
+                    onChange={(e) => actualizarObservacion(index, e.target.value)}
+                  />
+                </label>
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={rev.revision_resuelta}
+                    onChange={() => toggleRevisionResuelta(index)}
+                  />
+                  Resuelta
+                </label>
+
+                {/* 🗑️ Botón para eliminar revisión */}
+                <button type="button" onClick={() => eliminarRevision(index)} className="btn btn-danger">
+                  Eliminar
+                </button>
+
+                <hr />
+              </div>
+            ))}
+            <button type="button" onClick={() => setFormulario({
+              ...formulario,
+              nueva_revision: {
+                persona: '',
+                tipo_revision: '',
+                observacion: '',
+                revision_resuelta: false
+              }
+            })}>
+              ➕ Agregar Observación
+            </button>
+
+            {formulario.nueva_revision && (
+              <div className="bloque-observacion">
+                <label>Persona que registra:</label>
+                <input
+                  type="text"
+                  value={formulario.nueva_revision.persona}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        persona: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>Tipo de observación:</label>
+                <input
+                  type="text"
+                  value={formulario.nueva_revision.tipo_revision}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        tipo_revision: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>Observación:</label>
+                <textarea
+                  value={formulario.nueva_revision.observacion}
+                  onChange={(e) =>
+                    setFormulario({
+                      ...formulario,
+                      nueva_revision: {
+                        ...formulario.nueva_revision,
+                        observacion: e.target.value
+                      }
+                    })
+                  }
+                />
+
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={formulario.nueva_revision.revision_resuelta}
+                    onChange={(e) =>
+                      setFormulario({
+                        ...formulario,
+                        nueva_revision: {
+                          ...formulario.nueva_revision,
+                          revision_resuelta: e.target.checked
+                        }
+                      })
+                    }
+                  />
+                  ¿Revisión resuelta?
+                </label>
+              </div>
+            )}
 
             <div className="progress-bar">
               <div className="progress" style={{ width: `${loadingProgress}%` }}></div>
@@ -682,13 +845,13 @@ export const EditarIconografia = () => {
 
 
 
-              {/* Verifica la estructura de fotografia.images */}
-              {fotografia.images && fotografia.images.map((image, index) => (
+              {/* Verifica la estructura de fotografia.imagenes_fb */}
+              {fotografia.imagenes_fb && fotografia.imagenes_fb.map((image, index) => (
                 <div className="image-preview">
                   <div className='marco2'>
                     <img
                       key={index}
-                      src={`https://backend-prueba-apel.onrender.com/imagenes/hemerografia/${image.nombre}`}
+                      src={`${image.url}`}
                       alt={`${image.nombre}`}
                       className='fotografia-img-large'
                     />
@@ -716,7 +879,7 @@ export const EditarIconografia = () => {
         </div>
       </main>
 
-      
+
     </div>
   )
 };
