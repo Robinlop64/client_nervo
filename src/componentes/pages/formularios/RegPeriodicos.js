@@ -19,11 +19,6 @@ export const RegPeriodicos = () => {
     const [value, setValue] = useState('');
     const [sugerencias, setSugerencias] = useState([]);
     const [fieldName, setFieldName] = useState('');
-    //----------------------------------ChatGPT ----------------------------------//
-    const [showModal, setShowModal] = useState(false);
-    const [customPromptText, setCustomPromptText] = useState('');
-    const [currentField, setCurrentField] = useState('');
-    const [originalPrompt, setOriginalPrompt] = useState('');
     //----------------------------------Guardar y enviar ----------------------------------//
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
@@ -128,8 +123,6 @@ export const RegPeriodicos = () => {
 //#########################################################################################################//
 //-----------------------------------------Campos del formulario--------------------------------------------------//
 //##########################################################################################################//
-
-
     // Cuando se cambia el valor del input, se obtienen las sugerencias
     const handleChange = (e) => {
         
@@ -168,9 +161,6 @@ export const RegPeriodicos = () => {
         const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
         setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
     };
-
-    
-
 //#########################################################################################################//
 //-----------------------------------------Guardar los datos--------------------------------------------------//
 //##########################################################################################################//
@@ -218,63 +208,6 @@ export const RegPeriodicos = () => {
 
 
 
-//#########################################################################################################//
-//-----------------------------------------ChatGPT--------------------------------------------------//
-//##########################################################################################################//
-
-
-    // Funcion de transcripcion de imagen a texto utilizando la API de OpenAI
-    const handleAutoComplete = async (field, promptId) => {
-        const fileInput = document.querySelector("#file");
-        if (fileInput.files.length > 0) {
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-
-            const { datos } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
-            if (datos && datos.message) {
-                cambiado({ target: { name: field, value: datos.message } });
-            }
-        } else {
-            alert("Por favor selecciona una imagen primero.");
-        }
-    };
-    // Funcion para autocompletar otros campos, no esta completamente implementada
-    const handleAutoCompleteSelect = async (field, promptId) => {
-        const fileInput = document.querySelector("#file");
-        if (fileInput.files.length > 0) {
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-
-            const { datos } = await Api(`https://backend-prueba-apel.onrender.com/api/hemerografia/gpt/image-text/${promptId}`, "POST", formData, true);
-            if (datos && datos.message) {
-                // Validar que el mensaje sea una opción válida del select
-                const opcionesValidas = ['notas', 'articulos', 'cronicas', 'frases', 'poesia', 'pendiente', 'noticias', 'cuento'];
-                const generoSugerido = datos.message.toLowerCase();
-
-                if (opcionesValidas.includes(generoSugerido)) {
-                    cambiado({ target: { name: field, value: datos.message } });
-                } else {
-                    alert("El género sugerido no es válido para este campo.");
-                }
-            }
-        } else {
-            alert("Por favor selecciona una imagen primero.");
-        }
-    };
-    // Misaca funcion que la anterior pero permite editar el prompt antes de enviarlo
-    const handleEditPromptAndAutoComplete = async (field, prompt) => {
-        setCurrentField(field);
-        setOriginalPrompt(prompt);
-        setCustomPromptText(prompt);
-        setShowModal(true);
-    };
-    // Maneja el texto del prompt editado
-    const handleModalSubmit = () => {
-        handleAutoComplete(currentField, customPromptText);
-        setShowModal(false);
-    };
-
-
     return (
         <div>
             <main className='main_registro_hemerografia'>
@@ -286,11 +219,7 @@ export const RegPeriodicos = () => {
 
                             <div className="form-group" id="periodico_hemerografia">
                                 <label htmlFor="nombrePeriodico">Periódico:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'Dame el nombre de este periódico, solo contesta con el nombre')}></img>
-
-                                </div>
+                            
 
 
                                 <input
@@ -354,12 +283,7 @@ export const RegPeriodicos = () => {
 
                             <div className="form-group" id='encabezado_hemerografia'>
                                 <label>Encabezado:</label>
-                                <div className='botonesIA'>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png   ' onClick={() => handleEditPromptAndAutoComplete('encabezado', 'Dame el encabezado de este periodico, solo contesta con el encabezado sin saltos de linea')}></img>
-
-
-                                </div>
+                                
                                 <input type="text" name="encabezado" placeholder="Encabezado" value={formulario.encabezado || ''} onChange={cambiado} />
 
                             </div>
@@ -370,14 +294,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='seudonimo_hemerografia'>
                                 <label htmlFor="nombreSeudonimos">Seudónimo:</label>      
-                                <div className='botonesIA'>
-                            
-                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-                            <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seudonimos', 'De los siguientes seudónimos dime cuál está en el periódico:Amado Nervo, Román, Rip-Rip, Tricio, Benedictus, Joie, Versión española de Amado Nervo, X.Y.Z, Quirino Ordaz, Triplex., solo contesta con el género sin punto')}></img>
-
-
-
-                        </div>                         
+                                                        
                                 <input
                                     type='text'
                                     id="nombreSeudonimos"
@@ -402,14 +319,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='seccion_hemerografia'>
                                 <label>Sección:</label>
-                                <div className='botonesIA'>
-
-                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('seccion', 'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
-                                <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('seccion',  'Busca si en este periodico hay alguna de estas secciones:Fuegos Fatuos, Pimientos dulces, Página literaria, Literatura, Actualidades europeas, Asuntos femeninos, Actualidades literarias, Actualidades madrileñas, La varita de la virtud, Desde parís, Desde Madrid, Actualidades, Actualidades españolas, Plaso ibañes, "El Imparcial", De Amado Nervo, La literatura maravillosa, Crónicas frívolas, Literatura nacional, Sociales, Poesía, Literaria, solo contesta con la seccion sin punto')}></img>
-
-
-
-                                </div>
+                               
                                 <input
                                     type='text'
                                     id="generoPeriodistico"
@@ -459,11 +369,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='genero_hemerografia'>
                                 <label>Género periodístico:</label>
-                                <div className='botonesIA'>
-
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoCompleteSelect('genero_periodistico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('nombre_periodico', 'De los siguientes géneros dime cuál es más probable que sea el del periódico: notas, artículos, crónicas, frases, poesía, noticias, solo contesta con el género sin punto')}></img>
-                                    </div>
+                          
                                 <input
                                     type='text'
                                     id="generoPeriodistico"
@@ -545,11 +451,7 @@ export const RegPeriodicos = () => {
                             <div className="form-group" id="resumen_hemerografia">
                                 <p id='resumen_hemerografia_p'>Resumen:</p>
 
-                                <div className='botonesIA_resumen_hemerografia'>
-
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
-                                    <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('resumen', 'Dame un resumen de este periódico')}></img>
-                                </div>
+                           
 
                                 <textarea
                                     type="text"
@@ -574,14 +476,7 @@ export const RegPeriodicos = () => {
                             <div className='divisor_form'>
                                 <div className="form-group" id="transcripcion_hemerografia">
                                     <p>Transcripciòn</p>
-                                    <div className='botonesIA_resumen_hemerografia'>
-
-                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/ai.png   ' onClick={() => handleAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
-                                        <img src='https://backend-prueba-apel.onrender.com/imagenes/general/chat-gpt.png ' onClick={() => handleEditPromptAndAutoComplete('transcripcion', 'Dame la transcripcion de este periodico')}></img>
-
-
-
-                                    </div>
+                                    
                                     <textarea
                                         type="text"
                                         id="transcripcionInput2"
@@ -851,30 +746,10 @@ export const RegPeriodicos = () => {
                     </form>
                 </div>
             </main>
-            <div className={`modal ${showModal ? 'show' : ''}`}>
-                <div className="modal-content">
-                    <h2>Edita el prompt</h2>
-                   <div className='contenido_editar_prompt'>
-                                <div className="image-preview_editar_prompt">
-                                    <div className='marco2'>
-                                        <img src={selectedImages[0]} />
-                                    </div>
-                                </div>
-                    <div className='textarea_editar_prompt'>
-                    <textarea 
-                        value={customPromptText}
-                        onChange={(e) => setCustomPromptText(e.target.value)}
-                    />
-                    </div>
-                    <div className="modal-buttons">
-                        <button onClick={handleModalSubmit}>Aceptar</button>
-                        <button onClick={() => setShowModal(false)}>Cancelar</button>
-                    </div>
-                    </div>
-                </div>
+            
 
 
-            </div>
+         
         </div>
     )
 }

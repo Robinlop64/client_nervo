@@ -38,7 +38,12 @@ export const Tema = ({
             return fecha < hace30Dias;
           });
         }
-
+      // Ordenar por fecha_publicacion descendente (más reciente primero)
+        items.sort((a, b) => {
+          const fechaA = a.fecha_publicacion ? new Date(a.fecha_publicacion) : new Date(0);
+          const fechaB = b.fecha_publicacion ? new Date(b.fecha_publicacion) : new Date(0);
+          return fechaB - fechaA;
+       });
         setRegistros(items);
         if (items.length > 0 && campoNombre && items[0][campoNombre]) {
           setNombre(items[0][campoNombre]);
