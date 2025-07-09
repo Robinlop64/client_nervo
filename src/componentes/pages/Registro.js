@@ -25,7 +25,7 @@ export const Registro = () => {
           </NavLink>
           <NavLink to="/admin/registro/periodicos">
             <button>
-              Publicaciones periódicas
+              Hemerografía
             </button>
           </NavLink>
           <NavLink to="/admin/registro/correspondencia">
@@ -67,7 +67,7 @@ export const Registro = () => {
 
           <NavLink to="/admin/registro/periodicos2">
             <button>
-              Periódicos
+              Tema
             </button>
           </NavLink>
         </div>

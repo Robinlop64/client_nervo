@@ -11,13 +11,14 @@ import RequireRole from '../context/RequireRole';
 import { RegFotografia } from '../componentes/pages/formularios/RegFotografia';
 import { RegIconografia } from '../componentes/pages/formularios/RegIconografia';
 import { RegLibros } from '../componentes/pages/formularios/RegLibros';
-import { RegPeriodicos } from '../componentes/pages/formularios/RegPeriodicos';
+import { RegHemerografia } from '../componentes/pages/formularios/RegHemerografia';
 import { RegCorrespondencia } from '../componentes/pages/formularios/RegCorrespondencia';
 import { RegDocumentacion } from '../componentes/pages/formularios/RegDocumentacion';
 import { RegObjetos } from '../componentes/pages/formularios/RegObjetos';
 import { RegPartituras } from '../componentes/pages/formularios/RegPartituras';
 import { RegMonumentos } from '../componentes/pages/formularios/RegMonumentos';
 import { RegAudiovisuales } from '../componentes/pages/formularios/RegAudiovisuales';
+import { RegVideo } from '../componentes/pages/formularios/RegVideo';
 
 
 import { Cortejo } from '../componentes/pages/acervo/temas/Cortejo';
@@ -82,6 +83,7 @@ import { Bien } from '../componentes/pages/acervo/Bien';
 import { Tema } from '../componentes/pages/acervo/Tema';
 import { PeriodicoDetalle } from '../componentes/pages/acervo/detalles/PeriodicoDetalle';
 import { Detalle } from '../componentes/pages/acervo/Detalle';
+import { Videos } from '../componentes/pages/Videos';
 
 export const Rutas = () => {
   return (
@@ -100,7 +102,7 @@ export const Rutas = () => {
             <Route path="registro/fotografia" element={<RegFotografia />} />
             <Route path="registro/iconografia" element={<RegIconografia />} />
             <Route path="registro/libros" element={<RegLibros />} />
-            <Route path="registro/periodicos" element={<RegPeriodicos />} />
+            <Route path="registro/periodicos" element={<RegHemerografia />} />
             <Route path="registro/correspondencia" element={<RegCorrespondencia />} />
             <Route path="registro/documentacion" element={<RegDocumentacion />} />
             <Route path="registro/objetos" element={<RegObjetos />} />
@@ -125,7 +127,7 @@ export const Rutas = () => {
             <Route path="/admin/acervo" element={<Acervo />} />
             <Route path="/admin/Tienda" element={<Tienda />} />
             <Route path="/admin/success" element={<PagoSuccess />} />
-
+            <Route path="/admin/videos" element={<Videos />} />
 
             <Route path="/admin/instituciones" element={
               <RequireRole allowedRoles={["admin", "premium"]}>
@@ -136,7 +138,7 @@ export const Rutas = () => {
             <Route path="/admin/editar/fotografia/:id" element={<EditarFotografia />} />
             <Route path="/admin/registro/iconografia" element={<RegIconografia />} />
             <Route path="/admin/registro/libros" element={<RegLibros />} />
-            <Route path="/admin/registro/periodicos" element={<RegPeriodicos />} />
+            <Route path="/admin/registro/periodicos" element={<RegHemerografia />} />
             <Route path="/admin/registro/periodicos2" element={<RegPeriodicos2 />} />
             <Route path="/admin/editar/periodicos/:id" element={<EditarPeriodicos />} />
             <Route path="/admin/registro/correspondencia" element={<RegCorrespondencia />} />
@@ -146,6 +148,7 @@ export const Rutas = () => {
             <Route path="/admin/registro/monumentos" element={<RegMonumentos />} />
             <Route path="/admin/registro/audiovisuales" element={<RegAudiovisuales />} />
             <Route path="/admin/registro/instituciones" element={<RegInstituciones />} />
+            <Route path="/admin/registro/video" element={<RegVideo />} />
 
             <Route path="/admin/fotografias" element={<Bien
               titulo="Temas de Fotografías"
@@ -153,7 +156,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/fotografia/buscar"
               rutaItem="/admin/fotografia"
-              camposBusqueda={[]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
+              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "tema", "autor", "institucion"]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
             />} />
             <Route path="/admin/fotografia/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/fotografia"
@@ -199,7 +202,7 @@ export const Rutas = () => {
               campoNombre="nombre_periodico"
               rutaDetalle="/admin/hemerografia"
               rutaEditar="/admin/editar/hemerografia"
-              componenteDetalle={PeriodicoDetalle}
+              componenteDetalle={PeriodicoDetalle}//!ojito
             />} />
             <Route path="/admin/hemerografia/:id" element={<Detalle
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/hemerografia/hemero"
@@ -236,7 +239,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/iconografia/buscar"
               rutaItem="/admin/iconografia"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["institucion", "fecha_registro", "fecha_adquisicion", "ubicacion_fisica"]}
             />} />
             <Route path="/admin/iconografia/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/iconografia"
@@ -272,7 +275,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/libros/buscar"
               rutaItem="/admin/libros"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "ciudad", "editorial", "isbn"]}
             />} />
             <Route path="/admin/libros/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/libros"
@@ -317,7 +320,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/correspondencia/buscar"
               rutaItem="/admin/correspondencia"
-              camposBusqueda={[]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
+              camposBusqueda={["autor", "ciudad", "destinatario", "fecha", "fecha_envio"]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
               campoComparacion="nombre_periodico" // No se compara con otro dataset, así que este campo será irrelevante
             />} />
             <Route path="/admin/correspondencia/tema/:id" element={<Tema
@@ -354,7 +357,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/documentacion/buscar"
               rutaItem="/admin/documentacion"
-              camposBusqueda={[]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
+              camposBusqueda={["texto", "titulo", "institucion", "pais", "ciudad", "autor"]} // No se necesita búsqueda aquí, pero puedes poner campos si lo agregas después
               campoComparacion="nombre_periodico" // No se compara con otro dataset, así que este campo será irrelevante
             />} />
             <Route path="/admin/documentacion/tema/:id" element={<Tema
@@ -390,7 +393,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/partituras/buscar"
               rutaItem="/admin/partituras"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "ciudad", "autor"]}
             />} />
             <Route path="/admin/partituras/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/partituras"
@@ -424,7 +427,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/objetos/buscar"
               rutaItem="/admin/objetos"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["texto", "pais", "institucion", "ciudad", "autor"]}
             />} />
             <Route path="/admin/objetos/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/objetos"
@@ -458,7 +461,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/monumentos/buscar"
               rutaItem="/admin/monumentos"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["texto", "pais", "institucion", "ciudad", "autor"]}
             />} />
             <Route path="/admin/monumentos/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/monumentos"

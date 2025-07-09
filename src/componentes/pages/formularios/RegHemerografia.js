@@ -4,7 +4,7 @@ import { useForm } from '../../../hooks/useForm';
 import { Api } from '../../../hooks/Api';
 import { useState, useEffect } from 'react';
 
-export const RegPeriodicos = () => {
+export const RegHemerografia = () => {
     const { formulario, enviado, cambiado, resetFormulario } = useForm({})
     //----------------------------------Paises, ciudades e instituciones ----------------------------------//
     const [data, setData] = useState(null);
@@ -19,6 +19,7 @@ export const RegPeriodicos = () => {
     const [value, setValue] = useState('');
     const [sugerencias, setSugerencias] = useState([]);
     const [fieldName, setFieldName] = useState('');
+
     //----------------------------------Guardar y enviar ----------------------------------//
     const [resultado, setResultado] = useState(false)
     const [fileName, setFileName] = useState('');
@@ -123,6 +124,8 @@ export const RegPeriodicos = () => {
 //#########################################################################################################//
 //-----------------------------------------Campos del formulario--------------------------------------------------//
 //##########################################################################################################//
+
+
     // Cuando se cambia el valor del input, se obtienen las sugerencias
     const handleChange = (e) => {
         
@@ -161,6 +164,9 @@ export const RegPeriodicos = () => {
         const newPdfUrls = Array.from(files).map(file => URL.createObjectURL(file));
         setPdfUrls(prevPdfUrls => [...prevPdfUrls, ...newPdfUrls]); // Agrega las nuevas URLs al estado existente
     };
+
+    
+
 //#########################################################################################################//
 //-----------------------------------------Guardar los datos--------------------------------------------------//
 //##########################################################################################################//
@@ -208,6 +214,8 @@ export const RegPeriodicos = () => {
 
 
 
+
+
     return (
         <div>
             <main className='main_registro_hemerografia'>
@@ -219,7 +227,7 @@ export const RegPeriodicos = () => {
 
                             <div className="form-group" id="periodico_hemerografia">
                                 <label htmlFor="nombrePeriodico">Periódico:</label>
-                            
+                               
 
 
                                 <input
@@ -294,7 +302,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='seudonimo_hemerografia'>
                                 <label htmlFor="nombreSeudonimos">Seudónimo:</label>      
-                                                        
+                                                     
                                 <input
                                     type='text'
                                     id="nombreSeudonimos"
@@ -319,7 +327,7 @@ export const RegPeriodicos = () => {
                             </div>
                             <div className="form-group" id='seccion_hemerografia'>
                                 <label>Sección:</label>
-                               
+                                
                                 <input
                                     type='text'
                                     id="generoPeriodistico"
@@ -439,6 +447,17 @@ export const RegPeriodicos = () => {
                                     <option value="Sí">Sí</option>
                                 </select>
                             </div>
+                            <div className="form-group"id='edicion_hemerografia'>
+                                <label>Tomo: </label>
+                                <input
+                                    type="text"
+                                    id="hallazgo"
+                                    name="tomo"
+                                    placeholder="Tomo"
+                                    value={formulario.tomo|| ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
                             <div className='form-group' id='pdf2'>
                                 <label htmlFor='pdfs'>Pdfs: </label>
                                 <input type='file' onChange={handlePDFChange} name='pdfs' id='pdf' multiple />
@@ -451,8 +470,7 @@ export const RegPeriodicos = () => {
                             <div className="form-group" id="resumen_hemerografia">
                                 <p id='resumen_hemerografia_p'>Resumen:</p>
 
-                           
-
+                            
                                 <textarea
                                     type="text"
 
@@ -476,7 +494,7 @@ export const RegPeriodicos = () => {
                             <div className='divisor_form'>
                                 <div className="form-group" id="transcripcion_hemerografia">
                                     <p>Transcripciòn</p>
-                                    
+                                 
                                     <textarea
                                         type="text"
                                         id="transcripcionInput2"
@@ -746,10 +764,7 @@ export const RegPeriodicos = () => {
                     </form>
                 </div>
             </main>
-            
-
-
-         
+        
         </div>
     )
 }
