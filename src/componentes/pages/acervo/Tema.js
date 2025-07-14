@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AuthContext from '../../../context/AuthProvider';
+import { format, addDays } from 'date-fns';
+import { es } from 'date-fns/locale';
+
 
 export const Tema = ({
   apiBaseUrl,
@@ -100,7 +103,11 @@ export const Tema = ({
       setPaginaActual(paginaActual - 1);
     }
   };
-
+const formatFechaPublicacion = (fecha) => {
+  if (!fecha) return '';
+  const fechaModificada = addDays(new Date(fecha), 1);
+  return format(fechaModificada, "EEEE, dd MMMM yyyy", { locale: es });
+};
   return (
     <main className='main_album'>
       <div className='container_fotografia'>
@@ -131,6 +138,8 @@ export const Tema = ({
                   <p>No hay imagen</p>
                 )}
                 <p className='numero_foto'>{item.numero_registro}</p>
+               <p id="tema_fechaPublicacion"className='numero_foto2'>{formatFechaPublicacion(item.fecha_publicacion)}</p>
+               <p id="tema_fechaPublicacion"className='numero_foto2'>{item.encabezado}</p>
                 {pendiente && <p className='pendiente-text'>Pendiente: {pendiente}</p>}
 
                 <button onClick={(e) => handleEdit(e, item._id)}>Editar</button>

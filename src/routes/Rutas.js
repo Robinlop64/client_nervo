@@ -195,7 +195,7 @@ export const Rutas = () => {
               apiItemsUrl="https://backend-prueba-apel.onrender.com/api/periodicos/listar"
               apiBuscarUrl="https://backend-prueba-apel.onrender.com/api/hemerografia/buscar"
               rutaItem="/admin/hemerografia"
-              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico"]}
+              camposBusqueda={["texto", "anioInicio", "anioFin", "fecha_publicacion", "pais", "ciudad", "periodico","numero_registro"]}
             />} />
             <Route path="/admin/hemerografia/tema/:id" element={<Tema
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/hemerografia"

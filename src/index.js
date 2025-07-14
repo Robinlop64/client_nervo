@@ -8,6 +8,7 @@ import "./css/RegistroLibros.css"
 import "./css/RegistroCorrespondencia.css"
 import "./css/RegistroMonumentos.css"
 import "./css/Videos.css"
+import "./css/Tema.css"
 
 import App from './App';
 
