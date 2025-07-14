@@ -565,6 +565,18 @@ export const EditarHemerografia = () => {
                   <option value="Sí">Sí</option>
                 </select>
               </div>
+
+               <div className="form-group"id='edicion_hemerografia'>
+                                <label>Tomo: </label>
+                                <input
+                                    type="text"
+                                    id="hallazgo"
+                                    name="tomo"
+                                    placeholder="Tomo"
+                                    defaultValue={fotografia.tomo|| ''}
+                                    onChange={cambiado}
+                                />
+                            </div>
               <div className='form-group' id='pdf2'>
                 <label htmlFor='pdfs'>Pdfs: </label>
                 <input type='file' onChange={handlePDFChange} name='pdfs' id='pdf' multiple />

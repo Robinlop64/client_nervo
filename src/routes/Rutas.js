@@ -220,6 +220,7 @@ export const Rutas = () => {
                 { etiqueta: "Páginas", valor: "numero_paginas" },
                 { etiqueta: "Columnas", valor: "columnas" },
                 { etiqueta: "Género periodístico", valor: "genero_periodistico" },
+                { etiqueta: "Sección", valor: "seccion" },
                 { etiqueta: "Lugar de publicación", valor: "lugar_publicacion" },
                 { etiqueta: "Periodicidad", valor: "periodicidad" },
               ]}
