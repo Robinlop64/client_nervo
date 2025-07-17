@@ -201,7 +201,7 @@ export const Rutas = () => {
               apiBaseUrl="https://backend-prueba-apel.onrender.com/api/hemerografia"
               campoNombre="nombre_periodico"
               rutaDetalle="/admin/hemerografia"
-              rutaEditar="/admin/editar/hemerografia"
+              rutaEditar="/admin/hemerografia/editar"
               componenteDetalle={PeriodicoDetalle}//!ojito
             />} />
             <Route path="/admin/hemerografia/:id" element={<Detalle
@@ -229,7 +229,7 @@ export const Rutas = () => {
             <Route path="/admin/hemerografia/tema/Secciones" element={<Secciones />} />
             <Route path="/admin/hemerografia/tema/pendientes" element={<PendientesHemerografia />} />
 
-            <Route path="/admin/editar/hemerografia/:id" element={<EditarHemerografia />} />
+            <Route path="/admin/hemerografia/editar/:id" element={<EditarHemerografia />} />
             <Route path="/admin/hemerografia/carpeta/:id" element={<CarpetaRecortes />} />
             <Route path="/admin/hemerografia/seccion/:id" element={<Seccion />} />
 

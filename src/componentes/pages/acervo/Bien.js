@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { format, addDays } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const Bien = ({
   titulo,
@@ -90,6 +92,33 @@ export const Bien = ({
   const handleTemaClick = (tema) => navigate(`${rutaItem}/tema/${tema}`);
   const handleItemClick = (item) => navigate(`${rutaItem}/${item._id}`);
 
+  const formatFechaPublicacion = (fecha) => {
+    if (!fecha) return '';
+    const fechaModificada = addDays(new Date(fecha), 1);
+    return format(fechaModificada, "EEEE, dd MMMM yyyy", { locale: es });
+  };
+
+  const handleEdit = (event, idItem) => {
+    event.stopPropagation();
+    navigate(`${rutaItem}/editar/${idItem}`);
+  };
+
+  const handleDelete = async (event, idItem) => {
+    event.stopPropagation();
+    try {
+      const res = await fetch(`${apiItemsUrl}/borrar/${idItem}`, { method: "DELETE" });
+      const datos = await res.json();
+      if (datos.status === "success") {
+        // Actualiza resultados después de borrar
+        buscar();
+      } else {
+        console.error('❌ Error al eliminar:', datos.message);
+      }
+    } catch (error) {
+      console.error('❌ Error de red al eliminar:', error);
+    }
+  };
+
   return (
     <main className='main_temas_fotografia'>
       <div className='temas_contenedor_items'>
@@ -122,6 +151,10 @@ export const Bien = ({
                   alt="Imagen"
                 />
                 <p className='numero_foto'>{item.numero_registro}</p>
+                <p className='numero_foto2'>{formatFechaPublicacion(item.fecha_publicacion)}</p>
+                <p className='numero_foto2'>{item.encabezado}</p>
+                <button onClick={(e) => handleEdit(e, item._id)}>Editar</button>
+                <button onClick={(e) => handleDelete(e, item._id)}>Borrar</button>
               </div>
             ))}
           </div>
